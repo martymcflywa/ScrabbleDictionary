@@ -150,9 +150,12 @@
     <ClInclude Include="catch.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestLoader.h" />
     <ClInclude Include="TestPrinter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DictionaryTests.cpp" />
+    <ClCompile Include="TestLoader.cpp" />
     <ClCompile Include="TestPrinter.cpp" />
     <ClCompile Include="WordTests.cpp" />
     <ClCompile Include="stdafx.cpp">

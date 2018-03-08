@@ -9,16 +9,17 @@ using namespace lib;
 
 namespace wordTests
 {
-    SCENARIO("Word acceptance criteria")
-    {
-        GIVEN("An entry with a word, definition and valid type")
-        {
-            auto testPrinter = TestPrinter();
-            const string expectedWord = "test";
-            auto expectedType = Noun;
-            const string expectedDefinition = "This is a test description.";
+	const string testWord = "test";
+	auto testType = Noun;
+	const string testTypeString = "n";
+	const string testDefinition = "This is a test description.";
+	auto testPrinter = TestPrinter();
 
-            auto word = Word(expectedWord, "[n]", expectedDefinition, testPrinter);
+    SCENARIO("Word with valid type")
+    {
+        GIVEN("An entry with a word, valid type and definition")
+        {
+            auto word = Word(testWord, testTypeString, testDefinition, testPrinter);
 
             WHEN("The getters are called")
             {
@@ -28,15 +29,16 @@ namespace wordTests
 
                 THEN("The content matches input")
                 {
-                    REQUIRE(expectedWord == actualWord);
-                    REQUIRE(expectedType == actualType);
-                    REQUIRE(expectedDefinition == actualDefinition);
+                    REQUIRE(testWord == actualWord);
+                    REQUIRE(testType == actualType);
+                    REQUIRE(testDefinition == actualDefinition);
                 }
             }
+
             AND_WHEN("The entry is printed")
             {
                 const string expectedTypeHeader = "Noun (n.):\n";
-                const auto expected = expectedTypeHeader + expectedDefinition;
+                const auto expected = expectedTypeHeader + testDefinition;
 
                 word.printDefinition();
                 auto actual = testPrinter.getOutput();
@@ -48,4 +50,103 @@ namespace wordTests
             }
         }
     }
+
+	SCENARIO("Word with invalid type")
+    {
+	    GIVEN("An entry with a word, invalid type and definition")
+	    {
+			const string invalidType = "z";
+			unique_ptr<Word> actual;
+
+			WHEN("The word is constructed")
+			{
+				try
+				{
+					actual.reset(new Word(testWord, invalidType, testDefinition, testPrinter));
+				}
+				catch (invalid_argument&)
+				{
+				}
+
+				THEN("The word is not created")
+				{
+					REQUIRE(actual == nullptr);
+				}
+			}
+	    }
+    }
+
+	SCENARIO("Word with empty word")
+    {
+	    GIVEN("An entry with an empty word, valid type and definition")
+	    {
+			const string emptyWord = "";
+			unique_ptr<Word> actual;
+
+			WHEN("The word is constructed")
+			{
+				try
+				{
+					actual.reset(new Word(emptyWord, testTypeString, testDefinition, testPrinter));
+				} catch (invalid_argument&)
+				{
+				}
+
+				THEN("The word is not created")
+				{
+					REQUIRE(actual == nullptr);
+				}
+			}
+	    }
+    }
+
+	SCENARIO("Word with empty type")
+    {
+	    GIVEN("An entry with a word, empty type, and definition")
+	    {
+			const string emptyType = "";
+			unique_ptr<Word> actual;
+
+			WHEN("The word is constructed")
+			{
+				try
+				{
+					actual.reset(new Word(testWord, emptyType, testDefinition, testPrinter));
+				}
+				catch (invalid_argument&)
+				{
+				}
+
+				THEN("The word is not created")
+				{
+					REQUIRE(actual == nullptr);
+				}
+			}
+	    }
+    }
+
+	SCENARIO("Word with empty definition")
+	{
+		GIVEN("An entry with a word, valid type, and empty definition")
+		{
+			const string emptyDefinition = "";
+			unique_ptr<Word> actual;
+
+			WHEN("The word is constructed")
+			{
+				try
+				{
+					actual.reset(new Word(testWord, testTypeString, emptyDefinition, testPrinter));
+				}
+				catch (invalid_argument&)
+				{
+				}
+
+				THEN("The word is not created")
+				{
+					REQUIRE(actual == nullptr);
+				}
+			}
+		}
+	}
 }
