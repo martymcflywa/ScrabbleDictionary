@@ -1,0 +1,26 @@
+# semver
+version: 1.0.{build}
+# branches to build
+branches:
+  only:
+    - master
+# max concurrent jobs
+max_jobs: 1
+
+# build worker image
+image: Visual Studio 2017
+
+# build config
+platform:
+  - x86
+configuration:
+  - Debug
+
+build:
+  project: ${APPVEYOR_BUILD_FOLDER}\${APPVEYOR_PROJECT_NAME}.sln
+  parallel: true
+  verbosity: minimal
+
+# test config
+test_script:
+  - '%APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\test.exe'
