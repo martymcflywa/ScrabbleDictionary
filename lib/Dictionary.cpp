@@ -13,14 +13,11 @@ Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _e
 }
 
 /**
- * \brief Load dictionary entries from a source. Depends on ILoad to retrieve the contents from the source.
- * The function then iterates over each line, using regex to extract words, types and definitions.
- * The currentLine counter and isEndOfEntry() is used to group together entries which extend over multiple lines.
- * \param location The location of the dictionary source. Can be a filepath, db connection string etc. It depends on the injected ILoad.
- * \returns The dictionary as map<string, Word> where the key is the actual word itself, and the value is the Word object.
+ * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents from the source.
+ * \returns map<string, Word> populated with entries from the source dictionary.
  */
-map<string, Word> Dictionary::loadDictionary(const string& location) const
+map<string, Word> Dictionary::loadDictionary() const
 {
-    auto& content = _loader.load(location);
+    auto& content = _loader.load();
     return _extractor.extract(content);
 }
