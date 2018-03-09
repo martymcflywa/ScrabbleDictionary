@@ -2,6 +2,7 @@
 #include "catch.hpp"
 #include <string>
 #include "../lib/Dictionary.h"
+#include "../lib/TextFileExtractor.h"
 #include "TestLoader.h"
 #include "TestPrinter.h"
 
@@ -11,6 +12,7 @@ using namespace lib;
 namespace dictionaryTests
 {
     auto printer = TestPrinter();
+    auto extractor = TextFileExtractor(printer);
     const string dummyPath = "/path/to/somefile.txt";
 
     SCENARIO("Dictionary loads valid file")
@@ -23,7 +25,7 @@ namespace dictionaryTests
             {
                 auto loader = TestLoader();
                 loader.setTestFile(testFile);
-                auto dictionary = Dictionary(loader, printer);
+                auto dictionary = Dictionary(loader, extractor);
 
                 auto first = Word("first", "adj", "This is the first definition.", printer);
                 auto second = Word("second", "adv", "This is the second definition.", printer);
@@ -51,7 +53,7 @@ namespace dictionaryTests
             {
                 auto loader = TestLoader();
                 loader.setTestFile(testFile);
-                auto dictionary = Dictionary(loader, printer);
+                auto dictionary = Dictionary(loader, extractor);
                 map<string, Word> actual;
 
                 try
@@ -80,7 +82,7 @@ namespace dictionaryTests
             {
                 auto loader = TestLoader();
                 loader.setTestFile(testFile);
-                auto dictionary = Dictionary(loader, printer);
+                auto dictionary = Dictionary(loader, extractor);
                 auto actual = map<string, Word>();
 
                 try
@@ -109,7 +111,7 @@ namespace dictionaryTests
             {
                 auto loader = TestLoader();
                 loader.setTestFile(testFile);
-                auto dictionary = Dictionary(loader, printer);
+                auto dictionary = Dictionary(loader, extractor);
                 auto actual = map<string, Word>();
 
                 try

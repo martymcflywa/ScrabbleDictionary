@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <string>
-#include "IPrinter.h"
+#include "IPrint.h"
 #include "WordType.h"
 
 using namespace std;
@@ -13,7 +13,7 @@ namespace lib
         string _word;
         Type _type;
         string _definition;
-        IPrinter& _printer;
+        IPrint& _printer;
 
     public:
         /**
@@ -21,9 +21,9 @@ namespace lib
          * \param word The word itself.
          * \param type The type of word, ie. adj, n, etc. Must not include brackets "[]".
          * \param definition The definition of the word.
-         * \param printer Inject implementation of IPrinter so that Word is not coupled to implementation of printing.
+         * \param printer Inject implementation of IPrint so that Word is not coupled to implementation of printing.
          */
-        Word(const string& word, const string& type, const string& definition, IPrinter& printer);
+        Word(const string& word, const string& type, const string& definition, IPrint& printer);
         /**
          * \brief Don't want anyone using this.
          */

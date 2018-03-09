@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include <string>
-#include "../lib/IPrinter.h"
+#include "../lib/IPrint.h"
 
 using namespace std;
 using namespace lib;
 
-class TestPrinter : public IPrinter
+class TestPrinter : public IPrint
 {
     string _output;
     string format(Word& word) override;

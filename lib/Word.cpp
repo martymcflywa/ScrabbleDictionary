@@ -6,10 +6,10 @@
  * \param word The word itself.
  * \param type The type of word, ie. adj, n, etc. Must not include brackets "[]". Will be resolved to an enum during construction.
  * \param definition The definition of the word.
- * \param printer Inject implementation of IPrinter to decouple Word from implementation of printing.
+ * \param printer Inject implementation of IPrint to decouple Word from implementation of printing.
  * This means we could easily implement a Json (or whatever) printer, and inject it here if requirements change down the track.
  */
-Word::Word(const string& word, const string& type, const string& definition, IPrinter& printer) :
+Word::Word(const string& word, const string& type, const string& definition, IPrint& printer) :
     _word(validate(word)),
     _type(resolveType(type)),
     _definition(validate(definition)),
