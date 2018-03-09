@@ -10,31 +10,31 @@
  * This means we could easily implement a Json (or whatever) printer, and inject it here if requirements change down the track.
  */
 Word::Word(const string& word, const string& type, const string& definition, IPrinter& printer) :
-	_word(validate(word)),
-	_type(resolveType(type)),
-	_definition(validate(definition)),
-	_printer(printer)
+    _word(validate(word)),
+    _type(resolveType(type)),
+    _definition(validate(definition)),
+    _printer(printer)
 {
 }
 
 string Word::getWord() const
 {
-	return _word;
+    return _word;
 }
 
 Type Word::getType() const
 {
-	return _type;
+    return _type;
 }
 
 string Word::getDefinition() const
 {
-	return _definition;
+    return _definition;
 }
 
 void Word::printDefinition()
 {
-	_printer.print(*this);
+    _printer.print(*this);
 }
 
 /**
@@ -44,9 +44,9 @@ void Word::printDefinition()
 */
 bool Word::operator==(const Word& that) const
 {
-	return _word == that._word
-		&& _type == that._type
-		&& _definition == that._definition;
+    return _word == that._word
+        && _type == that._type
+        && _definition == that._definition;
 }
 
 /**
@@ -56,10 +56,10 @@ bool Word::operator==(const Word& that) const
  */
 Type Word::resolveType(const string& type)
 {
-	const auto initialType = static_cast<Type>(-1);
+    const auto initialType = static_cast<Type>(-1);
     auto out = initialType;
-	
-	// would rather switch case it up here but... https://stackoverflow.com/a/650218
+
+    // would rather switch case it up here but... https://stackoverflow.com/a/650218
     if (type == "v")
         out = Verb;
     if (type == "n")
@@ -77,9 +77,9 @@ Type Word::resolveType(const string& type)
     if (type == "misc")
         out = Misc;
 
-	// throw if we got some unexpected type
-	if (out == initialType)
-		throw invalid_argument("Type " + type + " not supported");
+    // throw if we got some unexpected type
+    if (out == initialType)
+        throw invalid_argument("Type " + type + " not supported");
 
     return out;
 }
@@ -91,8 +91,8 @@ Type Word::resolveType(const string& type)
  */
 string Word::validate(const string& input)
 {
-	if (input.empty())
-		throw invalid_argument("Received an empty string");
+    if (input.empty())
+        throw invalid_argument("Received an empty string");
 
-	return input;
+    return input;
 }
