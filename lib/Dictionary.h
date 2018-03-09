@@ -20,17 +20,16 @@ namespace lib {
 
     public:
         /**
-         * \brief Constructs the Dictionary. Requires injection of ILoad and IPrint.
-         * \param loader the implementation of ILoad, responsible for loading dictionary entries from a source.
-         * \param extractor the implementation of IExtract, responsible for extracting values from the source dictionary.
-         */
+        * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. Using dependency injection to decouple
+        * implementation details of loading and extracting.
+        * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
+        * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
+        */
         Dictionary(ILoad& loader, IExtract& extractor);
         /**
-         * \brief Load dictionary entries from a source. Not concerned with what the source is, it is abstracted away into ILoad.
-         * \param location The location of the dictionary source. Can be a filepath, db connection string etc.
-         * The requirement depends on ILoad implementation.
-         * \returns The dictionary as map<string, Word> where the key is the actual word itself, and the value is the Word object.
-         */
-        map<string, Word> loadDictionary(const string& location) const;
+        * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents from the source.
+        * \returns map<string, Word> populated with entries from the source dictionary.
+        */
+        map<string, Word> loadDictionary() const;
     };
 }

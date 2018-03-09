@@ -13,13 +13,12 @@ namespace dictionaryTests
 {
     auto printer = TestPrinter();
     auto extractor = TextFileExtractor(printer);
-    const string dummyPath = "/path/to/somefile.txt";
 
     SCENARIO("Dictionary loads valid file")
     {
         GIVEN("A file containing valid dictionary entries")
         {
-            const string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
+            string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
 
             WHEN("The file is loaded")
             {
@@ -33,7 +32,7 @@ namespace dictionaryTests
                 expected.insert(pair<string, Word>("first", first));
                 expected.insert(pair<string, Word>("second", second));
 
-                auto actual = dictionary.loadDictionary(dummyPath);
+                auto actual = dictionary.loadDictionary();
 
                 THEN("A corresponding collection of Words is created")
                 {
@@ -47,7 +46,7 @@ namespace dictionaryTests
     {
         GIVEN("A file containing a dictionary entry with missing word")
         {
-            const string testFile = "[adj]\nThis is the first definition.\n\n";
+            string testFile = "[adj]\nThis is the first definition.\n\n";
 
             WHEN("The file is loaded")
             {
@@ -58,7 +57,7 @@ namespace dictionaryTests
 
                 try
                 {
-                    actual = dictionary.loadDictionary(dummyPath);
+                    actual = dictionary.loadDictionary();
                 }
                 catch (invalid_argument&)
                 {
@@ -76,7 +75,7 @@ namespace dictionaryTests
     {
         GIVEN("A file containing a dictionary entry with missing type")
         {
-            const string testFile = "first []\nThis is the first definition.\n\n";
+            string testFile = "first []\nThis is the first definition.\n\n";
 
             WHEN("The file is loaded")
             {
@@ -87,7 +86,7 @@ namespace dictionaryTests
 
                 try
                 {
-                    actual = dictionary.loadDictionary(dummyPath);
+                    actual = dictionary.loadDictionary();
                 }
                 catch (invalid_argument&)
                 {
@@ -105,7 +104,7 @@ namespace dictionaryTests
     {
         GIVEN("A file containing a dictionary entry with missing definition")
         {
-            const string testFile = "first [adj]\n\n\n";
+            string testFile = "first [adj]\n\n\n";
 
             WHEN("The file is loaded")
             {
@@ -116,7 +115,7 @@ namespace dictionaryTests
 
                 try
                 {
-                    actual = dictionary.loadDictionary(dummyPath);
+                    actual = dictionary.loadDictionary();
                 }
                 catch (invalid_argument&)
                 {
