@@ -14,9 +14,6 @@ namespace lib
      */
     class IPrint
     {
-        // TODO: abstract this further so it is implemented only once
-        virtual string format(Word& word) = 0;
-
     public:
         virtual ~IPrint() = default;
         virtual void print(Word& word) = 0;

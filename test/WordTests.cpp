@@ -3,6 +3,7 @@
 #include <string>
 #include "../lib/Word.h"
 #include "TestPrinter.h"
+#include "../lib/DefinitionFormatter.h"
 
 using namespace std;
 using namespace lib;
@@ -13,13 +14,15 @@ namespace wordTests
     auto testType = Noun;
     const string testTypeString = "n";
     const string testDefinition = "This is a test description.";
-    auto testPrinter = TestPrinter();
+
+    auto formatter = DefinitionFormatter();
+    auto printer = TestPrinter(formatter);
 
     SCENARIO("Word with valid type")
     {
         GIVEN("An entry with a word, valid type and definition")
         {
-            auto word = Word(testWord, testTypeString, testDefinition, testPrinter);
+            auto word = Word(testWord, testTypeString, testDefinition, printer);
 
             WHEN("The getters are called")
             {
@@ -37,14 +40,14 @@ namespace wordTests
 
             AND_WHEN("The entry is printed")
             {
-                const string expectedTypeHeader = "Noun (n.):\n";
-                const auto expected = expectedTypeHeader + testDefinition;
-
                 word.printDefinition();
-                auto actual = testPrinter.getOutput();
+                auto actual = printer.getOutput();
 
                 THEN("The print output contains a type header with definition")
                 {
+                    const auto expectedType = WordType::getName(testType) + ":\n";
+                    const auto expected = expectedType + testDefinition;
+
                     REQUIRE(expected == actual);
                 }
             }
@@ -62,7 +65,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, invalidType, testDefinition, testPrinter));
+                    actual.reset(new Word(testWord, invalidType, testDefinition, printer));
                 }
                 catch (invalid_argument&)
                 {
@@ -87,7 +90,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(emptyWord, testTypeString, testDefinition, testPrinter));
+                    actual.reset(new Word(emptyWord, testTypeString, testDefinition, printer));
                 }
                 catch (invalid_argument&)
                 {
@@ -112,7 +115,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, emptyType, testDefinition, testPrinter));
+                    actual.reset(new Word(testWord, emptyType, testDefinition, printer));
                 }
                 catch (invalid_argument&)
                 {
@@ -137,7 +140,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, testTypeString, emptyDefinition, testPrinter));
+                    actual.reset(new Word(testWord, testTypeString, emptyDefinition, printer));
                 }
                 catch (invalid_argument&)
                 {
@@ -146,6 +149,214 @@ namespace wordTests
                 THEN("The word is not created")
                 {
                     REQUIRE(actual == nullptr);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word verb definition printing")
+    {
+        GIVEN("A verb Word")
+        {
+            const string word = "test";
+            const string type = "v";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Verb prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Verb) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word noun definition printing")
+    {
+        GIVEN("A noun Word")
+        {
+            const string word = "test";
+            const string type = "n";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Noun prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Noun) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word adverb definition printing")
+    {
+        GIVEN("An adverb Word")
+        {
+            const string word = "test";
+            const string type = "adv";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Adverb prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Adverb) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word adjective definition printing")
+    {
+        GIVEN("An adjective Word")
+        {
+            const string word = "test";
+            const string type = "adj";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Adjective prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Adjective) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word preposition definition printing")
+    {
+        GIVEN("A preposition Word")
+        {
+            const string word = "test";
+            const string type = "prep";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Preposition prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Preposition) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word proper noun definition printing")
+    {
+        GIVEN("A proper noun Word")
+        {
+            const string word = "test";
+            const string type = "pn";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Proper noun prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(ProperNoun) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word noun and verb definition printing")
+    {
+        GIVEN("A noun and verb Word")
+        {
+            const string word = "test";
+            const string type = "n_and_v";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Noun and verb prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(NounAndVerb) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
+                }
+            }
+        }
+    }
+
+    SCENARIO("Word misc definition printing")
+    {
+        GIVEN("A misc Word")
+        {
+            const string word = "test";
+            const string type = "misc";
+            const string definiton = "this is a test";
+
+            auto wordObj = Word(word, type, definiton, printer);
+
+            WHEN("The word is printed")
+            {
+                wordObj.printDefinition();
+                auto actual = printer.getOutput();
+
+                THEN("Misc prefixes the definition")
+                {
+                    const auto expectedType = WordType::getName(Misc) + ":\n";
+                    const auto expected = expectedType + definiton;
+
+                    REQUIRE(expected == actual);
                 }
             }
         }

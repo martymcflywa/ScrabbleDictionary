@@ -6,6 +6,7 @@
 #include "../lib/Dictionary.h"
 #include "TestFileFactory.h"
 #include "TestPrinter.h"
+#include "../lib/DefinitionFormatter.h"
 
 using namespace std;
 
@@ -13,7 +14,8 @@ namespace textFileLoaderTests
 {
     string filepath = ".\\test.txt";
 
-    auto printer = TestPrinter();
+    auto formatter = DefinitionFormatter();
+    auto printer = TestPrinter(formatter);
     auto extractor = TextFileExtractor(printer);
 
     SCENARIO("File loader loads existing file")

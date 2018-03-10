@@ -2,15 +2,13 @@
 #include "TestPrinter.h"
 #include "../lib/Word.h"
 
-string TestPrinter::format(Word& word)
+TestPrinter::TestPrinter(IFormat& formatter) : _formatter(formatter)
 {
-    return WordType::getName(word.getType()) + ":\n" +
-        word.getDefinition();
 }
 
 void TestPrinter::print(Word& word)
 {
-    _output = format(word);
+    _output = _formatter.format(word);
 }
 
 string TestPrinter::getOutput() const
