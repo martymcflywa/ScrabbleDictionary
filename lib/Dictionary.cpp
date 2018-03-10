@@ -19,5 +19,8 @@ Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _e
 map<string, Word> Dictionary::loadDictionary() const
 {
     auto& content = _loader.load();
-    return _extractor.extract(content);
+    auto out = _extractor.extract(content);
+    _loader.dispose();
+
+    return out;
 }

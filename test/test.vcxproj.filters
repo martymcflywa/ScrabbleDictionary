@@ -30,6 +30,9 @@
     <ClInclude Include="TestLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestFileFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFileLoaderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFileFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
