@@ -5,13 +5,15 @@
 #include "../lib/TextFileExtractor.h"
 #include "TestLoader.h"
 #include "TestPrinter.h"
+#include "../lib/DefinitionFormatter.h"
 
 using namespace std;
 using namespace lib;
 
 namespace dictionaryTests
 {
-    auto printer = TestPrinter();
+    auto formatter = DefinitionFormatter();
+    auto printer = TestPrinter(formatter);
     auto extractor = TextFileExtractor(printer);
 
     SCENARIO("Dictionary loads valid file")
