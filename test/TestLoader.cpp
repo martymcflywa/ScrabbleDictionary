@@ -11,3 +11,8 @@ istream& TestLoader::load()
     istream& is(_testDictionary);
     return is;
 }
+
+void TestLoader::dispose()
+{
+    // do nothing, no file or resource to close here
+}

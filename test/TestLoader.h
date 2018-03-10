@@ -13,4 +13,5 @@ class TestLoader : public ILoad
 public:
     void setTestFile(string& testFile);
     istream& load() override;
+    void dispose() override;
 };
