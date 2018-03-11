@@ -42,9 +42,6 @@
     <ClInclude Include="IExtract.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextFileExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WordFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
     <ClInclude Include="EmptyStringException.h">
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RegexExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -90,9 +90,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dictionary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextFileExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WordFactory.cpp">
@@ -118,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="EmptyStringException.cpp">
       <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegexExtractor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

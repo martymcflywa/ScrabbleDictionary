@@ -5,17 +5,17 @@
 #include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/Dictionary.h"
-#include "../lib/TextFileExtractor.h"
 #include "../lib/EmptyStringException.h"
+#include "../lib/RegexExtractor.h"
 
 using namespace std;
 using namespace lib;
 
-namespace textFileExtractorTests
+namespace regexExtractorTests
 {
     auto formatter = DefinitionFormatter();
     auto printer = TestPrinter(formatter);
-    auto extractor = TextFileExtractor(printer);
+    auto extractor = RegexExtractor(printer);
 
     SCENARIO("Extractor reads valid file")
     {

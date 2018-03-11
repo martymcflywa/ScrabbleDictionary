@@ -1,13 +1,13 @@
 ﻿#include "stdafx.h"
 #include <regex>
-#include "TextFileExtractor.h"
+#include "RegexExtractor.h"
 #include "WordFactory.h"
 
-TextFileExtractor::TextFileExtractor(IPrint& printer) : _printer(printer)
+RegexExtractor::RegexExtractor(IPrint& printer) : _printer(printer)
 {
 }
 
-map<string, Word> TextFileExtractor::extract(istream& content)
+map<string, Word> RegexExtractor::extract(istream& content)
 {
     const auto firstLine = 0;
     const auto lastLine = 2;
@@ -46,25 +46,25 @@ map<string, Word> TextFileExtractor::extract(istream& content)
     return output;
 }
 
-string TextFileExtractor::extractWord(string& line) const
+string RegexExtractor::extractWord(string& line) const
 {
     const auto groupIndex = 1;
     return extract(HEADER_PATTERN, line, groupIndex);
 }
 
-string TextFileExtractor::extractType(string& line) const
+string RegexExtractor::extractType(string& line) const
 {
     const auto groupIndex = 2;
     return extract(HEADER_PATTERN, line, groupIndex);
 }
 
-string TextFileExtractor::extractDefinition(string& line) const
+string RegexExtractor::extractDefinition(string& line) const
 {
     const auto groupIndex = 0;
     return extract(DEFINITION_PATTERN, line, groupIndex);
 }
 
-string TextFileExtractor::extract(string pattern, string& line, int groupIndex) const
+string RegexExtractor::extract(string pattern, string& line, int groupIndex) const
 {
     const regex regex(pattern, regex_constants::ECMAScript);
     smatch match;

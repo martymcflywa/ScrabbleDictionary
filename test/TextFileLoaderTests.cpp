@@ -3,11 +3,11 @@
 #include <string>
 #include "TestFileFactory.h"
 #include "TestPrinter.h"
-#include "../lib/TextFileLoader.h"
-#include "../lib/TextFileExtractor.h"
-#include "../lib/Dictionary.h"
 #include "../lib/DefinitionFormatter.h"
+#include "../lib/Dictionary.h"
 #include "../lib/FileNotFoundException.h"
+#include "../lib/RegexExtractor.h"
+#include "../lib/TextFileLoader.h"
 
 using namespace std;
 
@@ -17,7 +17,7 @@ namespace textFileLoaderTests
 
     auto formatter = DefinitionFormatter();
     auto printer = TestPrinter(formatter);
-    auto extractor = TextFileExtractor(printer);
+    auto extractor = RegexExtractor(printer);
 
     SCENARIO("File loader loads existing file")
     {
