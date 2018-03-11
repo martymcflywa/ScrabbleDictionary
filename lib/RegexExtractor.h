@@ -10,7 +10,7 @@ namespace lib
      * Second line contains definition.
      * Third line is empty, delimiter for the next entry.
      */
-    class TextFileExtractor : public IExtract
+    class RegexExtractor : public IExtract
     {
         IPrint& _printer;
         const string HEADER_PATTERN = "^(\\S+) \\[(\\w+)\\]";
@@ -19,10 +19,10 @@ namespace lib
 
     public:
         /**
-         * \brief TextFileExtractor constructor.
+         * \brief RegexExtractor constructor.
          * \param printer Implementation of IPrinter interface, dependency of constructing Words.
          */
-        TextFileExtractor(IPrint& printer);
+        RegexExtractor(IPrint& printer);
         map<string, Word> extract(istream& content) override;
 
     private:

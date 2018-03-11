@@ -56,7 +56,7 @@
     <ClCompile Include="TestFileFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextFileExtractorTests.cpp">
+    <ClCompile Include="RegexExtractorTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -155,7 +155,7 @@
     <ClInclude Include="TestPrinter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TextFileExtractorTests.cpp" />
+    <ClCompile Include="RegexExtractorTests.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TextFileLoaderTests.cpp" />
     <ClCompile Include="TestLoader.cpp" />
