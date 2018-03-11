@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
-#include "../lib/Word.h"
 #include "TestPrinter.h"
+#include "../lib/Word.h"
 #include "../lib/DefinitionFormatter.h"
+#include "../lib/UnsupportedTypeException.h"
+#include "../lib/EmptyStringException.h"
 
 using namespace std;
 using namespace lib;
@@ -67,9 +69,7 @@ namespace wordTests
                 {
                     actual.reset(new Word(testWord, invalidType, testDefinition, printer));
                 }
-                catch (invalid_argument&)
-                {
-                }
+                catch (UnsupportedTypeException&) {}
 
                 THEN("The word is not created")
                 {
@@ -92,9 +92,7 @@ namespace wordTests
                 {
                     actual.reset(new Word(emptyWord, testTypeString, testDefinition, printer));
                 }
-                catch (invalid_argument&)
-                {
-                }
+                catch (EmptyStringException&) {}
 
                 THEN("The word is not created")
                 {
@@ -117,9 +115,8 @@ namespace wordTests
                 {
                     actual.reset(new Word(testWord, emptyType, testDefinition, printer));
                 }
-                catch (invalid_argument&)
-                {
-                }
+                catch (EmptyStringException&) {}
+                catch (UnsupportedTypeException&) {}
 
                 THEN("The word is not created")
                 {
@@ -142,9 +139,7 @@ namespace wordTests
                 {
                     actual.reset(new Word(testWord, testTypeString, emptyDefinition, printer));
                 }
-                catch (invalid_argument&)
-                {
-                }
+                catch (EmptyStringException&) {}
 
                 THEN("The word is not created")
                 {

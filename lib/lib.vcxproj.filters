@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Exceptions">
+      <UniqueIdentifier>{d70265f8-7ef4-4911-8f33-bff4ce96b4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exceptions\Header Files">
+      <UniqueIdentifier>{34189ad0-e7bd-4ad1-bce2-b22892f5c961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exceptions\Source Files">
+      <UniqueIdentifier>{bc53f405-4aab-45e2-9c02-62261ff2b11c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,11 +63,20 @@
     <ClInclude Include="DefinitionFormatter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileNotFoundException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DefinitionPrinter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileNotFoundException.h">
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileReadException.h">
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnsupportedTypeException.h">
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyStringException.h">
+      <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,11 +104,20 @@
     <ClCompile Include="DefinitionFormatter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileNotFoundException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DefinitionPrinter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileNotFoundException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileReadException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnsupportedTypeException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyStringException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

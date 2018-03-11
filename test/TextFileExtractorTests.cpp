@@ -6,6 +6,7 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/Dictionary.h"
 #include "../lib/TextFileExtractor.h"
+#include "../lib/EmptyStringException.h"
 
 using namespace std;
 using namespace lib;
@@ -62,7 +63,7 @@ namespace textFileExtractorTests
                 {
                     actual = extractor.extract(content);
                 }
-                catch (invalid_argument&) {}
+                catch (EmptyStringException&) {}
 
                 THEN("Nothing is extracted")
                 {
@@ -90,7 +91,7 @@ namespace textFileExtractorTests
                 {
                     actual = extractor.extract(content);
                 }
-                catch (invalid_argument&) {}
+                catch (EmptyStringException&) {}
 
                 THEN("Nothing is extracted")
                 {
@@ -118,7 +119,7 @@ namespace textFileExtractorTests
                 {
                     actual = extractor.extract(content);
                 }
-                catch (invalid_argument&) {}
+                catch (EmptyStringException&) {}
 
                 THEN("Nothing is extracted")
                 {

@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "TextFileLoader.h"
 #include "FileNotFoundException.h"
+#include "FileReadException.h"
 
 /**
 * \brief Validates filepath during construction. If it fails validation, throw.
@@ -17,7 +18,7 @@ istream& TextFileLoader::load()
     _file.open(_filepath);
 
     if(!_file)
-        throw invalid_argument("Error reading file at " + _filepath);
+        throw FileReadException(_filepath);
 
     return _file;
 }

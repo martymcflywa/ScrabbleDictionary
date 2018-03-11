@@ -150,7 +150,9 @@
     <ClInclude Include="DefinitionFormatter.h" />
     <ClInclude Include="DefinitionPrinter.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="EmptyStringException.h" />
     <ClInclude Include="FileNotFoundException.h" />
+    <ClInclude Include="FileReadException.h" />
     <ClInclude Include="IExtract.h" />
     <ClInclude Include="IFormat.h" />
     <ClInclude Include="ILoad.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextFileExtractor.h" />
     <ClInclude Include="TextFileLoader.h" />
+    <ClInclude Include="UnsupportedTypeException.h" />
     <ClInclude Include="Word.h" />
     <ClInclude Include="WordFactory.h" />
     <ClInclude Include="WordType.h" />
@@ -167,7 +170,9 @@
     <ClCompile Include="DefinitionFormatter.cpp" />
     <ClCompile Include="DefinitionPrinter.cpp" />
     <ClCompile Include="Dictionary.cpp" />
+    <ClCompile Include="EmptyStringException.cpp" />
     <ClCompile Include="FileNotFoundException.cpp" />
+    <ClCompile Include="FileReadException.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -176,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="TextFileExtractor.cpp" />
     <ClCompile Include="TextFileLoader.cpp" />
+    <ClCompile Include="UnsupportedTypeException.cpp" />
     <ClCompile Include="Word.cpp" />
     <ClCompile Include="WordFactory.cpp" />
     <ClCompile Include="WordType.cpp" />
