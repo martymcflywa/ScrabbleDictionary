@@ -7,6 +7,7 @@
 #include "TestFileFactory.h"
 #include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
+#include "../lib/FileNotFoundException.h"
 
 using namespace std;
 
@@ -63,7 +64,7 @@ namespace textFileLoaderTests
                 {
                     actual.reset(new TextFileLoader(filepath));    
                 }
-                catch (invalid_argument&)
+                catch (FileNotFoundException&)
                 {
                 }
 

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "TextFileLoader.h"
+#include "FileNotFoundException.h"
 
 /**
 * \brief Validates filepath during construction. If it fails validation, throw.
@@ -8,7 +9,7 @@
 TextFileLoader::TextFileLoader(string& filepath) : _filepath(filepath)
 {
     if(!isFileExists(_filepath))
-        throw invalid_argument("File at " + _filepath + " does not exist");
+        throw FileNotFoundException(_filepath);
 }
 
 istream& TextFileLoader::load()
