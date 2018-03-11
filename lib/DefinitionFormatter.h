@@ -2,10 +2,14 @@
 #include <string>
 #include "IFormat.h"
 
-using namespace lib;
-
-class DefinitionFormatter : public IFormat
+namespace lib
 {
-public:
-    string format(Word& word) override;
-};
+    /**
+     * \brief Formats the definition when printing to console.
+     */
+    class DefinitionFormatter : public IFormat
+    {
+    public:
+        string format(Word& word) override;
+    };
+}

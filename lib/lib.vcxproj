@@ -148,7 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DefinitionFormatter.h" />
+    <ClInclude Include="DefinitionPrinter.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="FileNotFoundException.h" />
     <ClInclude Include="IExtract.h" />
     <ClInclude Include="IFormat.h" />
     <ClInclude Include="ILoad.h" />
@@ -163,7 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefinitionFormatter.cpp" />
+    <ClCompile Include="DefinitionPrinter.cpp" />
     <ClCompile Include="Dictionary.cpp" />
+    <ClCompile Include="FileNotFoundException.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
