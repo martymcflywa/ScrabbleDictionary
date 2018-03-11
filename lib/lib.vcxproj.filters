@@ -73,7 +73,10 @@
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UnsupportedTypeException.h">
-      <Filter>Header Files</Filter>
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyStringException.h">
+      <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +114,10 @@
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UnsupportedTypeException.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyStringException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

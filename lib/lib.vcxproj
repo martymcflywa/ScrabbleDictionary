@@ -150,6 +150,7 @@
     <ClInclude Include="DefinitionFormatter.h" />
     <ClInclude Include="DefinitionPrinter.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="EmptyStringException.h" />
     <ClInclude Include="FileNotFoundException.h" />
     <ClInclude Include="FileReadException.h" />
     <ClInclude Include="IExtract.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="DefinitionFormatter.cpp" />
     <ClCompile Include="DefinitionPrinter.cpp" />
     <ClCompile Include="Dictionary.cpp" />
+    <ClCompile Include="EmptyStringException.cpp" />
     <ClCompile Include="FileNotFoundException.cpp" />
     <ClCompile Include="FileReadException.cpp" />
     <ClCompile Include="stdafx.cpp">

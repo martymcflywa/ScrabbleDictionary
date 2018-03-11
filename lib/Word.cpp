@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Word.h"
 #include "UnsupportedTypeException.h"
+#include "EmptyStringException.h"
 
 /**
  * \brief Constructs a Word object with values extracted from a source dictionary.
@@ -93,7 +94,7 @@ Type Word::resolveType(const string& type)
 string Word::validate(const string& input)
 {
     if (input.empty())
-        throw invalid_argument("Received an empty string");
+        throw EmptyStringException();
 
     return input;
 }
