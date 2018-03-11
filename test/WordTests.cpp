@@ -4,6 +4,7 @@
 #include "../lib/Word.h"
 #include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
+#include "../lib/UnsupportedTypeException.h"
 
 using namespace std;
 using namespace lib;
@@ -67,9 +68,7 @@ namespace wordTests
                 {
                     actual.reset(new Word(testWord, invalidType, testDefinition, printer));
                 }
-                catch (invalid_argument&)
-                {
-                }
+                catch (UnsupportedTypeException&) {}
 
                 THEN("The word is not created")
                 {

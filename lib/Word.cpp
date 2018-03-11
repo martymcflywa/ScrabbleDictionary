@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Word.h"
+#include "UnsupportedTypeException.h"
 
 /**
  * \brief Constructs a Word object with values extracted from a source dictionary.
@@ -79,7 +80,7 @@ Type Word::resolveType(const string& type)
 
     // throw if we got some unexpected type
     if (out == initialType)
-        throw invalid_argument("Type " + type + " not supported");
+        throw UnsupportedTypeException(type);
 
     return out;
 }

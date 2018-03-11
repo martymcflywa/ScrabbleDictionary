@@ -160,6 +160,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextFileExtractor.h" />
     <ClInclude Include="TextFileLoader.h" />
+    <ClInclude Include="UnsupportedTypeException.h" />
     <ClInclude Include="Word.h" />
     <ClInclude Include="WordFactory.h" />
     <ClInclude Include="WordType.h" />
@@ -178,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="TextFileExtractor.cpp" />
     <ClCompile Include="TextFileLoader.cpp" />
+    <ClCompile Include="UnsupportedTypeException.cpp" />
     <ClCompile Include="Word.cpp" />
     <ClCompile Include="WordFactory.cpp" />
     <ClCompile Include="WordType.cpp" />

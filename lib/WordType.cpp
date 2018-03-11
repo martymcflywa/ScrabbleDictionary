@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "WordType.h"
+#include "UnsupportedTypeException.h"
 
 namespace lib
 {
@@ -22,6 +23,6 @@ namespace lib
         if (it != _typeMap.end())
             return it->second;
 
-        throw invalid_argument("Type " + to_string(type) + " not supported");
+        throw UnsupportedTypeException(to_string(type));
     }
 }
