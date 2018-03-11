@@ -14,13 +14,10 @@ Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _e
 
 /**
  * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents from the source.
- * \returns map<string, Word> populated with entries from the source dictionary.
  */
-map<string, Word> Dictionary::loadDictionary() const
+void Dictionary::loadDictionary()
 {
     auto& content = _loader.load();
-    auto out = _extractor.extract(content);
+    _dictionary = _extractor.extract(content);
     _loader.dispose();
-
-    return out;
 }

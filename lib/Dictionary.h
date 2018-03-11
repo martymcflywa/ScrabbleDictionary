@@ -17,6 +17,7 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
+        map<string, Word> _dictionary;
 
     public:
         /**
@@ -30,6 +31,6 @@ namespace lib {
         * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents from the source.
         * \returns map<string, Word> populated with entries from the source dictionary.
         */
-        map<string, Word> loadDictionary() const;
+        void loadDictionary();
     };
 }

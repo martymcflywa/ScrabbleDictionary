@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
+#include "TestFileFactory.h"
+#include "TestPrinter.h"
 #include "../lib/TextFileLoader.h"
 #include "../lib/TextFileExtractor.h"
 #include "../lib/Dictionary.h"
-#include "TestFileFactory.h"
-#include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/FileNotFoundException.h"
 
@@ -31,21 +31,22 @@ namespace textFileLoaderTests
             WHEN("The file is loaded")
             {
                 auto loader = TextFileLoader(filepath);
-                auto dictionary = Dictionary(loader, extractor);
+                auto& fileContent = loader.load();
 
-                auto first = Word("first", "adj", "This is the first definition.", printer);
-                auto second = Word("second", "adv", "This is the second definition.", printer);
-                auto expected = map<string, Word>();
-                expected.insert(pair<string, Word>("first", first));
-                expected.insert(pair<string, Word>("second", second));
-
-                auto actual = dictionary.loadDictionary();
+                auto actual = extractor.extract(fileContent);
 
                 // delete the test file, keep it out of version control
+                loader.dispose();
                 fileFactory.cleanup();
 
                 THEN("The content matches input")
                 {
+                    auto first = Word("first", "adj", "This is the first definition.", printer);
+                    auto second = Word("second", "adv", "This is the second definition.", printer);
+                    auto expected = map<string, Word>();
+                    expected.insert(pair<string, Word>("first", first));
+                    expected.insert(pair<string, Word>("second", second));
+
                     REQUIRE(expected == actual);
                 }
             }
@@ -64,9 +65,7 @@ namespace textFileLoaderTests
                 {
                     actual.reset(new TextFileLoader(filepath));    
                 }
-                catch (FileNotFoundException&)
-                {
-                }
+                catch (FileNotFoundException&) {}
 
                 THEN("Loader is not created")
                 {
