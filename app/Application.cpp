@@ -16,7 +16,8 @@ Application::Application() :
     _loader(TextFileLoader(_filepath)),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
-    _extractor(StringExtractor(_printer)),
+    _task(DictionaryTask()),
+    _extractor(StringExtractor(_printer, _task)),
     _dictionary(Dictionary(_loader, _extractor))
 {
 }
@@ -56,7 +57,7 @@ void Application::run()
     }
     if (selection == MenuItem::QUIT)
     {
-        Logger::log(Info, "Shutting down, goodbye.");
+        Logger::log(Info, "Shutting down, goodbye");
         exit(0);
     }
     // tried throwing here but couldn't call back to run() for retry, stack unwinds on throw,

@@ -6,8 +6,9 @@
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
 #include "../lib/FileNotFoundException.h"
-#include "../lib/RegexExtractor.h"
 #include "../lib/TextFileLoader.h"
+#include "../lib/StringExtractor.h"
+#include "../lib/DictionaryTask.h"
 
 using namespace std;
 
@@ -17,7 +18,8 @@ namespace textFileLoaderTests
 
     auto formatter = DefinitionFormatter();
     auto printer = DefinitionPrinter(formatter);
-    auto extractor = RegexExtractor(printer);
+    auto task = DictionaryTask();
+    auto extractor = StringExtractor(printer, task);
 
     SCENARIO("File loader loads existing file")
     {

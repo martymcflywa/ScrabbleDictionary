@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IExtract.h"
+#include "ITask.h"
 
 namespace lib
 {
@@ -13,14 +14,26 @@ namespace lib
     class StringExtractor : public IExtract
     {
         IPrint& _printer;
+        ITask& _task;
 
     public:
         /**
         * \brief StringExtractor constructor.
         * \param printer Implementation of IPrinter interface, dependency of constructing Words.
         */
-        StringExtractor(IPrint& printer);
+        StringExtractor(IPrint& printer, ITask& task);
+        /**
+         * \brief Extracts/parses words, types and definitions from a source dictionary.
+         * \param content The stream from source dictionary.
+         * \return The dictionary as a map<string, Word> where the key is the word itself.
+         */
         map<string, Word> extract(istream& content) override;
+        /**
+         * \brief Returns the longest word in the dictionary.
+         * \returns The longest word in the dictionary.
+         */
+        string getLongestWord() override;
+        list<string> getLogyWords() override;
 
     private:
         string extractWord(const string& line) const;

@@ -2,7 +2,7 @@
 #include "StringExtractor.h"
 #include "WordFactory.h"
 
-StringExtractor::StringExtractor(IPrint& printer) : _printer(printer)
+StringExtractor::StringExtractor(IPrint& printer, ITask& task) : _printer(printer), _task(task)
 {
 }
 
@@ -25,6 +25,11 @@ map<string, Word> StringExtractor::extract(istream& content)
         if (currentLine == lastLine)
         {
             output.insert(pair<string, Word>(word, WordFactory::build(word, type, definition, _printer)));
+
+            // optimisation: find answers for tasks in the one loop
+            _task.setLongestWord(word);
+            _task.setLogyWords(word);
+
             currentLine = 0;
             continue;
         }
@@ -45,11 +50,20 @@ map<string, Word> StringExtractor::extract(istream& content)
     return output;
 }
 
+string StringExtractor::getLongestWord()
+{
+    return _task.getLongestWord();
+}
+
+list<string> StringExtractor::getLogyWords()
+{
+    return _task.getLogyWords();
+}
+
 string StringExtractor::extractWord(const string& line) const
 {
     const auto start = 0;
     const auto length = line.find("[", start) - 1;
-
     return extract(line, start, length);
 }
 

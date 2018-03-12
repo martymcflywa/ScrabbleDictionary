@@ -155,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DictionaryTasksTests.cpp" />
-    <ClCompile Include="RegexExtractorTests.cpp" />
     <ClCompile Include="StringExtractorTests.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TextFileLoaderTests.cpp" />

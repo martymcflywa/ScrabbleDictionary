@@ -75,10 +75,13 @@
     <ClInclude Include="EmptyStringException.h">
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegexExtractor.h">
+    <ClInclude Include="StringExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StringExtractor.h">
+    <ClInclude Include="ITask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DictionaryTask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,10 +122,10 @@
     <ClCompile Include="EmptyStringException.cpp">
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegexExtractor.cpp">
+    <ClCompile Include="StringExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StringExtractor.cpp">
+    <ClCompile Include="DictionaryTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,6 +24,11 @@ void Dictionary::loadDictionary()
     _loader.dispose();
 }
 
+/**
+* \brief Searches for the word in collection. If it exists, returns the type and definition, else return message that word does not exist.
+* \param word The word to search for.
+* \return The definition or notify user word does not exist.
+*/
 string Dictionary::getDefinition(const string& word)
 {
     const auto it = _dictionary.find(word);
@@ -34,6 +39,24 @@ string Dictionary::getDefinition(const string& word)
     return it->second.printDefinition();
 }
 
+/**
+* \brief Returns the longest word in the dictionary.
+* \returns The longest word in the dictionary.
+*/
+string Dictionary::getLongestWord() const
+{
+    return _extractor.getLongestWord();
+}
+
+list<string> Dictionary::getLogyWords() const
+{
+    return _extractor.getLogyWords();
+}
+
+/**
+* \brief Returns how many entries are loaded in the dictionary.
+* \returns How many entries are loaded in the dictionary.
+*/
 int Dictionary::size() const
 {
     return _dictionary.size();

@@ -4,6 +4,7 @@
 #include "../lib/Dictionary.h"
 #include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
+#include "../lib/DictionaryTask.h"
 
 namespace app
 {
@@ -13,6 +14,7 @@ namespace app
         TextFileLoader _loader;
         DefinitionFormatter _formatter;
         DefinitionPrinter _printer;
+        DictionaryTask _task;
         StringExtractor _extractor;
         Dictionary _dictionary;
 
