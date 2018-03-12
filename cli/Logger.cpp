@@ -6,14 +6,19 @@ using namespace cli;
 
 void Logger::log(Prefix response, char const* message)
 {
-    auto m = string(message);
+    const auto m = string(message);
     log(response, m);
 }
 
-void Logger::log(Prefix response, string& message)
+void Logger::log(Prefix response, const string& message)
 {
     const auto prefix = resolvePrefix(response);
     cout << prefix + message << endl;
+}
+
+void Logger::log(const string& message)
+{
+    cout << message << endl;
 }
 
 string Logger::resolvePrefix(Prefix response)

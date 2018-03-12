@@ -33,7 +33,12 @@ namespace cli
          * \param response The message response type.
          * \param message The message to print.
          */
-        static void log(Prefix response, string& message);
+        static void log(Prefix response, const string& message);
+        /**
+         * \brief Overload for messages without prefix.
+         * \param message The message to print.
+         */
+        static void log(const string& message);
     private:
         /**
          * \brief Resolves prefix to string which is prepended to the message.

@@ -32,5 +32,6 @@ namespace lib {
         * \returns map<string, Word> populated with entries from the source dictionary.
         */
         void loadDictionary();
+        int size() const;
     };
 }
