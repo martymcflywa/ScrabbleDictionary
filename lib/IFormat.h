@@ -15,6 +15,6 @@ namespace lib {
     {
     public:
         virtual ~IFormat() = default;
-        virtual string format(Word& word) = 0;
+        virtual string format(const Word& word) = 0;
     };
 }

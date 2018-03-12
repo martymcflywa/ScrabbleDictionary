@@ -8,7 +8,7 @@ lib::DefinitionPrinter::DefinitionPrinter(IFormat& formatter) : _formatter(forma
 {
 }
 
-void lib::DefinitionPrinter::print(Word& word)
+void lib::DefinitionPrinter::print(const Word& word)
 {
     auto output = _formatter.format(word);
     Printer::print(Output, output);

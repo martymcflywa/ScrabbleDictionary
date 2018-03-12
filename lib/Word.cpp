@@ -34,7 +34,7 @@ string Word::getDefinition() const
     return _definition;
 }
 
-void Word::printDefinition()
+void Word::printDefinition() const
 {
     _printer.print(*this);
 }

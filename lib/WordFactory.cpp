@@ -2,7 +2,7 @@
 #include "WordFactory.h"
 #include "EmptyStringException.h"
 
-Word WordFactory::build(string& word, string& type, string& definition, IPrint& printer)
+Word WordFactory::build(const string& word, const string& type, const string& definition, IPrint& printer)
 {
     if (word.empty())
         throw EmptyStringException("Word");

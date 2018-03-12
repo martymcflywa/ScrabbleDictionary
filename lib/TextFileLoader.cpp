@@ -7,7 +7,7 @@
 * \brief Validates filepath during construction. If it fails validation, throw.
 * \param filepath The filepath to the source dictionary.
 */
-TextFileLoader::TextFileLoader(string& filepath) : _filepath(filepath)
+TextFileLoader::TextFileLoader(const string& filepath) : _filepath(filepath)
 {
     if(!isFileExists(_filepath))
         throw FileNotFoundException(_filepath);
@@ -28,7 +28,7 @@ void TextFileLoader::dispose()
     _file.close();
 }
 
-bool TextFileLoader::isFileExists(string& filepath)
+bool TextFileLoader::isFileExists(const string& filepath)
 {
     // found solution here https://stackoverflow.com/a/12774387
     auto file = ifstream(filepath.c_str());

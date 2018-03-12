@@ -10,6 +10,6 @@ namespace lib
     class DefinitionFormatter : public IFormat
     {
     public:
-        string format(Word& word) override;
+        string format(const Word& word) override;
     };
 }

@@ -23,7 +23,7 @@ namespace lib
         static map<Type, string> _typeMap;
 
     public:
-        static string getName(Type type);
+        static string getName(const Type& type);
     };
 }
 

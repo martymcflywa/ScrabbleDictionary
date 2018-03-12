@@ -12,7 +12,7 @@ class TestLoader : public ILoad
 
 public:
     TestLoader() = default;
-    void setTestFile(string& testFile);
+    void setTestFile(const string& testFile);
     istream& load() override;
     void dispose() override;
 };

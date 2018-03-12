@@ -21,7 +21,7 @@ namespace lib
         * \brief Validates filepath during construction. If it fails validation, throw.
         * \param filepath The filepath to the source dictionary.
         */
-        TextFileLoader(string& filepath);
+        TextFileLoader(const string& filepath);
         istream& load() override;
         void dispose() override;
     private:
@@ -30,6 +30,6 @@ namespace lib
         * \param filepath The filepath to check.
         * \return true if file exists.
         */
-        static bool isFileExists(string& filepath);
+        static bool isFileExists(const string& filepath);
     };
 }

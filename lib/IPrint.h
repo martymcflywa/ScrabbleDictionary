@@ -16,6 +16,6 @@ namespace lib
     {
     public:
         virtual ~IPrint() = default;
-        virtual void print(Word& word) = 0;
+        virtual void print(const Word& word) = 0;
     };
 }

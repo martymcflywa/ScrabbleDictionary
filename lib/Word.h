@@ -31,7 +31,7 @@ namespace lib
         string getWord() const;
         Type getType() const;
         string getDefinition() const;
-        void printDefinition();
+        void printDefinition() const;
         /**
          * \brief Implementation of operator ==, really useful for unit tests.
          * \param that The other Word to compare to.

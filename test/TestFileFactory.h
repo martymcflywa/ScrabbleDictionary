@@ -5,11 +5,11 @@ using namespace std;
 
 class TestFileFactory
 {
-    string& _filepath;
-    string& _content;
+    const string& _filepath;
+    const string& _content;
 
 public:
-    TestFileFactory(string& filepath, string& content);
+    TestFileFactory(const string& filepath, const string& content);
     void write() const;
     void cleanup() const;
 };
