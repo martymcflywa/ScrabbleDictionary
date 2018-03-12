@@ -6,6 +6,7 @@
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/EmptyStringException.h"
 #include "../lib/StringExtractor.h"
+#include "../lib/DictionaryTask.h"
 
 
 using namespace std;
@@ -15,7 +16,8 @@ namespace stringExtractorTests
 {
     auto formatter = DefinitionFormatter();
     auto printer = DefinitionPrinter(formatter);
-    auto extractor = StringExtractor(printer);
+    auto task = DictionaryTask();
+    auto extractor = StringExtractor(printer, task);
 
     SCENARIO("String extractor reads valid file")
     {

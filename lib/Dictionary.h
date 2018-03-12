@@ -4,6 +4,7 @@
 #include "Word.h"
 #include "ILoad.h"
 #include "IExtract.h"
+#include <list>
 
 using namespace std;
 using namespace lib;
@@ -38,6 +39,12 @@ namespace lib {
          * \return The definition or notify user word does not exist.
          */
         string getDefinition(const string& word);
+        /**
+         * \brief Returns the longest word in the dictionary.
+         * \returns The longest word in the dictionary. 
+         */
+        string getLongestWord() const;
+        list<string> getLogyWords() const;
         /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 

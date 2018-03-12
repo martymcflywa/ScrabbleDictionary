@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <list>
 #include <map>
 #include "Word.h"
 
@@ -17,5 +18,7 @@ namespace lib
     public:
         virtual ~IExtract() = default;
         virtual map<string, Word> extract(istream& content) = 0;
+        virtual string getLongestWord() = 0;
+        virtual list<string> getLogyWords() = 0;
     };
 }
