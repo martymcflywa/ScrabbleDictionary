@@ -5,8 +5,8 @@
 using namespace cli;
 
 /**
- * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. Using dependency injection to decouple
- * implementation details of loading and extracting.
+ * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. 
+ * Using dependency injection to decouple implementation details of loading and extracting.
  * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
  * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
  */
@@ -25,7 +25,8 @@ void Dictionary::loadDictionary()
 }
 
 /**
-* \brief Searches for the word in collection. If it exists, returns the type and definition, else return message that word does not exist.
+* \brief Searches for the word in collection. If it exists, returns the type and definition, 
+* else return message that word does not exist.
 * \param word The word to search for.
 * \return The definition or notify user word does not exist.
 */
@@ -43,11 +44,15 @@ string Dictionary::getDefinition(const string& word)
 * \brief Returns the longest word in the dictionary.
 * \returns The longest word in the dictionary.
 */
-string Dictionary::getLongestWord() const
+list<string> Dictionary::getLongestWord() const
 {
-    return _extractor.getLongestWord();
+    return _extractor.getLongestWords();
 }
 
+/**
+* \brief Returns words that end in 'logy' that have a length less than or equal to seven.
+* \returns Words that end in 'logy' that have a length less than or equal to seven.
+*/
 list<string> Dictionary::getLogyWords() const
 {
     return _extractor.getLogyWords();
