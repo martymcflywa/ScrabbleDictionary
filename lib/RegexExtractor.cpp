@@ -46,25 +46,25 @@ map<string, Word> RegexExtractor::extract(istream& content)
     return output;
 }
 
-string RegexExtractor::extractWord(string& line) const
+string RegexExtractor::extractWord(const string& line) const
 {
     const auto groupIndex = 1;
     return extract(HEADER_PATTERN, line, groupIndex);
 }
 
-string RegexExtractor::extractType(string& line) const
+string RegexExtractor::extractType(const string& line) const
 {
     const auto groupIndex = 2;
     return extract(HEADER_PATTERN, line, groupIndex);
 }
 
-string RegexExtractor::extractDefinition(string& line) const
+string RegexExtractor::extractDefinition(const string& line) const
 {
     const auto groupIndex = 0;
     return extract(DEFINITION_PATTERN, line, groupIndex);
 }
 
-string RegexExtractor::extract(string pattern, string& line, int groupIndex) const
+string RegexExtractor::extract(const string& pattern, const string& line, int groupIndex) const
 {
     const regex regex(pattern, regex_constants::ECMAScript);
     smatch match;

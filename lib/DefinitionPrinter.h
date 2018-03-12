@@ -10,6 +10,6 @@ namespace lib
 
     public:
         DefinitionPrinter(IFormat& formatter);
-        void print(Word& word) override;
+        void print(const Word& word) override;
     };
 }

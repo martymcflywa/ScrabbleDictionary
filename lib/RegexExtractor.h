@@ -26,9 +26,9 @@ namespace lib
         map<string, Word> extract(istream& content) override;
 
     private:
-        string extractWord(string& line) const;
-        string extractType(string& line) const;
-        string extractDefinition(string& line) const;
-        string extract(string pattern, string& line, int groupIndex) const;
+        string extractWord(const string& line) const;
+        string extractType(const string& line) const;
+        string extractDefinition(const string& line) const;
+        string extract(const string& pattern, const string& line, int groupIndex) const;
     };
 }

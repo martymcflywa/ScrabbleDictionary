@@ -6,7 +6,7 @@ TestPrinter::TestPrinter(IFormat& formatter) : _formatter(formatter)
 {
 }
 
-void TestPrinter::print(Word& word)
+void TestPrinter::print(const Word& word)
 {
     _output = _formatter.format(word);
 }

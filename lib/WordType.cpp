@@ -16,13 +16,13 @@ namespace lib
         { Misc, "MiscWords (misc.)" }
     };
 
-    string WordType::getName(const Type type)
+    string WordType::getName(const Type& type)
     {
         const auto it = _typeMap.find(type);
 
-        if (it != _typeMap.end())
-            return it->second;
-
-        throw UnsupportedTypeException(to_string(type));
+        if (it == _typeMap.end())
+            throw UnsupportedTypeException(to_string(type));
+            
+        return it->second;
     }
 }

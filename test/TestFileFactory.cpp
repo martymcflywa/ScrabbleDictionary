@@ -2,7 +2,7 @@
 #include "TestFileFactory.h"
 #include <fstream>
 
-TestFileFactory::TestFileFactory(string& filepath, string& content) : _filepath(filepath), _content(content)
+TestFileFactory::TestFileFactory(const string& filepath, const string& content) : _filepath(filepath), _content(content)
 {
 }
 
