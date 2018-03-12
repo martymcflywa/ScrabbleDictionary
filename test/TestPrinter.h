@@ -13,6 +13,6 @@ class TestPrinter : public IPrint
 
 public:
     TestPrinter(IFormat& formatter);
-    void print(const Word& word) override;
+    string print(const Word& word) override;
     string getOutput() const;
 };
