@@ -24,6 +24,16 @@ void Dictionary::loadDictionary()
     _loader.dispose();
 }
 
+string Dictionary::getDefinition(const string& word)
+{
+    const auto it = _dictionary.find(word);
+
+    if (it == _dictionary.end())
+        return "Word " + word + " not found";
+
+    return it->second.printDefinition();
+}
+
 int Dictionary::size() const
 {
     return _dictionary.size();
