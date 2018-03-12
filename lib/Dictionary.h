@@ -17,7 +17,7 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
-        map<string, Word> _dictionary;
+        map<string, Word> _dictionary{};
 
     public:
         /**
