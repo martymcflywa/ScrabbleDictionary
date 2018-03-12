@@ -2,10 +2,10 @@
 #include "catch.hpp"
 #include <string>
 #include "TestLoader.h"
-#include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
-#include "../lib/StringExtractor.h"
+#include "../lib/DefinitionPrinter.h"
 #include "../lib/EmptyStringException.h"
+#include "../lib/StringExtractor.h"
 
 
 using namespace std;
@@ -14,14 +14,14 @@ using namespace lib;
 namespace stringExtractorTests
 {
     auto formatter = DefinitionFormatter();
-    auto printer = TestPrinter(formatter);
+    auto printer = DefinitionPrinter(formatter);
     auto extractor = StringExtractor(printer);
 
     SCENARIO("String extractor reads valid file")
     {
         GIVEN("A file containing valid dictionary entries")
         {
-            string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
+            const string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
 
             WHEN("The extractor reads the file")
             {
@@ -49,7 +49,7 @@ namespace stringExtractorTests
     {
         GIVEN("A file containing a dictionary entry with missing word")
         {
-            string testFile = "[adj]\nThis is the first definition.\n\n";
+            const string testFile = "[adj]\nThis is the first definition.\n\n";
 
             WHEN("The extracor reads the file")
             {
@@ -77,7 +77,7 @@ namespace stringExtractorTests
     {
         GIVEN("A file containing a dictionary entry with missing type")
         {
-            string testFile = "first []\nThis is the first definition.\n\n";
+            const string testFile = "first []\nThis is the first definition.\n\n";
 
             WHEN("The extractor reads the file")
             {
@@ -105,7 +105,7 @@ namespace stringExtractorTests
     {
         GIVEN("A file containing a dictionary entry with missing definition")
         {
-            string testFile = "first [adj]\n\n\n";
+            const string testFile = "first [adj]\n\n\n";
 
             WHEN("The extractor reads the file")
             {

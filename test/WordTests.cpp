@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
-#include "TestPrinter.h"
-#include "../lib/Word.h"
 #include "../lib/DefinitionFormatter.h"
-#include "../lib/UnsupportedTypeException.h"
+#include "../lib/DefinitionPrinter.h"
 #include "../lib/EmptyStringException.h"
+#include "../lib/UnsupportedTypeException.h"
+#include "../lib/Word.h"
 
 using namespace std;
 using namespace lib;
@@ -18,7 +18,7 @@ namespace wordTests
     const string testDefinition = "This is a test description.";
 
     auto formatter = DefinitionFormatter();
-    auto printer = TestPrinter(formatter);
+    auto printer = DefinitionPrinter(formatter);
 
     SCENARIO("Word with valid type")
     {
@@ -42,8 +42,7 @@ namespace wordTests
 
             AND_WHEN("The entry is printed")
             {
-                word.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = word.printDefinition();
 
                 THEN("The print output contains a type header with definition")
                 {
@@ -161,8 +160,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Verb prefixes the definition")
                 {
@@ -187,8 +185,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Noun prefixes the definition")
                 {
@@ -213,8 +210,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Adverb prefixes the definition")
                 {
@@ -239,8 +235,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Adjective prefixes the definition")
                 {
@@ -265,8 +260,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Preposition prefixes the definition")
                 {
@@ -291,8 +285,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Proper noun prefixes the definition")
                 {
@@ -317,8 +310,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Noun and verb prefixes the definition")
                 {
@@ -343,8 +335,7 @@ namespace wordTests
 
             WHEN("The word is printed")
             {
-                wordObj.printDefinition();
-                auto actual = printer.getOutput();
+                const auto actual = wordObj.printDefinition();
 
                 THEN("Misc prefixes the definition")
                 {

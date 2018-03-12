@@ -152,7 +152,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestFileFactory.h" />
     <ClInclude Include="TestLoader.h" />
-    <ClInclude Include="TestPrinter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RegexExtractorTests.cpp" />
@@ -160,7 +159,6 @@
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TextFileLoaderTests.cpp" />
     <ClCompile Include="TestLoader.cpp" />
-    <ClCompile Include="TestPrinter.cpp" />
     <ClCompile Include="WordTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
