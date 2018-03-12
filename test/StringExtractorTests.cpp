@@ -4,20 +4,20 @@
 #include "TestLoader.h"
 #include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
-#include "../lib/Dictionary.h"
+#include "../lib/StringExtractor.h"
 #include "../lib/EmptyStringException.h"
-#include "../lib/RegexExtractor.h"
+
 
 using namespace std;
 using namespace lib;
 
-namespace regexExtractorTests
+namespace stringExtractorTests
 {
     auto formatter = DefinitionFormatter();
     auto printer = TestPrinter(formatter);
-    auto extractor = RegexExtractor(printer);
+    auto extractor = StringExtractor(printer);
 
-    SCENARIO("Regex extractor reads valid file")
+    SCENARIO("String extractor reads valid file")
     {
         GIVEN("A file containing valid dictionary entries")
         {
@@ -45,7 +45,7 @@ namespace regexExtractorTests
         }
     }
 
-    SCENARIO("Regex extractor reads file with missing word")
+    SCENARIO("String extractor reads file with missing word")
     {
         GIVEN("A file containing a dictionary entry with missing word")
         {
@@ -73,7 +73,7 @@ namespace regexExtractorTests
         }
     }
 
-    SCENARIO("Regex extractor reads file with missing type")
+    SCENARIO("String extractor reads file with missing type")
     {
         GIVEN("A file containing a dictionary entry with missing type")
         {
@@ -101,7 +101,7 @@ namespace regexExtractorTests
         }
     }
 
-    SCENARIO("Regex extractor reads file with missing definition")
+    SCENARIO("String extractor reads file with missing definition")
     {
         GIVEN("A file containing a dictionary entry with missing definition")
         {
@@ -111,7 +111,7 @@ namespace regexExtractorTests
             {
                 auto loader = TestLoader();
                 loader.setTestFile(testFile);
-                
+
                 auto& content = loader.load();
                 map<string, Word> actual;
 

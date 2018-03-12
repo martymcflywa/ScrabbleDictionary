@@ -11,6 +11,7 @@ class TestLoader : public ILoad
     istringstream _testDictionary;
 
 public:
+    TestLoader() = default;
     void setTestFile(string& testFile);
     istream& load() override;
     void dispose() override;
