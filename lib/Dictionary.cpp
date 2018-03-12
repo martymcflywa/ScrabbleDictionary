@@ -19,12 +19,12 @@ Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _e
  */
 void Dictionary::loadDictionary()
 {
-    Logger::log(Info, "Loading dictionary...");
-
     auto& content = _loader.load();
     _dictionary = _extractor.extract(content);
     _loader.dispose();
+}
 
-    auto message = "Loaded dictionary with " + to_string(_dictionary.size()) + " entries";
-    Logger::log(Info, message);
+int Dictionary::size() const
+{
+    return _dictionary.size();
 }
