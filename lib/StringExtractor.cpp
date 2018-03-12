@@ -64,7 +64,7 @@ string StringExtractor::extractType(const string& line) const
 
 string StringExtractor::extract(const string& line, const int start, const int length)
 {
-    if (start < 0 || length < 1 || start == length)
+    if (start < 0 || length < 1)
         return "";
 
     return line.substr(start, length);
