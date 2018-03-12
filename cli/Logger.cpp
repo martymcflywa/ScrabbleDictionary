@@ -1,20 +1,22 @@
 ﻿#include "stdafx.h"
 #include <iostream>
-#include "Printer.h"
+#include "Logger.h"
 
-void cli::Printer::print(Prefix response, char const* message)
+using namespace cli;
+
+void Logger::log(Prefix response, char const* message)
 {
     auto m = string(message);
-    print(response, m);
+    log(response, m);
 }
 
-void cli::Printer::print(Prefix response, string& message)
+void Logger::log(Prefix response, string& message)
 {
     const auto prefix = resolvePrefix(response);
     cout << prefix + message << endl;
 }
 
-string cli::Printer::resolvePrefix(Prefix response)
+string Logger::resolvePrefix(Prefix response)
 {
     switch (response)
     {

@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Dictionary.h"
-#include <regex>
+#include "../cli/Logger.h"
+
+using namespace cli;
 
 /**
  * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. Using dependency injection to decouple
@@ -17,7 +19,12 @@ Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _e
  */
 void Dictionary::loadDictionary()
 {
+    Logger::log(Info, "Loading dictionary...");
+
     auto& content = _loader.load();
     _dictionary = _extractor.extract(content);
     _loader.dispose();
+
+    auto message = "Loaded dictionary with " + to_string(_dictionary.size()) + " entries";
+    Logger::log(Info, message);
 }
