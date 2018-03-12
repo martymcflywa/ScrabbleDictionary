@@ -23,4 +23,4 @@ build:
 
 # test config
 test_script:
-  - '%APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\test.exe'
+  - '%APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\test.exe --reporter console --success'
