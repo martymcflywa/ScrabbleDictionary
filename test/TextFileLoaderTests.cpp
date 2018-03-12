@@ -2,8 +2,8 @@
 #include "catch.hpp"
 #include <string>
 #include "TestFileFactory.h"
-#include "TestPrinter.h"
 #include "../lib/DefinitionFormatter.h"
+#include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
 #include "../lib/FileNotFoundException.h"
 #include "../lib/RegexExtractor.h"
@@ -16,14 +16,14 @@ namespace textFileLoaderTests
     string filepath = ".\\test.txt";
 
     auto formatter = DefinitionFormatter();
-    auto printer = TestPrinter(formatter);
+    auto printer = DefinitionPrinter(formatter);
     auto extractor = RegexExtractor(printer);
 
     SCENARIO("File loader loads existing file")
     {
         GIVEN("A file that exists")
         {
-            string content = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
+            const string content = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
 
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();

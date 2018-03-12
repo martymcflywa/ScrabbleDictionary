@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 using namespace std;
 
@@ -15,6 +16,6 @@ namespace lib
     {
     public:
         virtual ~IPrint() = default;
-        virtual void print(const Word& word) = 0;
+        virtual string print(const Word& word) = 0;
     };
 }

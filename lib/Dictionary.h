@@ -32,6 +32,16 @@ namespace lib {
         * \returns map<string, Word> populated with entries from the source dictionary.
         */
         void loadDictionary();
+        /**
+         * \brief Searches for the word in collection. If it exists, returns the type and definition, else return message that word does not exist.
+         * \param word The word to search for.
+         * \return The definition or notify user word does not exist.
+         */
+        string getDefinition(const string& word);
+        /**
+         * \brief Returns how many entries are loaded in the dictionary.
+         * \returns How many entries are loaded in the dictionary. 
+         */
         int size() const;
     };
 }

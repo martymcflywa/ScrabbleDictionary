@@ -3,13 +3,13 @@
 #include "../cli/Logger.h"
 
 using namespace cli;
+using namespace lib;
 
-lib::DefinitionPrinter::DefinitionPrinter(IFormat& formatter) : _formatter(formatter)
+DefinitionPrinter::DefinitionPrinter(IFormat& formatter) : _formatter(formatter)
 {
 }
 
-void lib::DefinitionPrinter::print(const Word& word)
+string DefinitionPrinter::print(const Word& word)
 {
-    auto output = _formatter.format(word);
-    Logger::log(Output, output);
+    return _formatter.format(word);
 }
