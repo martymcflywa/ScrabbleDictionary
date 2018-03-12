@@ -3,14 +3,14 @@
 #include <fstream>
 #include "../lib/FileNotFoundException.h"
 #include "FileResolver.h"
-#include "Printer.h"
+#include "Logger.h"
 
 using namespace lib;
 using namespace cli;
 
 string FileResolver::getFilepath()
 {
-    Printer::print(Input, "Enter filepath to source dictionary.");
+    Logger::log(Input, "Enter filepath to source dictionary.");
     string filepath;
 
     getline(cin, filepath, '\n');

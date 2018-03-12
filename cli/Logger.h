@@ -19,7 +19,7 @@ namespace cli
     /**
      * \brief Prints stuff to console.
      */
-    class Printer
+    class Logger
     {
     public:
         /**
@@ -27,13 +27,13 @@ namespace cli
          * \param response The message response type.
          * \param message The message to print.
          */
-        static void print(Prefix response, char const* message);
+        static void log(Prefix response, char const* message);
         /**
          * \brief Overload to print messages passed in as std::string.
          * \param response The message response type.
          * \param message The message to print.
          */
-        static void print(Prefix response, string& message);
+        static void log(Prefix response, string& message);
     private:
         /**
          * \brief Resolves prefix to string which is prepended to the message.
