@@ -78,6 +78,9 @@
     <ClInclude Include="RegexExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -117,6 +120,9 @@
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RegexExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

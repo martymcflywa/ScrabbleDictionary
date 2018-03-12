@@ -4,7 +4,7 @@
 namespace lib
 {
     /**
-     * \brief Implementation of IExtract, which follows the expected format of Dictionary2018.txt.
+     * \brief Implementation of IExtract, using Regex which follows the expected format of Dictionary2018.txt.
      * It assumes that a single entry within the source dictionary will be composed of three separate lines.
      * First line contains word and type.
      * Second line contains definition.
