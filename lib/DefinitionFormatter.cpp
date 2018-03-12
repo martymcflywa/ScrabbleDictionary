@@ -8,6 +8,5 @@
 */
 string DefinitionFormatter::format(const Word& word)
 {
-    return WordType::getName(word.getType()) + ":\n" +
-        word.getDefinition();
+    return WordType::getName(word.getType()) + " " + word.getDefinition();
 }

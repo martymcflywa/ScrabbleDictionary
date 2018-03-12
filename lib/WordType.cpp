@@ -11,7 +11,7 @@ namespace lib
         { Adverb, "Adverb (adv.)" },
         { Adjective, "Adjective (adj.)" },
         { Preposition, "Preposition (prep.)" },
-        { ProperNoun, "ProperNoun (pn." },
+        { ProperNoun, "ProperNoun (pn.)" },
         { NounAndVerb, "NounAndVerb (n. v.)" },
         { Misc, "MiscWords (misc.)" }
     };
