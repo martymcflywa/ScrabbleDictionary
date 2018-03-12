@@ -46,7 +46,7 @@ namespace wordTests
 
                 THEN("The print output contains a type header with definition")
                 {
-                    const auto expectedType = WordType::getName(testType) + ":\n";
+                    const auto expectedType = WordType::getName(testType) + " ";
                     const auto expected = expectedType + testDefinition;
 
                     REQUIRE(expected == actual);
@@ -164,7 +164,7 @@ namespace wordTests
 
                 THEN("Verb prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Verb) + ":\n";
+                    const auto expectedType = WordType::getName(Verb) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -189,7 +189,7 @@ namespace wordTests
 
                 THEN("Noun prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Noun) + ":\n";
+                    const auto expectedType = WordType::getName(Noun) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -214,7 +214,7 @@ namespace wordTests
 
                 THEN("Adverb prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Adverb) + ":\n";
+                    const auto expectedType = WordType::getName(Adverb) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -239,7 +239,7 @@ namespace wordTests
 
                 THEN("Adjective prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Adjective) + ":\n";
+                    const auto expectedType = WordType::getName(Adjective) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -264,7 +264,7 @@ namespace wordTests
 
                 THEN("Preposition prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Preposition) + ":\n";
+                    const auto expectedType = WordType::getName(Preposition) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -289,7 +289,7 @@ namespace wordTests
 
                 THEN("Proper noun prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(ProperNoun) + ":\n";
+                    const auto expectedType = WordType::getName(ProperNoun) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -314,7 +314,7 @@ namespace wordTests
 
                 THEN("Noun and verb prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(NounAndVerb) + ":\n";
+                    const auto expectedType = WordType::getName(NounAndVerb) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);
@@ -339,7 +339,7 @@ namespace wordTests
 
                 THEN("Misc prefixes the definition")
                 {
-                    const auto expectedType = WordType::getName(Misc) + ":\n";
+                    const auto expectedType = WordType::getName(Misc) + " ";
                     const auto expected = expectedType + definiton;
 
                     REQUIRE(expected == actual);

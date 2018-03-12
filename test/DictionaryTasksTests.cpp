@@ -42,7 +42,7 @@ namespace dictionaryTasksTests
 
                 THEN("The definition is printed")
                 {
-                    const auto expectedType = WordType::getName(Adjective) + ":\n";
+                    const auto expectedType = WordType::getName(Adjective) + " ";
                     const auto expected = expectedType + "This is the first definition.";
 
                     REQUIRE(expected == actual);
