@@ -5,9 +5,9 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
+#include "../lib/DictionaryTask.h"
 #include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
-#include "../lib/DictionaryTask.h"
 
 using namespace std;
 
@@ -84,11 +84,22 @@ namespace dictionaryTasksTests
         }
     }
 
-    SCENARIO("Find longest word where the dictionary contains values")
+    bool contains(list<string> list, const string& target)
+    {
+        return find(list.begin(), list.end(), target) != list.end();
+    }
+
+    SCENARIO("Find longest word where the dictionary contains a single longest word")
     {
         GIVEN("A dictionary with a short word and a long word")
         {
-            const string content = "X [n]\nX's definition.\n\nXYZ [v]\nXYZ's definition.\n\n";
+            const string shortWord = "XY";
+            const string longWord = "XYZ";
+            const string typeAndDef = " [n]\nThe definition.\n\n";
+
+            const string content =
+                string(shortWord + typeAndDef) +
+                string(longWord + typeAndDef);
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();
 
@@ -108,17 +119,56 @@ namespace dictionaryTasksTests
 
                 THEN("The dictionary returns the longest word")
                 {
-                    const string expected = "XYZ";
-
-                    REQUIRE(expected == actual);
+                    // assert long word is in the list
+                    REQUIRE(contains(actual, longWord));
+                    // assert short word is not in the list
+                    REQUIRE(!contains(actual, shortWord));
                 }
             }
         }
     }
 
-    bool contains(list<string> list, const string& target)
+    SCENARIO("Find the longest words where the dictionary contains multiple longest words")
     {
-        return find(list.begin(), list.end(), target) != list.end();
+        GIVEN("A dictionary with a short word and two longest words")
+        {
+            const string shortWord = "AB";
+            const string longWord1 = "ABC";
+            const string longWord2 = "XYZ";
+            const string typeAndDef = " [n]\nThe definition.\n\n";
+
+            const string content =
+                string(shortWord + typeAndDef) +
+                string(longWord1 + typeAndDef) +
+                string(longWord2 + typeAndDef);
+            auto fileFactory = TestFileFactory(filepath, content);
+            fileFactory.write();
+
+            auto task = DictionaryTask();
+            auto loader = TextFileLoader(filepath);
+            auto extractor = StringExtractor(printer, task);
+            auto dictionary = Dictionary(loader, extractor);
+            dictionary.loadDictionary();
+
+            WHEN("The longest word is requested")
+            {
+                const auto actual = dictionary.getLongestWord();
+
+                // delete the test file, keep it out of version control
+                loader.dispose();
+                fileFactory.cleanup();
+
+                THEN("The dictionary returns both longest words")
+                {
+                    // assert longest words are in the list
+                    REQUIRE(contains(actual, longWord1));
+                    REQUIRE(contains(actual, longWord2));
+
+                    // assert short word is not in the list
+                    REQUIRE(!contains(actual, shortWord));
+                }
+            }
+        }
     }
 
     SCENARIO("Find words that end in 'logy' that have a length of seven or less characters")
