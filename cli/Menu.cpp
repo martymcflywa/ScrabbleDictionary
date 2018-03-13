@@ -8,7 +8,8 @@ using namespace cli;
 
 string Menu::select()
 {
-    Logger::log(Input, "Select an item by pressing the [key], then [enter].");
+    Logger::log(Info, "Main menu:");
+    Logger::log(Input, "Select an item by pressing the [key], then [enter]");
 
     const auto menu =
         string("[" + MenuItem::SEARCH_DEFINITION + "] Search for a word's definition\n") +
@@ -21,4 +22,14 @@ string Menu::select()
 
     getline(cin, selection);
     return selection;
+}
+
+string Menu::findDefinition()
+{
+    Logger::log(Info, "Find definition:");
+    Logger::log(Input, "Enter word to find definition, or [" + MenuItem::BACK + "] to go back");
+    string word;
+    
+    getline(cin, word);
+    return word;
 }

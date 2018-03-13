@@ -32,7 +32,7 @@ namespace app
          */
         void run();
     private:
-        void searchDefinition();
+        void findDefinition();
         void longestWord();
         void wordsEndWithLogy();
     };

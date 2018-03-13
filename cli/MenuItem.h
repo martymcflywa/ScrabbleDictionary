@@ -14,5 +14,6 @@ namespace cli
         static const string LONGEST_WORD;
         static const string WORDS_END_WITH_LOGY;
         static const string QUIT;
+        static const string BACK;
     };
 }
