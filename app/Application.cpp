@@ -88,12 +88,18 @@ void Application::longestWord()
     
     auto longest = _dictionary.getLongestWord();
     for (auto const& word : longest)
-        Logger::log(word + " [length " + to_string(word.length()) + "]");
+        Logger::log(word + " (" + to_string(word.length()) + ")");
 
     run();
 }
 
 void Application::wordsEndWithLogy()
 {
-    throw invalid_argument("not implemented");
+    Logger::log(Output, "Words that end in 'logy' and have a length of seven or less characters:");
+
+    auto logyWords = _dictionary.getLogyWords();
+    for (auto const& word : logyWords)
+        Logger::log(word + " (" + to_string(word.length()) + ")");
+
+    run();
 }
