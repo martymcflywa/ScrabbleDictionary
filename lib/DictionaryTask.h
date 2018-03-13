@@ -3,7 +3,7 @@
 
 class DictionaryTask : public ITask
 {
-    int _maxWordLength = 0;
+    unsigned int _maxWordLength = 0;
     list<string> _longestWords {};
     list<string> _logyWords {};
 
