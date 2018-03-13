@@ -507,4 +507,7 @@ compile_commands.json
 CTestTestfile.cmake
 build
 
+# Text files
+*.txt
+
 # End of https://www.gitignore.io/api/c,c++,linux,macos,windows,clion+all,visualstudio,visualstudiocode

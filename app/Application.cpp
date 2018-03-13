@@ -12,7 +12,7 @@ using namespace app;
 * \brief Instantiate all the interface implementations, inject dependencies where needed, then construct the Dictionary.
 */
 Application::Application() :
-    _filepath(FileResolver::getFilepath()),
+    _filepath(string(".\\dictionary2018.txt")), // Switched to hardcoded path, replaces FileResolver::getFilepath()
     _loader(TextFileLoader(_filepath)),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
