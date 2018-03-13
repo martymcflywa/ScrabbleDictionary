@@ -84,7 +84,13 @@ void Application::findDefinition()
 
 void Application::longestWord()
 {
-    throw invalid_argument("not implemented");
+    Logger::log(Output, "The longest word/s found in the dictionary:");
+    
+    auto longest = _dictionary.getLongestWord();
+    for (auto const& word : longest)
+        Logger::log(word + " [length " + to_string(word.length()) + "]");
+
+    run();
 }
 
 void Application::wordsEndWithLogy()
