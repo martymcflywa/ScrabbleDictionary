@@ -34,9 +34,9 @@ void Application::init()
 }
 
 /**
-* \brief Runs the app. Ask user to select from menu, then perform selected task.
+* \brief Show the main menu. Ask user to select from menu, then perform selected task.
 */
-void Application::run()
+void Application::mainMenu()
 {
     const auto selection = Menu::select();
 
@@ -60,25 +60,24 @@ void Application::run()
         Logger::log(Info, "Shutting down, goodbye");
         exit(0);
     }
-    // tried throwing here but couldn't call back to run() for retry, stack unwinds on throw,
+    // tried throwing here but couldn't call back to mainMenu() for retry, stack unwinds on throw,
     // see http://www.acodersjourney.com/2016/08/top-15-c-exception-handling-mistakes-avoid/
     Logger::log(Error, selection + " is not a valid selection, try again");
-    run();
+    mainMenu();
 }
 
 void Application::findDefinition()
 {
-    auto word = Menu::findDefinition();
+    const auto word = Menu::findDefinition();
     
+    // give user option to go back to main menu
     if (word == MenuItem::BACK)
-    {
-        run();
-    }
+        mainMenu();
 
     Logger::log(Output, "Definition for " + word + ":");
     Logger::log(_dictionary.getDefinition(word));
 
-    string().swap(word); // TODO: does this need cleanup? will auto be released if called recursively?
+    // recurse to search for another word
     findDefinition();
 }
 
@@ -90,7 +89,8 @@ void Application::longestWord()
     for (auto const& word : longest)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
-    run();
+    // head back to main menu
+    mainMenu();
 }
 
 void Application::wordsEndWithLogy()
@@ -101,5 +101,6 @@ void Application::wordsEndWithLogy()
     for (auto const& word : logyWords)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
-    run();
+    // head back to main menu
+    mainMenu();
 }

@@ -2,9 +2,9 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
+#include "../lib/DictionaryTask.h"
 #include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
-#include "../lib/DictionaryTask.h"
 
 namespace app
 {
@@ -28,9 +28,9 @@ namespace app
          */
         void init();
         /**
-         * \brief Runs the app. Ask user to select from menu, then perform selected task.
+         * \brief Show the main menu. Ask user to select from menu, then perform selected task.
          */
-        void run();
+        void mainMenu();
     private:
         void findDefinition();
         void longestWord();
