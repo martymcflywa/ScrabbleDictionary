@@ -42,7 +42,7 @@ void Application::run()
 
     if (selection == MenuItem::SEARCH_DEFINITION)
     {
-        searchDefinition();
+        findDefinition();
         return;
     }
     if (selection == MenuItem::LONGEST_WORD)
@@ -66,9 +66,20 @@ void Application::run()
     run();
 }
 
-void Application::searchDefinition()
+void Application::findDefinition()
 {
-    throw invalid_argument("not implemented");
+    auto word = Menu::findDefinition();
+    
+    if (word == MenuItem::BACK)
+    {
+        run();
+    }
+
+    Logger::log(Output, "Definition for " + word + ":");
+    Logger::log(_dictionary.getDefinition(word));
+
+    string().swap(word); // TODO: does this need cleanup? will auto be released if called recursively?
+    findDefinition();
 }
 
 void Application::longestWord()

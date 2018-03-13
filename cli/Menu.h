@@ -12,5 +12,6 @@ namespace cli
     {
     public:
         static string select();
+        static string findDefinition();
     };
 }
