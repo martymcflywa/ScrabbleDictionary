@@ -124,7 +124,7 @@ void Application::longestWords()
     Logger::log(Output, "The longest word/s found in the dictionary:");
     
     auto longest = _dictionary.getLongestWords();
-    for (auto const& word : longest)
+    for (const auto& word : longest)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
     // head back to main menu
@@ -136,7 +136,7 @@ void Application::wordsEndWithLogy()
     Logger::log(Output, "Words that end in 'logy' and have a length of seven or less characters:");
 
     auto logyWords = _dictionary.getLogyWords();
-    for (auto const& word : logyWords)
+    for (const auto& word : logyWords)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
     // head back to main menu
