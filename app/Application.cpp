@@ -9,10 +9,12 @@ using namespace cli;
 using namespace app;
 
 /**
-* \brief Instantiate all the interface implementations, inject dependencies where needed, then construct the Dictionary.
+* \brief Instantiate all the interface implementations, inject dependencies where needed, 
+* then construct the Dictionary.
 */
 Application::Application() :
-    _filepath(string(".\\dictionary2018.txt")), // Switched to hardcoded path, replaces FileResolver::getFilepath()
+    // Switched to hardcoded path, replaces FileResolver::getFilepath()
+    _filepath(string(".\\dictionary2018.txt")),
     _loader(TextFileLoader(_filepath)),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
@@ -35,19 +37,29 @@ void Application::init()
 
 /**
 * \brief Show the main menu. Ask user to select from menu, then perform selected task.
+* If input is invalid, menu is shown again.
+* Retry until user picks correct input or rage quits with CTRL+C.
 */
 void Application::mainMenu()
 {
-    const auto selection = Menu::select();
+    string selection;
 
+    // handy input validation from module 5 loop workshop
+    do
+    {
+        selection = Menu::select();
+    } 
+    while (!isValidMenuItem(selection));
+
+    // bust out of the loop when user picks valid input and do stuff
     if (selection == MenuItem::SEARCH_DEFINITION)
     {
         findDefinition();
         return;
     }
-    if (selection == MenuItem::LONGEST_WORD)
+    if (selection == MenuItem::LONGEST_WORDS)
     {
-        longestWord();
+        longestWords();
         return;
     }
     if (selection == MenuItem::WORDS_END_WITH_LOGY)
@@ -60,32 +72,58 @@ void Application::mainMenu()
         Logger::log(Info, "Shutting down, goodbye");
         exit(0);
     }
-    // tried throwing here but couldn't call back to mainMenu() for retry, stack unwinds on throw,
-    // see http://www.acodersjourney.com/2016/08/top-15-c-exception-handling-mistakes-avoid/
-    Logger::log(Error, selection + " is not a valid selection, try again");
+}
+
+/**
+* \brief Returns true if user input at main menu matches any MenuItem.
+* \param selection The input from the user at main menu.
+* \returns true if input matches any MenuItem.
+*/
+bool Application::isValidMenuItem(const string& selection)
+{
+    const auto isValid = selection == MenuItem::SEARCH_DEFINITION
+        || selection == MenuItem::LONGEST_WORDS
+        || selection == MenuItem::WORDS_END_WITH_LOGY
+        || selection == MenuItem::QUIT;
+
+    if(!isValid)
+        Logger::log(Error, selection + " is not a valid selection, try again");
+
+    return isValid;
+}
+
+/**
+* \brief Asks user to input a word. Dictionary will attempt to find it.
+* If found, will print definition, else will notify user word is not found.
+* Repeat until user chooses to go back to main menu.
+*/
+void Application::findDefinition()
+{
+    string word;
+
+    // replaced recursive call with do-while, resolves C4717 compile warning:
+    // recursive on all control paths, function will cause runtime stack overflow
+    do
+    {
+        word = Menu::findDefinition();
+        Logger::log(Output, "Definition for " + word + ":");
+        Logger::log(_dictionary.getDefinition(word));
+    }
+    while (word != MenuItem::BACK);
+
+    // bump back to main menu when we get the BACK command
     mainMenu();
 }
 
-void Application::findDefinition()
-{
-    const auto word = Menu::findDefinition();
-    
-    // give user option to go back to main menu
-    if (word == MenuItem::BACK)
-        mainMenu();
-
-    Logger::log(Output, "Definition for " + word + ":");
-    Logger::log(_dictionary.getDefinition(word));
-
-    // recurse to search for another word
-    findDefinition();
-}
-
-void Application::longestWord()
+/**
+* \brief Will print longest word/s found in dictionary.
+* Then jumps back to main menu.
+*/
+void Application::longestWords()
 {
     Logger::log(Output, "The longest word/s found in the dictionary:");
     
-    auto longest = _dictionary.getLongestWord();
+    auto longest = _dictionary.getLongestWords();
     for (auto const& word : longest)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 

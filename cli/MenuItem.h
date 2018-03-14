@@ -11,7 +11,7 @@ namespace cli
     struct MenuItem
     {
         static const string SEARCH_DEFINITION;
-        static const string LONGEST_WORD;
+        static const string LONGEST_WORDS;
         static const string WORDS_END_WITH_LOGY;
         static const string QUIT;
         static const string BACK;
