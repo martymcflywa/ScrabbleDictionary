@@ -116,8 +116,8 @@ void Application::findDefinition()
 }
 
 /**
-* \brief Will print longest word/s found in dictionary.
-* Then jumps back to main menu.
+* \brief Prints longest word/s in dictionary.
+* Then returns to main menu.
 */
 void Application::longestWords()
 {
@@ -131,6 +131,10 @@ void Application::longestWords()
     mainMenu();
 }
 
+/**
+* \brief Prints words that end in 'logy' with length seven or less in dictionary.
+* Then returns to main menu.
+*/
 void Application::wordsEndWithLogy()
 {
     Logger::log(Output, "Words that end in 'logy' and have a length of seven or less characters:");
