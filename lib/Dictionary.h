@@ -45,7 +45,7 @@ namespace lib {
         * \brief Returns the longest word/s in the dictionary.
         * \returns The longest word/s in the dictionary.
         */
-        list<string> getLongestWord() const;
+        list<string> getLongestWords() const;
         /**
         * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
         * \returns Words that end in 'logy' that have a length less than or equal to seven.

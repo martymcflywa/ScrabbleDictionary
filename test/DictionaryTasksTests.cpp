@@ -111,7 +111,7 @@ namespace dictionaryTasksTests
 
             WHEN("The longest word is requested")
             {
-                const auto actual = dictionary.getLongestWord();
+                const auto actual = dictionary.getLongestWords();
 
                 // delete the test file, keep it out of version control
                 loader.dispose();
@@ -152,7 +152,7 @@ namespace dictionaryTasksTests
 
             WHEN("The longest word is requested")
             {
-                const auto actual = dictionary.getLongestWord();
+                const auto actual = dictionary.getLongestWords();
 
                 // delete the test file, keep it out of version control
                 loader.dispose();

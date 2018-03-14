@@ -41,10 +41,10 @@ string Dictionary::getDefinition(const string& word)
 }
 
 /**
-* \brief Returns the longest word in the dictionary.
-* \returns The longest word in the dictionary.
+* \brief Returns the longest word/s in the dictionary.
+* \returns The longest word/s in the dictionary.
 */
-list<string> Dictionary::getLongestWord() const
+list<string> Dictionary::getLongestWords() const
 {
     return _extractor.getLongestWords();
 }
