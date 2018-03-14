@@ -10,7 +10,7 @@ namespace app
 {
     class Application
     {
-        string _filepath;
+        const string _filepath;
         TextFileLoader _loader;
         DefinitionFormatter _formatter;
         DefinitionPrinter _printer;
@@ -47,12 +47,12 @@ namespace app
          */
         void findDefinition();
         /**
-         * \brief Will print longest word/s found in dictionary.
+         * \brief Prints longest word/s in dictionary.
          * Then returns to main menu.
          */
         void longestWords();
         /**
-         * \brief Prints words that end in 'logy' with length seven or less.
+         * \brief Prints words that end in 'logy' with length seven or less in dictionary.
          * Then returns to main menu.
          */
         void wordsEndWithLogy();
