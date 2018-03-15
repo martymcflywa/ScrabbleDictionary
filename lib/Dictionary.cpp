@@ -59,6 +59,16 @@ list<string> Dictionary::getLogyWords() const
 }
 
 /**
+* \brief Returns word/s that rhyme with the parameter word.
+* \param word The word to search for rhymes.
+* \returns Word/s that rhyme with parameter word.
+*/
+list<string> Dictionary::getRhymes(const std::string& word) const
+{
+    return _extractor.getRhymes(word);
+}
+
+/**
 * \brief Returns how many entries are loaded in the dictionary.
 * \returns How many entries are loaded in the dictionary.
 */

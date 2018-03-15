@@ -48,6 +48,12 @@ namespace lib {
         */
         std::list<std::string> getLogyWords() const;
         /**
+         * \brief Returns word/s that rhyme with the parameter word.
+         * \param word The word to search for rhymes.
+         * \returns Word/s that rhyme with parameter word.
+         */
+        std::list<std::string> getRhymes(const std::string& word) const;
+        /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 
          */

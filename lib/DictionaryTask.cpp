@@ -42,6 +42,35 @@ void DictionaryTask::setLogyWords(const string& word)
 }
 
 /**
+* \brief Checks if current word's length is equal to or greater than min rhyme length.
+* If true, checks if rhyme key exists in rhyme map. If true, add to list of values,
+* else create a new map entry, with last three letters as key, and word as list entry.
+* \param word The current word during extraction.
+*/
+void DictionaryTask::setRhymes(const std::string& word)
+{
+    // get the rhyme part
+    const auto key = getRhymingPart(word);
+    // don't add entries with empty keys
+    if (key.empty())
+        return;
+
+    // try to find rhyme in map
+    const auto it = _rhymes.find(key);
+
+    // if not found, add a new k/v pair
+    if (it == _rhymes.end())
+    {
+        auto value = list<string>{ word };
+        _rhymes.insert(pair<string, list<string>>(key, value));
+        return;
+    }
+
+    // if found, add word to the list
+    it->second.push_back(word);
+}
+
+/**
 * \brief Returns the collection of longest words found in dictionary.
 * \returns The collection of longest words found in dictionary.
 */
@@ -57,6 +86,38 @@ list<string> DictionaryTask::getLongestWords()
 list<string> DictionaryTask::getLogyWords()
 {
     return _logyWords;
+}
+
+/**
+* \brief Returns word/s that rhyme with the parameter word, if any exist.
+* \param word The word to search for rhymes.
+* \returns Word/s that rhyme with parameter word.
+*/
+list<string> DictionaryTask::getRhymes(const string& word)
+{
+    const auto key = getRhymingPart(word);
+    const auto it = _rhymes.find(key);
+
+    // if not found, return an empty list
+    if (it == _rhymes.end())
+        return list<string>();
+
+    return it->second;
+}
+
+/**
+* \brief Returns the rhyming part of the word if >= 3 letters,
+* else returns an empty string.
+* \param word The current word being extracted.
+* \returns The rhyming part of the word if >= 3 letters,
+* else returns an empty string.
+*/
+std::string DictionaryTask::getRhymingPart(const std::string& word)
+{
+    if (word.length() < RHYME_LENGTH)
+        return "";
+
+    return word.substr(word.length() - RHYME_LENGTH);
 }
 
 /**
