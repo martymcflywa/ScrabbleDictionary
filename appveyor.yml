@@ -1,5 +1,5 @@
 # semver
-version: 1.0.{build}
+version: 2.0.{build}
 # branches to build
 branches:
   only:
