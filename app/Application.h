@@ -7,20 +7,18 @@
 #include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
 
-using namespace cli;
-
 namespace app
 {
     class Application
     {
-        const string _filepath;
-        TextFileLoader _loader;
-        DefinitionFormatter _formatter;
-        DefinitionPrinter _printer;
-        DictionaryTask _task;
-        StringExtractor _extractor;
-        Dictionary _dictionary;
-        CliUserInterface _ui;
+        const std::string _filepath;
+        lib::TextFileLoader _loader;
+        lib::DefinitionFormatter _formatter;
+        lib::DefinitionPrinter _printer;
+        lib::DictionaryTask _task;
+        lib::StringExtractor _extractor;
+        lib::Dictionary _dictionary;
+        cli::CliUserInterface _ui;
 
     public:
         /**
