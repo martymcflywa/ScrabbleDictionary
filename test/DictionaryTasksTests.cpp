@@ -76,7 +76,7 @@ namespace dictionaryTasksTests
 
                 THEN("The word is not found")
                 {
-                    const auto expected = "Word " + word + " not found";
+                    const auto expected = "Word '" + word + "' not found";
 
                     REQUIRE(expected == actual);
                 }

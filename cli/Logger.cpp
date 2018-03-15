@@ -21,18 +21,28 @@ void Logger::log(const string& message)
     cout << message << endl;
 }
 
+/**
+* \brief Print '>' cli prompt when user input required.
+*/
+void Logger::printPrompt()
+{
+    cout << "> ";
+}
+
 string Logger::resolvePrefix(Prefix response)
 {
     switch (response)
     {
-    case Input:
-        return "[INPUT] ";
-    case Output:
-        return "[OUTPUT] ";
-    case Info:
-        return "[INFO] ";
     case Error:
         return "[ERROR] ";
+    case Info:
+        return "[INFO] ";
+    case Input:
+        return "[INPUT] ";
+    case Menu:
+        return "[MENU] ";
+    case Output:
+        return "[OUTPUT] ";
     default:
         return "";
     }
