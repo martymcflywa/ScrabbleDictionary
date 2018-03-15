@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include <algorithm>
 #include "catch.hpp"
+#include <algorithm>
 #include "TestFileFactory.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
@@ -10,8 +10,9 @@
 #include "../lib/TextFileLoader.h"
 
 using namespace std;
+using namespace lib;
 
-namespace dictionaryTasksTests
+namespace dictionaryTaskTests
 {
     string filepath = ".\\test.txt";
 

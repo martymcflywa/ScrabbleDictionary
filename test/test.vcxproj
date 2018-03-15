@@ -154,7 +154,7 @@
     <ClInclude Include="TestLoader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DictionaryTasksTests.cpp" />
+    <ClCompile Include="DictionaryTaskTests.cpp" />
     <ClCompile Include="StringExtractorTests.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TextFileLoaderTests.cpp" />

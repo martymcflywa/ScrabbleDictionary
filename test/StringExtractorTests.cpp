@@ -4,10 +4,9 @@
 #include "TestLoader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
+#include "../lib/DictionaryTask.h"
 #include "../lib/EmptyStringException.h"
 #include "../lib/StringExtractor.h"
-#include "../lib/DictionaryTask.h"
-
 
 using namespace std;
 using namespace lib;

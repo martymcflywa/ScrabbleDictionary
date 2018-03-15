@@ -5,12 +5,13 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
+#include "../lib/DictionaryTask.h"
 #include "../lib/FileNotFoundException.h"
 #include "../lib/TextFileLoader.h"
 #include "../lib/StringExtractor.h"
-#include "../lib/DictionaryTask.h"
 
 using namespace std;
+using namespace lib;
 
 namespace textFileLoaderTests
 {
