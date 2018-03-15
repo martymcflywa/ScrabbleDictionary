@@ -1,7 +1,10 @@
 ﻿#include "stdafx.h"
-#include "TextFileLoader.h"
 #include "FileNotFoundException.h"
 #include "FileReadException.h"
+#include "TextFileLoader.h"
+
+using namespace std;
+using namespace lib;
 
 /**
 * \brief Validates filepath during construction. If it fails validation, throw.

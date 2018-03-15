@@ -1,7 +1,4 @@
 ﻿#pragma once
-#include <string>
-
-using namespace std;
 
 namespace cli
 {
@@ -34,12 +31,12 @@ namespace cli
          * \param response The message response type.
          * \param message The message to print.
          */
-        static void log(Prefix response, const string& message);
+        static void log(Prefix response, const std::string& message);
         /**
          * \brief Overload for messages without prefix.
          * \param message The message to print.
          */
-        static void log(const string& message);
+        static void log(const std::string& message);
         /**
         * \brief Print '>' cli prompt when user input required.
         */
@@ -50,6 +47,6 @@ namespace cli
          * \param response The message response type.
          * \return The formatted prefix.
          */
-        static string resolvePrefix(Prefix response);
+        static std::string resolvePrefix(Prefix response);
     };
 }

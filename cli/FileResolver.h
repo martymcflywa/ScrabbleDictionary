@@ -1,15 +1,12 @@
 ﻿#pragma once
-#include <string>
-
-using namespace std;
 
 namespace cli
 {
     class FileResolver
     {
     public:
-        static string getFilepath();
+        static std::string getFilepath();
     private:
-        static string validate(string& filepath);
+        static std::string validate(std::string& filepath);
     };
 }

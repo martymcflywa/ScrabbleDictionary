@@ -3,16 +3,13 @@
 #include <sstream>
 #include "../lib/ILoad.h"
 
-using namespace std;
-using namespace lib;
-
-class TestLoader : public ILoad
+class TestLoader : public lib::ILoad
 {
-    istringstream _testDictionary;
+    std::istringstream _testDictionary;
 
 public:
     TestLoader() = default;
-    void setTestFile(const string& testFile);
-    istream& load() override;
+    void setTestFile(const std::string& testFile);
+    std::istream& load() override;
     void dispose() override;
 };

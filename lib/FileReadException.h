@@ -1,17 +1,15 @@
 ﻿#pragma once
 #include <stdexcept>
 
-using namespace std;
-
 namespace lib
 {
     /**
      * \brief Throw when there's a problem reading a file.
      */
-    class FileReadException : public logic_error
+    class FileReadException : public std::logic_error
     {
     public:
         typedef logic_error logicError;
-        FileReadException(const string& filepath);
+        FileReadException(const std::string& filepath);
     };
 }

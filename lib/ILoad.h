@@ -1,7 +1,5 @@
 #pragma once
 
-using namespace std;
-
 namespace lib
 {
     /**
@@ -16,7 +14,7 @@ namespace lib
          * \brief Loads the source dictionary.
          * \return the source dictionary contents as an istream.
          */
-        virtual istream& load() = 0;
+        virtual std::istream& load() = 0;
         /**
          * \brief Close the resource.
          */

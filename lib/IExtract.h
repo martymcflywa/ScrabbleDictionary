@@ -1,9 +1,7 @@
 ﻿#pragma once
-#include <list>
 #include <map>
+#include <list>
 #include "Word.h"
-
-using namespace std;
 
 namespace lib
 {
@@ -17,8 +15,8 @@ namespace lib
     {
     public:
         virtual ~IExtract() = default;
-        virtual map<string, Word> extract(istream& content) = 0;
-        virtual list<string> getLongestWords() = 0;
-        virtual list<string> getLogyWords() = 0;
+        virtual std::map<std::string, Word> extract(std::istream& content) = 0;
+        virtual std::list<std::string> getLongestWords() = 0;
+        virtual std::list<std::string> getLogyWords() = 0;
     };
 }

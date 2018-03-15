@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
-#include "TestFileFactory.h"
 #include <fstream>
+#include "TestFileFactory.h"
+
+using namespace std;
 
 TestFileFactory::TestFileFactory(const string& filepath, const string& content) : _filepath(filepath), _content(content)
 {

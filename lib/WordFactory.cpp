@@ -1,6 +1,9 @@
 ﻿#include "stdafx.h"
-#include "WordFactory.h"
 #include "EmptyStringException.h"
+#include "WordFactory.h"
+
+using namespace std;
+using namespace lib;
 
 Word WordFactory::build(const string& word, const string& type, const string& definition, IPrint& printer)
 {

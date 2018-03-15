@@ -3,16 +3,13 @@
 #include "IPrint.h"
 #include "WordType.h"
 
-using namespace std;
-using namespace lib;
-
 namespace lib
 {
     class Word
     {
-        string _word;
+        std::string _word;
         Type _type;
-        string _definition;
+        std::string _definition;
         IPrint& _printer;
 
     public:
@@ -23,15 +20,15 @@ namespace lib
          * \param definition The definition of the word.
          * \param printer Inject implementation of IPrint so that Word is not coupled to implementation of printing.
          */
-        Word(const string& word, const string& type, const string& definition, IPrint& printer);
+        Word(const std::string& word, const std::string& type, const std::string& definition, IPrint& printer);
         /**
          * \brief Don't want anyone using this.
          */
         Word() = delete;
-        string getWord() const;
+        std::string getWord() const;
         Type getType() const;
-        string getDefinition() const;
-        string printDefinition() const;
+        std::string getDefinition() const;
+        std::string printDefinition() const;
         /**
          * \brief Implementation of operator ==, really useful for unit tests.
          * \param that The other Word to compare to.
@@ -40,7 +37,7 @@ namespace lib
         bool operator == (const Word& that) const;
 
     private:
-        static Type resolveType(const string& type);
-        static string validate(const string& input);
+        static Type resolveType(const std::string& type);
+        static std::string validate(const std::string& input);
     };
 }

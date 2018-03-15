@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "TestLoader.h"
 
+using namespace std;
+
 void TestLoader::setTestFile(const string& testFile)
 {
     _testDictionary.str(testFile);

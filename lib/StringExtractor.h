@@ -30,17 +30,17 @@ namespace lib
         * \param content The stream from source dictionary.
         * \return The dictionary as a map<string, Word> where the key is the word itself.
         */
-        map<string, Word> extract(istream& content) override;
+        std::map<std::string, Word> extract(std::istream& content) override;
         /**
          * \brief Returns the longest word/s in the dictionary.
          * \returns The longest word/s in the dictionary.
          */
-        list<string> getLongestWords() override;
+        std::list<std::string> getLongestWords() override;
         /**
          * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
          * \returns Words that end in 'logy' that have a length less than or equal to seven. 
          */
-        list<string> getLogyWords() override;
+        std::list<std::string> getLogyWords() override;
 
     private:
         /**
@@ -48,13 +48,13 @@ namespace lib
          * \param line The current line being inspected from the source file.
          * \returns The word. 
          */
-        string extractWord(const string& line) const;
+        std::string extractWord(const std::string& line) const;
         /**
          * \brief Uses '[' and ']' to determine location of type in the line.
          * \param line The current line being inspected from the source file.
          * \returns The type.
          */
-        string extractType(const string& line) const;
+        std::string extractType(const std::string& line) const;
         /**
          * \brief Helper function to help keep extractWord and extractType DRY.
          * \param line The current line being inspected from the source file.
@@ -62,6 +62,6 @@ namespace lib
          * \param length The length of the word.
          * \returns The word. 
          */
-        static string extract(const string& line, int start, int length);
+        static std::string extract(const std::string& line, int start, int length);
     };
 }

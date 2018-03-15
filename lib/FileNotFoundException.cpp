@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "FileNotFoundException.h"
 
+using namespace std;
 using namespace lib;
 
 /**

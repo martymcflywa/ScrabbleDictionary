@@ -1,13 +1,9 @@
 ﻿#pragma once
-#include <map>
-#include <regex>
-#include "Word.h"
-#include "ILoad.h"
-#include "IExtract.h"
 #include <list>
-
-using namespace std;
-using namespace lib;
+#include <map>
+#include "IExtract.h"
+#include "ILoad.h"
+#include "Word.h"
 
 namespace lib {
 
@@ -18,7 +14,7 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
-        map<string, Word> _dictionary{};
+        std::map<std::string, Word> _dictionary{};
 
     public:
         /**
@@ -40,17 +36,17 @@ namespace lib {
          * \param word The word to search for.
          * \return The definition or notify user word does not exist.
          */
-        string getDefinition(const string& word);
+        std::string getDefinition(const std::string& word);
         /**
         * \brief Returns the longest word/s in the dictionary.
         * \returns The longest word/s in the dictionary.
         */
-        list<string> getLongestWords() const;
+        std::list<std::string> getLongestWords() const;
         /**
         * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
         * \returns Words that end in 'logy' that have a length less than or equal to seven.
         */
-        list<string> getLogyWords() const;
+        std::list<std::string> getLogyWords() const;
         /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 

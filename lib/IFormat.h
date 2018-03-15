@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include <string>
 
-using namespace std;
-
 namespace lib {
 
     class Word;
@@ -15,6 +13,6 @@ namespace lib {
     {
     public:
         virtual ~IFormat() = default;
-        virtual string format(const Word& word) = 0;
+        virtual std::string format(const Word& word) = 0;
     };
 }

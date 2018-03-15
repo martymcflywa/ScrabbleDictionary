@@ -1,12 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Application.h"
 #include "../cli/CliUserInterface.h"
-#include "../cli/FileResolver.h"
 #include "../cli/Logger.h"
-#include "../cli/MenuItem.h"
 
+using namespace std;
 using namespace app;
 using namespace cli;
+using namespace lib;
 
 /**
 * \brief Instantiate all the interface implementations, inject dependencies where needed, 

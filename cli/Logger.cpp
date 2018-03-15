@@ -1,7 +1,9 @@
 ﻿#include "stdafx.h"
 #include <iostream>
+#include <string>
 #include "Logger.h"
 
+using namespace std;
 using namespace cli;
 
 void Logger::log(Prefix response, char const* message)

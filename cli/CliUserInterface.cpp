@@ -4,7 +4,9 @@
 #include "Logger.h"
 #include "MenuItem.h"
 
+using namespace std;
 using namespace cli;
+using namespace lib;
 
 /**
 * \brief Constructor for CliUserInterface. Dictionary used to retrieve

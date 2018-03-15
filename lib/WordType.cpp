@@ -2,6 +2,8 @@
 #include "WordType.h"
 #include "UnsupportedTypeException.h"
 
+using namespace std;
+
 namespace lib
 {
     map<Type, string> WordType::_typeMap =

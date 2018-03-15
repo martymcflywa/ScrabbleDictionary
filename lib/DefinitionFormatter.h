@@ -10,6 +10,6 @@ namespace lib
     class DefinitionFormatter : public IFormat
     {
     public:
-        string format(const Word& word) override;
+        std::string format(const Word& word) override;
     };
 }

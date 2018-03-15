@@ -9,6 +9,10 @@ namespace lib
     class WordFactory
     {
     public:
-        static Word build(const string& word, const string& type, const string& definition, IPrint& printer);
+        static Word build(
+            const std::string& word,
+            const std::string& type,
+            const std::string& definition,
+            IPrint& printer);
     };
 }
