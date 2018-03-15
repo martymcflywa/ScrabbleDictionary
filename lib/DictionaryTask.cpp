@@ -1,6 +1,9 @@
 ﻿#include "stdafx.h"
 #include "DictionaryTask.h"
 
+using namespace std;
+using namespace lib;
+
 /**
 * \brief Sets a collection of longest words. It compares the current word length with the longest length seen so far.
 * If the lengths are equal, it adds the word to the collection. If the length is greater than max, it clears the list,

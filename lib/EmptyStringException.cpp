@@ -1,12 +1,15 @@
 ﻿#include "stdafx.h"
 #include "EmptyStringException.h"
 
-lib::EmptyStringException::EmptyStringException() :
+using namespace std;
+using namespace lib;
+
+EmptyStringException::EmptyStringException() :
     logicError("Word, type or definition is empty")
 {
 }
 
-lib::EmptyStringException::EmptyStringException(const string& arg) :
+EmptyStringException::EmptyStringException(const string& arg) :
     logicError(arg + " is empty")
 {
 }

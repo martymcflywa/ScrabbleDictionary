@@ -1,7 +1,10 @@
 ﻿#include "stdafx.h"
 #include "UnsupportedTypeException.h"
 
-lib::UnsupportedTypeException::UnsupportedTypeException(const string& type) :
+using namespace std;
+using namespace lib;
+
+UnsupportedTypeException::UnsupportedTypeException(const string& type) :
     logicError("Type " + type + " unsupported")
 {
 }

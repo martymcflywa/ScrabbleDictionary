@@ -1,8 +1,6 @@
 ﻿#pragma once
-#include <string>
 #include <map>
-
-using namespace std;
+#include <string>
 
 namespace lib
 {
@@ -20,10 +18,10 @@ namespace lib
 
     class WordType
     {
-        static map<Type, string> _typeMap;
+        static std::map<Type, std::string> _typeMap;
 
     public:
-        static string getName(const Type& type);
+        static std::string getName(const Type& type);
     };
 }
 

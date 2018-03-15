@@ -2,6 +2,9 @@
 #include "StringExtractor.h"
 #include "WordFactory.h"
 
+using namespace std;
+using namespace lib;
+
 /**
 * \brief StringExtractor constructor.
 * \param printer Implementation of IPrinter interface, dependency of constructing Words.

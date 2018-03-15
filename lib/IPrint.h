@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 
-using namespace std;
-
 namespace lib
 {
     class Word;
@@ -16,6 +14,6 @@ namespace lib
     {
     public:
         virtual ~IPrint() = default;
-        virtual string print(const Word& word) = 0;
+        virtual std::string print(const Word& word) = 0;
     };
 }

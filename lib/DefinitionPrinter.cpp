@@ -2,6 +2,7 @@
 #include "DefinitionPrinter.h"
 #include "../cli/Logger.h"
 
+using namespace std;
 using namespace cli;
 using namespace lib;
 

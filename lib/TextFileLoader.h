@@ -1,10 +1,7 @@
 ﻿#pragma once
-#include <string>
 #include <fstream>
+#include <string>
 #include "ILoad.h"
-
-using namespace std;
-using namespace lib;
 
 namespace lib
 {
@@ -13,16 +10,16 @@ namespace lib
     */
     class TextFileLoader : public ILoad
     {
-        string _filepath;
-        ifstream _file;
+        std::string _filepath;
+        std::ifstream _file;
 
     public:
         /**
         * \brief Validates filepath during construction. If it fails validation, throw.
         * \param filepath The filepath to the source dictionary.
         */
-        TextFileLoader(const string& filepath);
-        istream& load() override;
+        TextFileLoader(const std::string& filepath);
+        std::istream& load() override;
         void dispose() override;
     private:
         /**
@@ -30,6 +27,6 @@ namespace lib
         * \param filepath The filepath to check.
         * \return true if file exists.
         */
-        static bool isFileExists(const string& filepath);
+        static bool isFileExists(const std::string& filepath);
     };
 }

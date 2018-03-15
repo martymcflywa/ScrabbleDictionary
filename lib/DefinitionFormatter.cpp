@@ -3,6 +3,9 @@
 #include "Word.h"
 #include "WordType.h"
 
+using namespace std;
+using namespace lib;
+
 /**
 * \brief Formats the definition when printing to console.
 */

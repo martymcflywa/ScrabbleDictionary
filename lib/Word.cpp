@@ -1,7 +1,10 @@
 ﻿#include "stdafx.h"
-#include "Word.h"
-#include "UnsupportedTypeException.h"
 #include "EmptyStringException.h"
+#include "UnsupportedTypeException.h"
+#include "Word.h"
+
+using namespace std;
+using namespace lib;
 
 /**
  * \brief Constructs a Word object with values extracted from a source dictionary.

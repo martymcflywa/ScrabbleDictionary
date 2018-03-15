@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Dictionary.h"
-#include "../cli/Logger.h"
 
-using namespace cli;
+using namespace std;
+using namespace lib;
 
 /**
  * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. 
