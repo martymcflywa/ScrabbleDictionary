@@ -16,8 +16,8 @@ using namespace lib;
 CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(dictionary)
 {
     _menu = 
-        string("[" + MenuItem::SEARCH_DEFINITION + "] Search for a word's definition\n") +
-        string("[" + MenuItem::LONGEST_WORDS + "] Find the longest word/s in the dictionary\n") +
+        string("[" + MenuItem::SEARCH_DEFINITION + "] Find a word definition\n") +
+        string("[" + MenuItem::LONGEST_WORDS + "] Find longest word/s in the dictionary\n") +
         string("[" + MenuItem::WORDS_END_WITH_LOGY + "] Find words that end in 'logy' and have a length of seven or less characters\n") +
         string("[" + MenuItem::QUIT + "] Quit");
 }
@@ -74,7 +74,7 @@ void CliUserInterface::findDefinition()
     string word;
     do
     {
-        Logger::log(Info, "Find definition:");
+        Logger::log(Info, "Find a word definition:");
         Logger::log(Input, "Enter word to find definition, or [" + MenuItem::BACK + "] to go back");
         Logger::printPrompt();
         getline(cin, word);
