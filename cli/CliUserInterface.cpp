@@ -97,9 +97,10 @@ void CliUserInterface::findDefinition()
 */
 void CliUserInterface::longestWords()
 {
-    Logger::log(Output, "The longest word/s found in the dictionary:");
-
     auto longest = _dictionary.getLongestWords();
+    Logger::log(Output, "Found " + to_string(longest.size()) + 
+        " longest word/s in the dictionary:");
+
     for (const auto& word : longest)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
@@ -113,9 +114,10 @@ void CliUserInterface::longestWords()
 */
 void CliUserInterface::wordsEndWithLogy()
 {
-    Logger::log(Output, "Words that end in 'logy' and have a length of seven or less characters:");
-
     auto logyWords = _dictionary.getLogyWords();
+    Logger::log(Output, "Found " + to_string(logyWords.size()) + 
+        " words that end in 'logy' and have a length of seven or less characters:");
+
     for (const auto& word : logyWords)
         Logger::log(word + " (" + to_string(word.length()) + ")");
 
