@@ -14,18 +14,19 @@ using namespace lib;
 
 namespace dictionaryTaskTests
 {
-    const string filepath = ".\\test.txt";
+    const std::string filepath = ".\\test.txt";
 
     auto formatter = DefinitionFormatter();
     auto printer = DefinitionPrinter(formatter);
 
-    SCENARIO("Dictionary prints definition for existing word")
+    SCENARIO("Find a word definition")
     {
         GIVEN("A dictionary with a word")
         {
-            const string word = "first";
+            // TODO: define all this boilerplate stuff in a scenario builder
+            const string foundWord = "first";
             const string typeAndDef = " [adj]\nThe definition.\n\n";
-            const string content = word + typeAndDef;
+            const auto content = foundWord + typeAndDef;
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();
 
@@ -35,13 +36,13 @@ namespace dictionaryTaskTests
             auto dictionary = Dictionary(loader, extractor);
             dictionary.loadDictionary();
 
+            // delete the test file, keep it out of version control
+            loader.dispose();
+            fileFactory.cleanup();
+
             WHEN("The dictionary is searched for an existing word")
             {
-                const auto actual = dictionary.getDefinition(word);
-
-                // delete the test file, keep it out of version control
-                loader.dispose();
-                fileFactory.cleanup();
+                const auto actual = dictionary.getDefinition(foundWord);
 
                 THEN("The definition is printed")
                 {
@@ -51,35 +52,15 @@ namespace dictionaryTaskTests
                     REQUIRE(expected == actual);
                 }
             }
-        }
-    }
 
-    SCENARIO("Dictionary prints definition for non existent word")
-    {
-        GIVEN("A dictionary with a word")
-        {
-            const string content = "first [adj]\nThis is the first definition.\n\n";
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
-
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            WHEN("The dictionary is searched for a non existent word")
+            AND_WHEN("The dictionary is searched for a non existent word")
             {
-                const string word = "second";
-                const auto actual = dictionary.getDefinition(word);
-
-                // delete the test file, keep it out of version control
-                loader.dispose();
-                fileFactory.cleanup();
+                const string notFoundWord = "second";
+                const auto actual = dictionary.getDefinition(notFoundWord);
 
                 THEN("The word is not found")
                 {
-                    const auto expected = "Word '" + word + "' not found";
+                    const auto expected = "Word '" + notFoundWord + "' not found";
 
                     REQUIRE(expected == actual);
                 }
@@ -107,13 +88,13 @@ namespace dictionaryTaskTests
             auto dictionary = Dictionary(loader, extractor);
             dictionary.loadDictionary();
 
+            // delete the test file, keep it out of version control
+            loader.dispose();
+            fileFactory.cleanup();
+
             WHEN("The longest word is requested")
             {
                 const auto actual = dictionary.getLongestWords();
-
-                // delete the test file, keep it out of version control
-                loader.dispose();
-                fileFactory.cleanup();
 
                 THEN("The dictionary returns the longest word")
                 {
@@ -148,13 +129,13 @@ namespace dictionaryTaskTests
             auto dictionary = Dictionary(loader, extractor);
             dictionary.loadDictionary();
 
+            // delete the test file, keep it out of version control
+            loader.dispose();
+            fileFactory.cleanup();
+
             WHEN("The longest word is requested")
             {
                 const auto actual = dictionary.getLongestWords();
-
-                // delete the test file, keep it out of version control
-                loader.dispose();
-                fileFactory.cleanup();
 
                 THEN("The dictionary returns both longest words")
                 {
@@ -197,13 +178,13 @@ namespace dictionaryTaskTests
             auto dictionary = Dictionary(loader, extractor);
             dictionary.loadDictionary();
 
+            // delete the test file, keep it out of version control
+            loader.dispose();
+            fileFactory.cleanup();
+
             WHEN("The logy words are requested")
             {
                 const auto actual = dictionary.getLogyWords();
-
-                // delete the test file, keep it out of version control
-                loader.dispose();
-                fileFactory.cleanup();
 
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
@@ -220,7 +201,7 @@ namespace dictionaryTaskTests
         }
     }
 
-    SCENARIO("Dictionary has words that rhyme")
+    SCENARIO("Find words that rhyme")
     {
         GIVEN("A dictionary with words")
         {
