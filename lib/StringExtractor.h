@@ -42,7 +42,12 @@ namespace lib
          * \returns Words that end in 'logy' that have a length less than or equal to seven. 
          */
         std::list<std::string> getLogyWords() override;
-
+        /**
+        * \brief Returns word/s that rhyme with the parameter word, if any exist.
+        * \param word The word to search for rhymes.
+        * \returns Word/s that rhyme with parameter word.
+        */
+        std::list<std::string> getRhymes(const std::string& word) override;
     private:
         /**
          * \brief Uses '[' to determine location of word in the line.

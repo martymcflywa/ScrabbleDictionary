@@ -19,5 +19,6 @@ namespace lib
         virtual std::map<std::string, std::shared_ptr<Word>> extract(std::istream& content) = 0;
         virtual std::list<std::string> getLongestWords() = 0;
         virtual std::list<std::string> getLogyWords() = 0;
+        virtual std::list<std::string> getRhymes(const std::string& word) = 0;
     };
 }

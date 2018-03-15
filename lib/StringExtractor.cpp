@@ -40,11 +40,11 @@ map<string, shared_ptr<Word>> StringExtractor::extract(istream& content)
         if (currentLine == lastLine)
         {
             output.insert(pair<string, shared_ptr<Word>>(word, WordFactory::build(word, type, definition, _printer)));
-            //output.insert(word, WordFactory::build(word, type, definition, _printer));
 
             // optimisation: find answers for tasks in the one loop
             _task.setLongestWords(word);
             _task.setLogyWords(word);
+            _task.setRhymes(word);
 
             currentLine = 0;
             continue;
@@ -81,6 +81,16 @@ list<string> StringExtractor::getLongestWords()
 list<string> StringExtractor::getLogyWords()
 {
     return _task.getLogyWords();
+}
+
+/**
+* \brief Returns word/s that rhyme with the parameter word, if any exist.
+* \param word The word to search for rhymes.
+* \returns Word/s that rhyme with parameter word.
+*/
+list<string> StringExtractor::getRhymes(const string& word)
+{
+    return _task.getRhymes(word);
 }
 
 /**
