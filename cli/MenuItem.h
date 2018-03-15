@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include <string>
 
-using namespace std;
-
 namespace cli
 {
     /**
@@ -10,10 +8,10 @@ namespace cli
      */
     struct MenuItem
     {
-        static const string SEARCH_DEFINITION;
-        static const string LONGEST_WORDS;
-        static const string WORDS_END_WITH_LOGY;
-        static const string QUIT;
-        static const string BACK;
+        static const std::string SEARCH_DEFINITION;
+        static const std::string LONGEST_WORDS;
+        static const std::string WORDS_END_WITH_LOGY;
+        static const std::string QUIT;
+        static const std::string BACK;
     };
 }

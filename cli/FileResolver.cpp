@@ -1,14 +1,14 @@
 ﻿#include "stdafx.h"
-#include <iostream>
 #include <fstream>
-#include "../lib/FileNotFoundException.h"
+#include <iostream>
+#include <string>
 #include "FileResolver.h"
 #include "Logger.h"
+#include "../lib/FileNotFoundException.h"
 
-using namespace lib;
-using namespace cli;
+using namespace std;
 
-string FileResolver::getFilepath()
+string cli::FileResolver::getFilepath()
 {
     Logger::log(Input, "Enter filepath to source dictionary.");
     string filepath;
@@ -17,13 +17,13 @@ string FileResolver::getFilepath()
     return validate(filepath);
 }
 
-string FileResolver::validate(string& filepath)
+string cli::FileResolver::validate(string& filepath)
 {
     auto file = ifstream(filepath.c_str());
     file.close();
 
     if (!file.good())
-        throw FileNotFoundException(filepath);
+        throw lib::FileNotFoundException(filepath);
 
     return filepath;
 }

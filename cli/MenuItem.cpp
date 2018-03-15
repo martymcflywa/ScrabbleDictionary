@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MenuItem.h"
 
+using namespace std;
 using namespace cli;
 
 const string MenuItem::SEARCH_DEFINITION = "1";

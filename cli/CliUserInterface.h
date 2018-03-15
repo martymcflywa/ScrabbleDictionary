@@ -3,18 +3,15 @@
 #include "../lib/Dictionary.h"
 #include "../lib/IUserInterface.h"
 
-using namespace std;
-using namespace lib;
-
 namespace cli
 {
     /**
      * \brief Implementation of IUserInterface for command line console app.
      */
-    class CliUserInterface : public IUserInterface
+    class CliUserInterface : public lib::IUserInterface
     {
-        Dictionary& _dictionary;
-        string _menu;
+        lib::Dictionary& _dictionary;
+        std::string _menu;
 
     public:
         /**
@@ -22,7 +19,7 @@ namespace cli
          * values to show the user.
          * \param dictionary The dictionary, once populated with Words.
          */
-        explicit CliUserInterface(Dictionary& dictionary);
+        explicit CliUserInterface(lib::Dictionary& dictionary);
         /**
         * \brief Show user main menu. Ask user to select item from menu,
         * then perform task. If input is invalid, retry until user picks corrrect option,
@@ -52,6 +49,6 @@ namespace cli
          * \param selection The selection made by the user at main menu.
          * \returns true if input matches any MenuItem.
          */
-        bool isValidMenuSelection(const string& selection) const;
+        bool isValidMenuSelection(const std::string& selection) const;
     };
 }
