@@ -10,10 +10,11 @@ namespace cli
      */
     enum Prefix
     {
-        Input,
-        Output,
+        Error,
         Info,
-        Error
+        Input,
+        Menu,
+        Output,
     };
 
     /**
@@ -39,6 +40,10 @@ namespace cli
          * \param message The message to print.
          */
         static void log(const string& message);
+        /**
+        * \brief Print '>' cli prompt when user input required.
+        */
+        static void printPrompt();
     private:
         /**
          * \brief Resolves prefix to string which is prepended to the message.
