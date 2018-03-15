@@ -6,6 +6,9 @@ namespace lib
     class DictionaryTask : public ITask
     {
         unsigned int _maxWordLength = 0;
+        const std::string LOGY_ENDING = "logy";
+        const unsigned int MAX_LOGY_LENGTH = 7;
+
         std::list<std::string> _longestWords{};
         std::list<std::string> _logyWords{};
 
@@ -41,6 +44,6 @@ namespace lib
         * \param ending The ending of the word we'd like to find.
         * \return True if the word ends with ending.
         */
-        bool endsWith(const std::string& word, const std::string& ending) const;
+        static bool endsWith(const std::string& word, const std::string& ending);
     };
 }
