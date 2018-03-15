@@ -2,6 +2,7 @@
 #include <map>
 #include <list>
 #include "Word.h"
+#include <memory>
 
 namespace lib
 {
@@ -15,7 +16,7 @@ namespace lib
     {
     public:
         virtual ~IExtract() = default;
-        virtual std::map<std::string, Word> extract(std::istream& content) = 0;
+        virtual std::map<std::string, std::shared_ptr<Word>> extract(std::istream& content) = 0;
         virtual std::list<std::string> getLongestWords() = 0;
         virtual std::list<std::string> getLogyWords() = 0;
     };

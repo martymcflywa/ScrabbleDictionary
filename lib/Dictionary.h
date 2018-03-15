@@ -14,7 +14,7 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
-        std::map<std::string, Word> _dictionary{};
+        std::map<std::string, std::shared_ptr<Word>> _dictionary{};
 
     public:
         /**

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "catch.hpp"
-#include <algorithm>
 #include "TestFileFactory.h"
+#include "TestHelpers.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
@@ -23,7 +23,9 @@ namespace dictionaryTaskTests
     {
         GIVEN("A dictionary with a word")
         {
-            const string content = "first [adj]\nThis is the first definition.\n\n";
+            const string word = "first";
+            const string typeAndDef = " [adj]\nThe definition.\n\n";
+            const string content = word + typeAndDef;
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();
 
@@ -35,7 +37,7 @@ namespace dictionaryTaskTests
 
             WHEN("The dictionary is searched for an existing word")
             {
-                const auto actual = dictionary.getDefinition("first");
+                const auto actual = dictionary.getDefinition(word);
 
                 // delete the test file, keep it out of version control
                 loader.dispose();
@@ -43,8 +45,8 @@ namespace dictionaryTaskTests
 
                 THEN("The definition is printed")
                 {
-                    const auto expectedType = WordType::getName(Adjective) + " ";
-                    const auto expected = expectedType + "This is the first definition.";
+                    const auto expectedType = WordType::getName(Adjective);
+                    const auto expected = expectedType + " The definition.";
 
                     REQUIRE(expected == actual);
                 }
@@ -85,11 +87,6 @@ namespace dictionaryTaskTests
         }
     }
 
-    bool contains(list<string> list, const string& target)
-    {
-        return find(list.begin(), list.end(), target) != list.end();
-    }
-
     SCENARIO("Find longest word where the dictionary contains a single longest word")
     {
         GIVEN("A dictionary with a short word and a long word")
@@ -121,9 +118,9 @@ namespace dictionaryTaskTests
                 THEN("The dictionary returns the longest word")
                 {
                     // assert long word is in the list
-                    REQUIRE(contains(actual, longWord));
+                    REQUIRE(TestHelpers::listContainsWord(actual, longWord));
                     // assert short word is not in the list
-                    REQUIRE(!contains(actual, shortWord));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
                 }
             }
         }
@@ -138,10 +135,10 @@ namespace dictionaryTaskTests
             const string longWord2 = "XYZ";
             const string typeAndDef = " [n]\nThe definition.\n\n";
 
-            const string content =
-                string(shortWord + typeAndDef) +
-                string(longWord1 + typeAndDef) +
-                string(longWord2 + typeAndDef);
+            const auto content =
+                shortWord + typeAndDef +
+                longWord1 + typeAndDef +
+                longWord2 + typeAndDef;
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();
 
@@ -162,11 +159,10 @@ namespace dictionaryTaskTests
                 THEN("The dictionary returns both longest words")
                 {
                     // assert longest words are in the list
-                    REQUIRE(contains(actual, longWord1));
-                    REQUIRE(contains(actual, longWord2));
-
+                    REQUIRE(TestHelpers::listContainsWord(actual, longWord1));
+                    REQUIRE(TestHelpers::listContainsWord(actual, longWord2));
                     // assert short word is not in the list
-                    REQUIRE(!contains(actual, shortWord));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
                 }
             }
         }
@@ -182,14 +178,16 @@ namespace dictionaryTaskTests
             const string logy3 = "567logy";
             const string logy4 = "5678logy";
             const string notLogy = "logynot";
+            const string typeAndDef = " [n]\nThe definition.\n\n";
 
-            const string content = 
-                string(logy0 + " [n]\nlogy0\n\n") +
-                string(logy1 + " [n]\nlogy1\n\n") +
-                string(logy2 + " [n]\nlogy2\n\n") +
-                string(logy3 + " [n]\nlogy3\n\n") +
-                string(logy4 + " [n]\nlogy4\n\n") +
-                string(notLogy + " [n]\nnotLogy\n\n");
+            const auto content =
+                logy0 + typeAndDef +
+                logy1 + typeAndDef +
+                logy2 + typeAndDef +
+                logy3 + typeAndDef +
+                logy4 + typeAndDef +
+                notLogy + typeAndDef;
+
             auto fileFactory = TestFileFactory(filepath, content);
             fileFactory.write();
 
@@ -210,13 +208,13 @@ namespace dictionaryTaskTests
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
                     // assert these words are in the list
-                    REQUIRE(contains(actual, logy0));
-                    REQUIRE(contains(actual, logy1));
-                    REQUIRE(contains(actual, logy2));
-                    REQUIRE(contains(actual, logy3));
+                    REQUIRE(TestHelpers::listContainsWord(actual, logy0));
+                    REQUIRE(TestHelpers::listContainsWord(actual, logy1));
+                    REQUIRE(TestHelpers::listContainsWord(actual, logy2));
+                    REQUIRE(TestHelpers::listContainsWord(actual, logy3));
                     // assert these words are not in the list
-                    REQUIRE(!contains(actual, logy4));
-                    REQUIRE(!contains(actual, notLogy));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, logy4));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy));
                 }
             }
         }

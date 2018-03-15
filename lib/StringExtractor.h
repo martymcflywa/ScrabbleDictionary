@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "IExtract.h"
 #include "ITask.h"
+#include <memory>
 
 namespace lib
 {
@@ -30,7 +31,7 @@ namespace lib
         * \param content The stream from source dictionary.
         * \return The dictionary as a map<string, Word> where the key is the word itself.
         */
-        std::map<std::string, Word> extract(std::istream& content) override;
+        std::map<std::string, std::shared_ptr<Word>> extract(std::istream& content) override;
         /**
          * \brief Returns the longest word/s in the dictionary.
          * \returns The longest word/s in the dictionary.
