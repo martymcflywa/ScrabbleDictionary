@@ -32,10 +32,13 @@ void DictionaryTask::setLongestWords(const string& word)
 */
 void DictionaryTask::setLogyWords(const string& word)
 {
-    const string ending = "logy";
 
-    if (word.length() >= ending.length() && word.length() < 8 && endsWith(word, ending))
+    if (word.length() >= LOGY_ENDING.length()
+            && word.length() <= MAX_LOGY_LENGTH
+            && endsWith(word, LOGY_ENDING))
+    {
         _logyWords.insert(_logyWords.end(), word);
+    }
 }
 
 /**
@@ -62,7 +65,8 @@ list<string> DictionaryTask::getLogyWords()
 * \param ending The ending of the word we'd like to find.
 * \return True if the word ends with ending.
 */
-bool DictionaryTask::endsWith(const string& word, const string& ending) const
+bool DictionaryTask::endsWith(const string& word, const string& ending)
 {
-    return equal(ending.rbegin(), ending.rend(), word.rbegin());
+    const auto endIndex = word.length() - ending.length();
+    return word.find(ending, endIndex) != string::npos;
 }
