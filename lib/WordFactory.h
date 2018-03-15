@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Word.h"
+#include <memory>
 
 namespace lib
 {
@@ -9,7 +10,7 @@ namespace lib
     class WordFactory
     {
     public:
-        static Word build(
+        static std::shared_ptr<Word> build(
             const std::string& word,
             const std::string& type,
             const std::string& definition,

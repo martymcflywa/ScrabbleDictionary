@@ -1,11 +1,12 @@
 ﻿#include "stdafx.h"
 #include "EmptyStringException.h"
 #include "WordFactory.h"
+#include <memory>
 
 using namespace std;
 using namespace lib;
 
-Word WordFactory::build(const string& word, const string& type, const string& definition, IPrint& printer)
+shared_ptr<Word> WordFactory::build(const string& word, const string& type, const string& definition, IPrint& printer)
 {
     if (word.empty())
         throw EmptyStringException("Word");
@@ -14,5 +15,5 @@ Word WordFactory::build(const string& word, const string& type, const string& de
     if (definition.empty())
         throw EmptyStringException("Definition");
 
-    return { word, type, definition, printer };
+    return make_shared<Word>(Word(word, type, definition, printer));
 }

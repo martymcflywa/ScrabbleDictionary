@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
+#include "TestHelpers.h"
 #include "TestLoader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
@@ -34,13 +35,19 @@ namespace stringExtractorTests
 
                 THEN("A corresponding collection of Words is created")
                 {
-                    auto first = Word("first", "adj", "This is the first definition.", printer);
-                    auto second = Word("second", "adv", "This is the second definition.", printer);
-                    auto expected = map<string, Word>();
-                    expected.insert(pair<string, Word>("first", first));
-                    expected.insert(pair<string, Word>("second", second));
+                    auto expected = map<string, shared_ptr<Word>>
+                    {
+                        { "first", make_shared<Word>(Word("first", "adj", "This is the first definition.", printer)) },
+                        { "second", make_shared<Word>(Word("second", "adv", "This is the second definition.", printer)) }
+                    };
 
-                    REQUIRE(expected == actual);
+                    for(auto expectedIt = expected.begin(), actualIt = actual.begin();
+                        expectedIt != expected.end() || actualIt != actual.end();
+                        ++expectedIt, ++actualIt)
+                    {
+                        REQUIRE(expectedIt->first == actualIt->first);
+                        REQUIRE(TestHelpers::isSmartPtrEqual(expectedIt->second, actualIt->second));
+                    }
                 }
             }
         }
@@ -58,7 +65,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, Word> actual;
+                map<string, shared_ptr<Word>> actual;
 
                 try
                 {
@@ -86,7 +93,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, Word> actual;
+                map<string, shared_ptr<Word>> actual;
 
                 try
                 {
@@ -114,7 +121,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, Word> actual;
+                map<string, shared_ptr<Word>> actual;
 
                 try
                 {

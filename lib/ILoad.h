@@ -9,6 +9,7 @@ namespace lib
     class ILoad
     {
     public:
+        ILoad() = default;
         virtual ~ILoad() = default;
         /**
          * \brief Loads the source dictionary.

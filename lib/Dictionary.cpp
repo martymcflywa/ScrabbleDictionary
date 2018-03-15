@@ -37,7 +37,7 @@ string Dictionary::getDefinition(const string& word)
     if (it == _dictionary.end())
         return "Word '" + word + "' not found";
 
-    return it->second.printDefinition();
+    return it->second->printDefinition();
 }
 
 /**

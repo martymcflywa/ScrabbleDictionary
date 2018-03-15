@@ -21,13 +21,13 @@ StringExtractor::StringExtractor(IPrint& printer, ITask& task) : _printer(printe
 * \param content The stream from source dictionary.
 * \return The dictionary as a map<string, Word> where the key is the word itself.
 */
-map<string, Word> StringExtractor::extract(istream& content)
+map<string, shared_ptr<Word>> StringExtractor::extract(istream& content)
 {
     const auto firstLine = 0;
     const auto lastLine = 2;
     auto currentLine = 0;
 
-    auto output = map<string, Word>();
+    auto output = map<string, shared_ptr<Word>>();
 
     string line;
     string word;
@@ -39,7 +39,8 @@ map<string, Word> StringExtractor::extract(istream& content)
         // the last line of the entry, time to construct the word and add it to collection.
         if (currentLine == lastLine)
         {
-            output.insert(pair<string, Word>(word, WordFactory::build(word, type, definition, _printer)));
+            output.insert(pair<string, shared_ptr<Word>>(word, WordFactory::build(word, type, definition, _printer)));
+            //output.insert(word, WordFactory::build(word, type, definition, _printer));
 
             // optimisation: find answers for tasks in the one loop
             _task.setLongestWords(word);
