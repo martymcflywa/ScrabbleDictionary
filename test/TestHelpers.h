@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <memory>
 #include <list>
+#include "../lib/Word.h"
 
 class TestHelpers
 {
@@ -12,6 +13,13 @@ public:
      * \returns True if the list contains the word.
      */
     static bool listContainsWord(std::list<std::string> list, const std::string& target);
+    /**
+     * \brief Overload which searches list of std::shared_ptr<lib::Word>
+     * \param list The list to search.
+     * \param target The word to search for.
+     * \returns True if the list contains the word. 
+     */
+    static bool listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target);
     /**
     * \brief Test helper to compare smart ptr managed object equality,
     * see https://stackoverflow.com/a/38391135. Overload for shared_ptr.
@@ -41,6 +49,16 @@ public:
 inline bool TestHelpers::listContainsWord(std::list<std::string> list, const std::string& target)
 {
     return find(list.begin(), list.end(), target) != list.end();
+}
+
+inline bool TestHelpers::listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target)
+{
+    for (const auto word : list)
+    {
+        if (word->getWord() == target)
+            return true;
+    }
+    return false;
 }
 
 template <class TExpected, class TActual>
