@@ -44,18 +44,18 @@ string Dictionary::getDefinition(const string& word)
 * \brief Returns the longest word/s in the dictionary.
 * \returns The longest word/s in the dictionary.
 */
-list<string> Dictionary::getLongestWords() const
+list<shared_ptr<Word>> Dictionary::getLongestWords() const
 {
-    return _extractor.getLongestWords();
+    return _extractor.getTaskResults(LongestWords);
 }
 
 /**
 * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
 * \returns Words that end in 'logy' that have a length less than or equal to seven.
 */
-list<string> Dictionary::getLogyWords() const
+list<shared_ptr<Word>> Dictionary::getLogyWords() const
 {
-    return _extractor.getLogyWords();
+    return _extractor.getTaskResults(LogyWords);
 }
 
 /**
@@ -63,9 +63,9 @@ list<string> Dictionary::getLogyWords() const
 * \param word The word to search for rhymes.
 * \returns Word/s that rhyme with parameter word.
 */
-list<string> Dictionary::getRhymes(const string& word) const
+list<shared_ptr<Word>> Dictionary::getRhymes(const string& word) const
 {
-    return _extractor.getRhymes(word);
+    return _extractor.getTaskResults(Rhymes, word);
 }
 
 /**
@@ -109,7 +109,7 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 */
 list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
 {
-    return _extractor.getAnagrams(letters);
+    return _extractor.getTaskResults(Anagrams, letters);
 }
 
 /**

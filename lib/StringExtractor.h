@@ -32,35 +32,9 @@ namespace lib
         * \return The dictionary as a map<string, Word> where the key is the word itself.
         */
         std::unordered_map<std::string, std::shared_ptr<Word>> extract(std::istream& content) override;
-        /**
-         * \brief Returns the longest word/s in the dictionary.
-         * \returns The longest word/s in the dictionary.
-         */
-        std::list<std::string> getLongestWords() override;
-        /**
-         * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
-         * \returns Words that end in 'logy' that have a length less than or equal to seven. 
-         */
-        std::list<std::string> getLogyWords() override;
-        /**
-        * \brief Returns word/s that rhyme with the parameter word, if any exist.
-        * \param word The word to search for rhymes.
-        * \returns Word/s that rhyme with parameter word.
-        */
-        std::list<std::string> getRhymes(const std::string& word) override;
-        /**
-        * \brief Search for any anagrams of the word. Returns any anagrams that exist,
-        * else returns an empty list.
-        * \param word The word to search for anagrams.
-        * \returns Anagram/s of the word, if they exist, else returns an empty list.
-        */
-        std::list<std::shared_ptr<Word>> getAnagrams(const std::string& word) override; 
+        std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType) override;
+        std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType, const std::string& word) override;
     private:
-        /**
-         * \brief Uses '[' to determine location of word in the line.
-         * \param line The current line being inspected from the source file.
-         * \returns The word. 
-         */
         std::string extractWord(const std::string& line) const;
         /**
          * \brief Uses '[' and ']' to determine location of type in the line.

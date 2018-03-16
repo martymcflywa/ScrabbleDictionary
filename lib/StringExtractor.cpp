@@ -36,18 +36,15 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
 
     while (getline(content, line))
     {
-        // the last line of the entry, time to construct the word and add it to collection.
         if (currentLine == lastLine)
         {
-            // optimisation: find answers for tasks in the one loop
-            _task.setLongestWords(word);
-            _task.setLogyWords(word);
-            _task.setRhymes(word);
-
+            // the last line of the entry, time to construct the word and add it to collection.
             const auto wordObj = WordFactory::build(word, type, definition, _printer);
-            _task.setAnagrams(wordObj);
-
             output.insert(pair<string, shared_ptr<Word>>(word, wordObj));
+
+            // optimisation: handle tasks in the one loop while loading,
+            // rather than multiple loops later on
+            _task.handleTasks(wordObj);
 
             currentLine = 0;
             continue;
@@ -68,43 +65,15 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
     }
     return output;
 }
-/**
-* \brief Returns the longest word/s in the dictionary.
-* \returns The longest word/s in the dictionary.
-*/
-list<string> StringExtractor::getLongestWords()
+
+std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType)
 {
-    return _task.getLongestWords();
+    return _task.getTaskResult(taskType);
 }
 
-/**
-* \brief Returns words that end in 'logy' that have a length less than or equal to seven.
-* \returns Words that end in 'logy' that have a length less than or equal to seven.
-*/
-list<string> StringExtractor::getLogyWords()
+std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType, const std::string& word)
 {
-    return _task.getLogyWords();
-}
-
-/**
-* \brief Returns word/s that rhyme with the parameter word, if any exist.
-* \param word The word to search for rhymes.
-* \returns Word/s that rhyme with parameter word.
-*/
-list<string> StringExtractor::getRhymes(const string& word)
-{
-    return _task.getRhymes(word);
-}
-
-/**
-* \brief Search for any anagrams of the word. Returns any anagrams that exist,
-* else returns an empty list.
-* \param word The word to search for anagrams.
-* \returns Anagram/s of the word, if they exist, else returns an empty list.
-*/
-std::list<std::shared_ptr<Word>> StringExtractor::getAnagrams(const std::string& word)
-{
-    return _task.getAnagrams(word);
+    return _task.getTaskResult(taskType, word);
 }
 
 /**
