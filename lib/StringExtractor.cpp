@@ -21,13 +21,13 @@ StringExtractor::StringExtractor(IPrint& printer, ITask& task) : _printer(printe
 * \param content The stream from source dictionary.
 * \return The dictionary as a map<string, Word> where the key is the word itself.
 */
-map<string, shared_ptr<Word>> StringExtractor::extract(istream& content)
+unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& content)
 {
     const auto firstLine = 0;
     const auto lastLine = 2;
     auto currentLine = 0;
 
-    auto output = map<string, shared_ptr<Word>>();
+    auto output = unordered_map<string, shared_ptr<Word>>();
 
     string line;
     string word;

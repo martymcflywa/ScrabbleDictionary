@@ -35,7 +35,7 @@ namespace stringExtractorTests
 
                 THEN("A corresponding collection of Words is created")
                 {
-                    auto expected = map<string, shared_ptr<Word>>
+                    auto expected = unordered_map<string, shared_ptr<Word>>
                     {
                         { "first", make_shared<Word>(Word("first", "adj", "This is the first definition.", printer)) },
                         { "second", make_shared<Word>(Word("second", "adv", "This is the second definition.", printer)) }
@@ -65,7 +65,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, shared_ptr<Word>> actual;
+                unordered_map<string, shared_ptr<Word>> actual;
 
                 try
                 {
@@ -93,7 +93,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, shared_ptr<Word>> actual;
+                unordered_map<string, shared_ptr<Word>> actual;
 
                 try
                 {
@@ -121,7 +121,7 @@ namespace stringExtractorTests
                 loader.setTestFile(testFile);
 
                 auto& content = loader.load();
-                map<string, shared_ptr<Word>> actual;
+                unordered_map<string, shared_ptr<Word>> actual;
 
                 try
                 {
