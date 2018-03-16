@@ -4,8 +4,11 @@
 
 using namespace std;
 
-TestFileFactory::TestFileFactory(const string& filepath, const string& content) : _filepath(filepath), _content(content)
+TestFileFactory::TestFileFactory(const string& filepath, const string& content) : 
+    _filepath(filepath), 
+    _content(content)
 {
+    write();
 }
 
 void TestFileFactory::write() const

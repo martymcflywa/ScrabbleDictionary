@@ -1,13 +1,10 @@
 #include "stdafx.h"
 #include "catch.hpp"
-#include "TestFileFactory.h"
+#include "TestDictionaryBuilder.h"
 #include "TestHelpers.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
-#include "../lib/DictionaryTask.h"
-#include "../lib/StringExtractor.h"
-#include "../lib/TextFileLoader.h"
 
 using namespace std;
 using namespace lib;
@@ -23,22 +20,13 @@ namespace dictionaryTaskTests
     {
         GIVEN("A dictionary with a word")
         {
-            // TODO: define all this boilerplate stuff in a scenario builder
             const string foundWord = "first";
-            const string typeAndDef = " [adj]\nThe definition.\n\n";
-            const auto content = foundWord + typeAndDef;
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
+            const string type = " [adj]\n";
+            const string definition = "The definition.";
+            const auto typeAndDef = type + definition + "\n\n";
 
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            // delete the test file, keep it out of version control
-            loader.dispose();
-            fileFactory.cleanup();
+            auto builder = TestDictionaryBuilder(foundWord, typeAndDef);
+            auto dictionary = builder.build();
 
             WHEN("The dictionary is searched for an existing word")
             {
@@ -47,7 +35,7 @@ namespace dictionaryTaskTests
                 THEN("The definition is printed")
                 {
                     const auto expectedType = WordType::getName(Adjective);
-                    const auto expected = expectedType + " The definition.";
+                    const auto expected = expectedType + " " + definition;
 
                     REQUIRE(expected == actual);
                 }
@@ -74,23 +62,10 @@ namespace dictionaryTaskTests
         {
             const string shortWord = "XY";
             const string longWord = "XYZ";
-            const string typeAndDef = " [n]\nThe definition.\n\n";
+            const auto words = list<string>{ shortWord, longWord };
 
-            const string content =
-                string(shortWord + typeAndDef) +
-                string(longWord + typeAndDef);
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
-
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            // delete the test file, keep it out of version control
-            loader.dispose();
-            fileFactory.cleanup();
+            auto builder = TestDictionaryBuilder(words);
+            auto dictionary = builder.build();
 
             WHEN("The longest word is requested")
             {
@@ -114,24 +89,10 @@ namespace dictionaryTaskTests
             const string shortWord = "AB";
             const string longWord1 = "ABC";
             const string longWord2 = "XYZ";
-            const string typeAndDef = " [n]\nThe definition.\n\n";
+            const auto words = list<string>{ shortWord, longWord1, longWord2 };
 
-            const auto content =
-                shortWord + typeAndDef +
-                longWord1 + typeAndDef +
-                longWord2 + typeAndDef;
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
-
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            // delete the test file, keep it out of version control
-            loader.dispose();
-            fileFactory.cleanup();
+            auto builder = TestDictionaryBuilder(words);
+            auto dictionary = builder.build();
 
             WHEN("The longest word is requested")
             {
@@ -153,34 +114,24 @@ namespace dictionaryTaskTests
     {
         GIVEN("A dictionary with words that end in 'logy' that have a length of seven or less characters")
         {
-            const string logy0 = "logy";
-            const string logy1 = "5logy";
-            const string logy2 = "56logy";
-            const string logy3 = "567logy";
-            const string logy4 = "5678logy";
-            const string notLogy = "logynot";
-            const string typeAndDef = " [n]\nThe definition.\n\n";
+            const string logy1 = "logy";
+            const string logy2 = "5logy";
+            const string logy3 = "56logy";
+            const string logy4 = "567logy";
+            const string notLogy1 = "5678logy";
+            const string notLogy2 = "logynot";
+            const auto words = list<string>
+            {
+                logy1,
+                logy2,
+                logy3,
+                logy4,
+                notLogy1,
+                notLogy2
+            };
 
-            const auto content =
-                logy0 + typeAndDef +
-                logy1 + typeAndDef +
-                logy2 + typeAndDef +
-                logy3 + typeAndDef +
-                logy4 + typeAndDef +
-                notLogy + typeAndDef;
-
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
-
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            // delete the test file, keep it out of version control
-            loader.dispose();
-            fileFactory.cleanup();
+            auto builder = TestDictionaryBuilder(words);
+            auto dictionary = builder.build();
 
             WHEN("The logy words are requested")
             {
@@ -189,13 +140,13 @@ namespace dictionaryTaskTests
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
                     // assert these words are in the list
-                    REQUIRE(TestHelpers::listContainsWord(actual, logy0));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy1));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy2));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy3));
+                    REQUIRE(TestHelpers::listContainsWord(actual, logy4));
                     // assert these words are not in the list
-                    REQUIRE(!TestHelpers::listContainsWord(actual, logy4));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy1));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy2));
                 }
             }
         }
@@ -211,27 +162,18 @@ namespace dictionaryTaskTests
             const string notRhyme1 = "oy";
             const string notRhyme2 = "joy";
             const string notRhyme3 = "royal";
-            const string typeAndDef = " [n]\nThe definition.\n\n";
+            const auto words = list<string>
+            {
+                rhyme1,
+                rhyme2,
+                rhyme3,
+                notRhyme1,
+                notRhyme2,
+                notRhyme3
+            };
 
-            const auto content =
-                rhyme1 + typeAndDef +
-                rhyme2 + typeAndDef +
-                rhyme3 + typeAndDef +
-                notRhyme1 + typeAndDef +
-                notRhyme2 + typeAndDef +
-                notRhyme3 + typeAndDef;
-            auto fileFactory = TestFileFactory(filepath, content);
-            fileFactory.write();
-
-            auto task = DictionaryTask();
-            auto loader = TextFileLoader(filepath);
-            auto extractor = StringExtractor(printer, task);
-            auto dictionary = Dictionary(loader, extractor);
-            dictionary.loadDictionary();
-
-            // delete the test file, keep it out of version control
-            loader.dispose();
-            fileFactory.cleanup();
+            auto builder = TestDictionaryBuilder(words);
+            auto dictionary = builder.build();
 
             WHEN("A word that rhymes is searched")
             {
