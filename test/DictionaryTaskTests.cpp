@@ -73,9 +73,11 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns the longest word")
                 {
-                    // assert long word is in the list
                     REQUIRE(TestHelpers::listContainsWord(actual, longWord));
-                    // assert short word is not in the list
+                }
+                
+                AND_THEN("The dictionary does not return the short word")
+                {
                     REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
                 }
             }
@@ -100,10 +102,12 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns both longest words")
                 {
-                    // assert longest words are in the list
                     REQUIRE(TestHelpers::listContainsWord(actual, longWord1));
                     REQUIRE(TestHelpers::listContainsWord(actual, longWord2));
-                    // assert short word is not in the list
+                }
+
+                AND_THEN("The dictionary does not return the short word")
+                {
                     REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
                 }
             }
@@ -139,12 +143,14 @@ namespace dictionaryTaskTests
 
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
-                    // assert these words are in the list
                     REQUIRE(TestHelpers::listContainsWord(actual, logy1));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy2));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy3));
                     REQUIRE(TestHelpers::listContainsWord(actual, logy4));
-                    // assert these words are not in the list
+                }
+
+                AND_THEN("Non logy words are not returned")
+                {
                     REQUIRE(!TestHelpers::listContainsWord(actual, notLogy1));
                     REQUIRE(!TestHelpers::listContainsWord(actual, notLogy2));
                 }
@@ -179,13 +185,15 @@ namespace dictionaryTaskTests
             {
                 const auto actual = dictionary.getRhymes(rhyme1);
 
-                THEN("Only words that rhyme are returned")
+                THEN("Words that rhyme are returned")
                 {
-                    // assert words that rhyme are in the list
                     REQUIRE(TestHelpers::listContainsWord(actual, rhyme1));
                     REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
                     REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
-                    // assert words that don't rhyme are not in the list
+                }
+
+                AND_THEN("Words that don't rhyme are not returned")
+                {
                     REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme1));
                     REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme2));
                     REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme3));
