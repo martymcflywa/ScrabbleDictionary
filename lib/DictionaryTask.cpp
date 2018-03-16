@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include <algorithm>
 #include "DictionaryTask.h"
 
 using namespace std;
@@ -42,7 +43,7 @@ void DictionaryTask::setLogyWords(const string& word)
 }
 
 /**
-* \brief Checks if current word's length is equal to or greater than min rhyme length.
+* \brief Get the rhyme part of the word, used as key for rhyme map.
 * If true, checks if rhyme key exists in rhyme map. If true, add to list of values,
 * else create a new map entry, with last three letters as key, and word as list entry.
 * \param word The current word during extraction.
@@ -50,7 +51,7 @@ void DictionaryTask::setLogyWords(const string& word)
 void DictionaryTask::setRhymes(const std::string& word)
 {
     // get the rhyme part
-    const auto key = getRhymingPart(word);
+    const auto key = getRhymeKey(word);
     // don't add entries with empty keys
     if (key.empty())
         return;
@@ -67,6 +68,32 @@ void DictionaryTask::setRhymes(const std::string& word)
     }
 
     // if found, add word to the list
+    it->second.push_back(word);
+}
+
+/**
+* \brief Strip word of any '-', then sort letters alphabetically. Result is key to anagram map.
+* If key exists, add to value (list of shared_ptr<Word>). If it doesn't exist,
+* add new k/v pair of alphabetically sorted letters as key, and a new list of shared_ptr<Word>,
+* inserting current shared_ptr<Word> into it.
+* \param word The current word during extraction.
+*/
+void DictionaryTask::setAnagrams(const shared_ptr<Word> word)
+{
+    // convert word into key (no '-', alphabetically sorted)
+    const auto key = getAnagramKey(word->getWord());
+    // try to find key in anagram map
+    const auto it = _anagrams.find(key);
+
+    // if not found, add a new k/v pair
+    if (it == _anagrams.end())
+    {
+        auto value = list<shared_ptr<Word>>{ word };
+        _anagrams.insert(pair<string, list<shared_ptr<Word>>>(key, value));
+        return;
+    }
+
+    // else we found an anagram, add it to the list
     it->second.push_back(word);
 }
 
@@ -95,12 +122,30 @@ list<string> DictionaryTask::getLogyWords()
 */
 list<string> DictionaryTask::getRhymes(const string& word)
 {
-    const auto key = getRhymingPart(word);
+    const auto key = getRhymeKey(word);
     const auto it = _rhymes.find(key);
 
     // if not found, return an empty list
     if (it == _rhymes.end())
         return list<string>();
+
+    return it->second;
+}
+
+/**
+* \brief Convert word to key for anagram map. If key exists in map,
+* return list value for that key, else return an empty list.
+* \param word The word to search for anagrams.
+* \returns Anagram/s of the word, if they exist, else returns an empty list.
+*/
+list<shared_ptr<Word>> DictionaryTask::getAnagrams(const string& word)
+{
+    const auto key = getAnagramKey(word);
+    const auto it = _anagrams.find(key);
+
+    // if not found, return an empty list
+    if (it == _anagrams.end())
+        return list<shared_ptr<Word>>();
 
     return it->second;
 }
@@ -112,12 +157,34 @@ list<string> DictionaryTask::getRhymes(const string& word)
 * \returns The rhyming part of the word if >= 3 letters,
 * else returns an empty string.
 */
-std::string DictionaryTask::getRhymingPart(const std::string& word)
+string DictionaryTask::getRhymeKey(const string& word)
 {
     if (word.length() < RHYME_LENGTH)
         return "";
 
     return word.substr(word.length() - RHYME_LENGTH);
+}
+
+/**
+* \brief If word length == 1, return word. Else remove all '-' from string.
+* Then sort alphabetically and return it.
+* \param word The word to generate an anagram key with.
+* \returns The word's letters sorted alphabetically and without '-'.
+*/
+string DictionaryTask::getAnagramKey(const string& word)
+{
+    // if single letter, nothing else to do
+    if (word.length() == 1)
+        return word;
+
+    // make a copy
+    auto key = word;
+    // strip hyphens '-'
+    key.erase(remove(key.begin(), key.end(), '-'), key.end());
+    // sort alphabetically
+    sort(key.begin(), key.end());
+
+    return key;
 }
 
 /**

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ITask.h"
 #include "Word.h"
+#include <unordered_map>
 
 namespace lib
 {
@@ -13,7 +14,8 @@ namespace lib
 
         std::list<std::string> _longestWords{};
         std::list<std::string> _logyWords{};
-        std::map<std::string, std::list<std::string>> _rhymes{};
+        std::unordered_map<std::string, std::list<std::string>> _rhymes{};
+        std::unordered_map<std::string, std::list<std::shared_ptr<Word>>> _anagrams{};
 
     public:
         DictionaryTask() = default;
@@ -38,6 +40,14 @@ namespace lib
          */
         void setRhymes(const std::string& word) override;
         /**
+         * \brief Sort letters alphabetically, strip any '-'. Result is key to anagram map.
+         * If key exists, add to value (list of shared_ptr<Word>). If it doesn't exist,
+         * add new k/v pair of alphabetically sorted letters as key, and a new list of shared_ptr<Word>,
+         * inserting current shared_ptr<Word> into it.
+         * \param word The current word during extraction.
+         */
+        void setAnagrams(std::shared_ptr<lib::Word> word) override;
+        /**
         * \brief Returns the collection of longest words found in dictionary.
         * \returns The collection of longest words found in dictionary.
         */
@@ -53,6 +63,13 @@ namespace lib
         * \returns Word/s that rhyme with parameter word.
         */
         std::list<std::string> getRhymes(const std::string& word) override;
+        /**
+        * \brief Sort word's letters alphabetically, as key to anagram map.
+        * If key exists in anagram map, return list value for that key, else return an empty list.
+        * \param word The word to search for anagrams.
+        * \returns Anagram/s of the word, if they exist, else returns an empty list.
+        */
+        std::list<std::shared_ptr<lib::Word>> getAnagrams(const std::string& word) override;
     private:
         /**
          * \brief Returns the rhyming part of the word if >= 3 letters,
@@ -61,7 +78,14 @@ namespace lib
          * \returns The rhyming part of the word if >= 3 letters,
          * else returns an empty string. 
          */
-        static std::string getRhymingPart(const std::string& word);
+        static std::string getRhymeKey(const std::string& word);
+        /**
+         * \brief If word length == 1, return word. Else remove all '-' from string.
+         * Then sort alphabetically and return it.
+         * \param word The word to generate an anagram key with.
+         * \returns The word's letters sorted alphabetically and without '-'. 
+         */
+        static std::string getAnagramKey(const std::string& word);
         /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.

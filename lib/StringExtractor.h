@@ -48,6 +48,13 @@ namespace lib
         * \returns Word/s that rhyme with parameter word.
         */
         std::list<std::string> getRhymes(const std::string& word) override;
+        /**
+        * \brief Search for any anagrams of the word. Returns any anagrams that exist,
+        * else returns an empty list.
+        * \param word The word to search for anagrams.
+        * \returns Anagram/s of the word, if they exist, else returns an empty list.
+        */
+        std::list<std::shared_ptr<Word>> getAnagrams(const std::string& word) override; 
     private:
         /**
          * \brief Uses '[' to determine location of word in the line.

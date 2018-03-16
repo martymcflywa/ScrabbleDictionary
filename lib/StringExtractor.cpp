@@ -44,9 +44,10 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
             _task.setLogyWords(word);
             _task.setRhymes(word);
 
-            output.insert(pair<string, shared_ptr<Word>>(
-                word, 
-                WordFactory::build(word, type, definition, _printer)));
+            const auto wordObj = WordFactory::build(word, type, definition, _printer);
+            _task.setAnagrams(wordObj);
+
+            output.insert(pair<string, shared_ptr<Word>>(word, wordObj));
 
             currentLine = 0;
             continue;
@@ -93,6 +94,17 @@ list<string> StringExtractor::getLogyWords()
 list<string> StringExtractor::getRhymes(const string& word)
 {
     return _task.getRhymes(word);
+}
+
+/**
+* \brief Search for any anagrams of the word. Returns any anagrams that exist,
+* else returns an empty list.
+* \param word The word to search for anagrams.
+* \returns Anagram/s of the word, if they exist, else returns an empty list.
+*/
+std::list<std::shared_ptr<Word>> StringExtractor::getAnagrams(const std::string& word)
+{
+    return _task.getAnagrams(word);
 }
 
 /**

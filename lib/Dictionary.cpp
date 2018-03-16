@@ -63,7 +63,7 @@ list<string> Dictionary::getLogyWords() const
 * \param word The word to search for rhymes.
 * \returns Word/s that rhyme with parameter word.
 */
-list<string> Dictionary::getRhymes(const std::string& word) const
+list<string> Dictionary::getRhymes(const string& word) const
 {
     return _extractor.getRhymes(word);
 }
@@ -83,6 +83,33 @@ int Dictionary::getScrabbleScore(const std::string& word) const
         return -1;
 
     return it->second->getScrabbleScore();
+}
+
+/**
+* \brief Searches the dictionary for the word. If it exists, will look for anagrams of that word.
+* If it doesn't exist, or no anagrams exist, returns an empty list.
+* \param word The word to search for anagrams.
+* \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list.
+*/
+list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
+{
+    const auto it = _dictionary.find(word);
+
+    if (it == _dictionary.end())
+        return list<shared_ptr<Word>>();
+
+    return getStringAnagrams(word);
+}
+
+/**
+* \brief Searches for any anagrams with the letters. Returns any anagrams that exist,
+* else returns an empty list.
+* \param letters The letters to search for anagrams.
+* \returns Anagram/s made from the letters, if they exist, else returns an empty list.
+*/
+list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
+{
+    return _extractor.getAnagrams(letters);
 }
 
 /**
