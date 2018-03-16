@@ -39,12 +39,14 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
         // the last line of the entry, time to construct the word and add it to collection.
         if (currentLine == lastLine)
         {
-            output.insert(pair<string, shared_ptr<Word>>(word, WordFactory::build(word, type, definition, _printer)));
-
             // optimisation: find answers for tasks in the one loop
             _task.setLongestWords(word);
             _task.setLogyWords(word);
             _task.setRhymes(word);
+
+            output.insert(pair<string, shared_ptr<Word>>(
+                word, 
+                WordFactory::build(word, type, definition, _printer)));
 
             currentLine = 0;
             continue;

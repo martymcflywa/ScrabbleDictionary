@@ -7,17 +7,18 @@ using namespace std;
 using namespace lib;
 
 /**
- * \brief Constructs a Word object with values extracted from a source dictionary.
- * \param word The word itself.
- * \param type The type of word, ie. adj, n, etc. Must not include brackets "[]". Will be resolved to an enum during construction.
- * \param definition The definition of the word.
- * \param printer Inject implementation of IPrint to decouple Word from implementation of printing.
- * This means we could easily implement a Json (or whatever) printer, and inject it here if requirements change down the track.
- */
+* \brief Constructs a Word object with values extracted from a source dictionary.
+* Resolves word type to an enum and calculates scrabble score on construction.
+* \param word The word itself.
+* \param type The type of word, ie. adj, n, etc. Must not include brackets "[]".
+* \param definition The definition of the word.
+* \param printer Inject implementation of IPrint so that Word is not coupled to implementation of printing.
+*/
 Word::Word(const string& word, const string& type, const string& definition, IPrint& printer) :
     _word(validate(word)),
     _type(resolveType(type)),
     _definition(validate(definition)),
+    _scrabbleScore(calculateScrabbleScore()),
     _printer(printer)
 {
 }
@@ -37,6 +38,11 @@ string Word::getDefinition() const
     return _definition;
 }
 
+int Word::getScrabbleScore() const
+{
+    return _scrabbleScore;
+}
+
 string Word::printDefinition() const
 {
     return _printer.print(*this);
@@ -51,7 +57,8 @@ bool Word::operator==(const Word& that) const
 {
     return _word == that._word
         && _type == that._type
-        && _definition == that._definition;
+        && _definition == that._definition
+        && _scrabbleScore == that._scrabbleScore;
 }
 
 /**
@@ -87,6 +94,32 @@ Type Word::resolveType(const string& type)
         throw UnsupportedTypeException(type);
 
     return out;
+}
+
+/**
+* \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
+* \returns The score for the word if not Misc, ProperNoun and hyphenated, else returns 0.
+*/
+int Word::calculateScrabbleScore() const
+{
+    // cannot score with misc, proper noun and hyphenated words
+    if (_type == Misc || _type == ProperNoun || _word.find("-") != string::npos)
+        return 0;
+
+    // already have a solution for this in github, so borrowing it:
+    // https://github.com/martymcflywa/exercism/blob/master/java/scrabble-score/src/main/java/Scrabble.java
+
+    const auto capitalA = 'A';
+    const int letterScores[] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
+
+    // map each uppercase char to corresponding index on letterScores, 
+    // by (char ascii value - 'A' ascii value) then reduce to sum
+    // TODO: can we do this with map/reduce in cpp?
+    auto score = 0;
+    for (auto letter : _word)
+        score += letterScores[toupper(letter) - capitalA];
+
+    return score;
 }
 
 /**

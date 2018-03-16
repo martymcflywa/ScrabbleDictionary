@@ -69,6 +69,23 @@ list<string> Dictionary::getRhymes(const std::string& word) const
 }
 
 /**
+* \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
+* \param word The word to search for its score.
+* \returns The score for the word if found, else returns -1.
+*/
+int Dictionary::getScrabbleScore(const std::string& word) const
+{
+    const auto it = _dictionary.find(word);
+
+    // if not found, return a negative value,
+    // so we can tell difference between not found and words you can't use in scrabble
+    if (it == _dictionary.end())
+        return -1;
+
+    return it->second->getScrabbleScore();
+}
+
+/**
 * \brief Returns how many entries are loaded in the dictionary.
 * \returns How many entries are loaded in the dictionary.
 */

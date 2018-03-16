@@ -60,6 +60,12 @@ namespace lib {
          */
         std::list<std::string> getRhymes(const std::string& word) const;
         /**
+         * \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
+         * \param word The word to search for its score.
+         * \returns The score for the word if found, else returns 0.
+         */
+        int getScrabbleScore(const std::string& word) const;
+        /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 
          */
