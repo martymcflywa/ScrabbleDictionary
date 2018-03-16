@@ -10,6 +10,7 @@ namespace lib
         std::string _word;
         Type _type;
         std::string _definition;
+        int _scrabbleScore;
         IPrint& _printer;
 
     public:
@@ -28,16 +29,22 @@ namespace lib
         std::string getWord() const;
         Type getType() const;
         std::string getDefinition() const;
+        int getScrabbleScore() const;
         std::string printDefinition() const;
         /**
          * \brief Implementation of operator ==, really useful for unit tests.
          * \param that The other Word to compare to.
          * \returns true if both Words contain the same values.
          */
-        bool operator == (const Word& that) const;
+        bool operator==(const Word& that) const;
 
     private:
         static Type resolveType(const std::string& type);
+        /**
+        * \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
+        * \returns The score for the word if not Misc, ProperNoun and hyphenated, else returns 0.
+        */
+        int calculateScrabbleScore() const;
         static std::string validate(const std::string& input);
     };
 }
