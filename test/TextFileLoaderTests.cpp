@@ -45,7 +45,7 @@ namespace textFileLoaderTests
 
                 THEN("The content matches input")
                 {
-                    auto expected = map<string, shared_ptr<Word>>
+                    auto expected = unordered_map<string, shared_ptr<Word>>
                     {
                         { "first", make_shared<Word>(Word("first", "adj", "This is the first definition.", printer)) },
                         { "second", make_shared<Word>(Word("second", "adv", "This is the second definition.", printer)) }

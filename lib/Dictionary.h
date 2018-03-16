@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <list>
-#include <map>
+#include <unordered_map>
 #include "IExtract.h"
 #include "ILoad.h"
 #include "Word.h"
@@ -14,7 +14,13 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
-        std::map<std::string, std::shared_ptr<Word>> _dictionary{};
+        /**
+         * \brief Using std::unordered_map for O(1) lookup. No constraints re memory,
+         * and data set isn't too large so it is a better choice over std::map when
+         * searching for definition/scrabble score.
+         * Using std::shared_ptr<Word> as value as Word is shared by anagram map.
+         */
+        std::unordered_map<std::string, std::shared_ptr<Word>> _dictionary{};
 
     public:
         /**

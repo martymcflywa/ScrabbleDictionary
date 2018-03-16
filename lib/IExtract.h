@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include <map>
 #include <list>
-#include "Word.h"
 #include <memory>
+#include <unordered_map>
+#include "Word.h"
 
 namespace lib
 {
@@ -16,7 +16,7 @@ namespace lib
     {
     public:
         virtual ~IExtract() = default;
-        virtual std::map<std::string, std::shared_ptr<Word>> extract(std::istream& content) = 0;
+        virtual std::unordered_map<std::string, std::shared_ptr<Word>> extract(std::istream& content) = 0;
         virtual std::list<std::string> getLongestWords() = 0;
         virtual std::list<std::string> getLogyWords() = 0;
         virtual std::list<std::string> getRhymes(const std::string& word) = 0;
