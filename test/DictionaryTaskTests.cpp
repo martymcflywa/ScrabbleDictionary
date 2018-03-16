@@ -355,4 +355,91 @@ namespace dictionaryTaskTests
             }
         }
     }
+
+    SCENARIO("Find anagrams")
+    {
+        GIVEN("A dictionary with words")
+        {
+            const string anagram1 = "tesla";
+            const string anagram2 = "least";
+            const string anagram3 = "slate";
+            const string anagram4 = "steal";
+            const string notAnagram1 = "abcde";
+            const string notAnagram2 = "slat";
+
+            const auto words = list<string>
+            {
+                anagram1,
+                anagram2,
+                anagram3,
+                anagram4,
+                notAnagram1,
+                notAnagram2
+            };
+
+            auto builder = TestDictionaryBuilder(words);
+            auto dictionary = builder.build();
+
+            WHEN("Anagrams of an existing word is requested")
+            {
+                const auto actual = dictionary.getWordAnagrams(anagram1);
+
+                THEN("Anagrams of the word are returned")
+                {
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram1));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram3));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram4));
+                }
+
+                AND_THEN("Non anagrams are not returned")
+                {
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram2));
+                }
+            }
+
+            AND_WHEN("Anagrams of a non existent word is requested")
+            {
+                const string target = "nope";
+                const auto actual = dictionary.getWordAnagrams(target);
+
+                THEN("No anagrams are returned")
+                {
+                    REQUIRE(actual.empty());
+                }
+            }
+
+            AND_WHEN("Anagrams of a collection of letters is requested")
+            {
+                const string target = "alset";
+                const auto actual = dictionary.getStringAnagrams(target);
+
+                THEN("Anagrams of the word are returned")
+                {
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram1));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram3));
+                    REQUIRE(TestHelpers::listContainsWord(actual, anagram4));
+                }
+
+                AND_THEN("Non anagrams are not returned")
+                {
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram2));
+                }
+            }
+
+            AND_WHEN("Anagrams of a collection of letters that do not have any anagrams are requested")
+            {
+                const string target = "nope";
+                const auto actual = dictionary.getStringAnagrams(target);
+
+                THEN("No anagrams are returned")
+                {
+                    REQUIRE(actual.empty());
+                }
+            }
+        }
+    }
 }
