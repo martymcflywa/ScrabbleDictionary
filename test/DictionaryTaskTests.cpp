@@ -215,4 +215,144 @@ namespace dictionaryTaskTests
             }
         }
     }
+
+    SCENARIO("Calculate scrabble scores")
+    {
+        const string definition = "\nTest definition.\n\n";
+
+        GIVEN("A dictionary with all word types")
+        {
+            const string adjectiveWord = "quixotic";
+            const auto adjectiveTypeDef = " [adj]" + definition;
+            const auto expectedAdjectiveScore = 26;
+
+            const string adverbWord = "quizzically";
+            const auto adverbTypeDef = " [adv]" + definition;
+            const auto expectedAdverbScore = 43;
+
+            const string nounWord = "zephyr";
+            const auto nounTypeDef = " [n]" + definition;
+            const auto expectedNounScore = 23;
+
+            const string nounAndVerbWord = "whistle";
+            const auto nounAndVerbTypeDef = " [n_and_v]" + definition;
+            const auto expectedNounAndVerbScore = 13;
+
+            const string prepositionWord = "versus";
+            const auto prepositionTypeDef = " [prep]" + definition;
+            const auto expectedPrepositionScore = 9;
+
+            const string verbWord = "quadruplicated";
+            const auto verbTypeDef = " [v]" + definition;
+            const auto expectedVerbScore = 29;
+
+            const string miscWord = "misc";
+            const auto miscWordTypeDef = " [misc]" + definition;
+            const auto expectedMiscScore = 0;
+
+            const string properNounWord = "propernoun";
+            const auto properNounTypeDef = " [pn]" + definition;
+            const auto expectedProperNounScore = 0;
+
+            const string hyphenWord = "hyphen-word";
+            const auto hyphenTypeDef = " [v]" + definition;
+            const auto expectedHyphenScore = 0;
+
+            const auto words = list<string>
+            {
+                adjectiveWord,
+                adverbWord,
+                nounWord,
+                nounAndVerbWord,
+                prepositionWord,
+                verbWord,
+                miscWord,
+                properNounWord,
+                hyphenWord
+            };
+            const auto typeAndDefs = list<string>
+            {
+                adjectiveTypeDef,
+                adverbTypeDef,
+                nounTypeDef,
+                nounAndVerbTypeDef,
+                prepositionTypeDef,
+                verbTypeDef,
+                miscWordTypeDef,
+                properNounTypeDef,
+                hyphenTypeDef
+            };
+
+            auto builder = TestDictionaryBuilder(words, typeAndDefs);
+            auto dictionary = builder.build();
+
+            WHEN("The score is requested for each word")
+            {
+                auto actualAdjectiveScore = dictionary.getScrabbleScore(adjectiveWord);
+                auto actualAdverbScore = dictionary.getScrabbleScore(adverbWord);
+                auto actualNounScore = dictionary.getScrabbleScore(nounWord);
+                auto actualNounAndVerbScore = dictionary.getScrabbleScore(nounAndVerbWord);
+                auto actualPrepositionScore = dictionary.getScrabbleScore(prepositionWord);
+                auto actualVerbScore = dictionary.getScrabbleScore(verbWord);
+                auto actualMiscScore = dictionary.getScrabbleScore(miscWord);
+                auto actualProperNounScore = dictionary.getScrabbleScore(properNounWord);
+                auto actualHyphenScore = dictionary.getScrabbleScore(hyphenWord);
+
+                THEN("An adjective word can score")
+                {
+                    REQUIRE(expectedAdjectiveScore == actualAdjectiveScore);
+                }
+
+                AND_THEN("An adverb word can score")
+                {
+                    REQUIRE(expectedAdverbScore == actualAdverbScore);
+                }
+
+                AND_THEN("A noun word can score")
+                {
+                    REQUIRE(expectedNounScore == actualNounScore);
+                }
+
+                AND_THEN("A noun and verb word can score")
+                {
+                    REQUIRE(expectedNounAndVerbScore == actualNounAndVerbScore);
+                }
+
+                AND_THEN("A preposition word can score")
+                {
+                    REQUIRE(expectedPrepositionScore == actualPrepositionScore);
+                }
+                
+                AND_THEN("A verb word can score")
+                {
+                    REQUIRE(expectedVerbScore == actualVerbScore);
+                }
+
+                AND_THEN("A misc word can't score")
+                {
+                    REQUIRE(expectedMiscScore == actualMiscScore);
+                }
+
+                AND_THEN("A proper noun word can't score")
+                {
+                    REQUIRE(expectedProperNounScore == actualProperNounScore);
+                }
+
+                AND_THEN("A hyphen word can't score")
+                {
+                    REQUIRE(expectedHyphenScore == actualHyphenScore);
+                }
+            }
+
+            AND_WHEN("A score is requested for a non existent word")
+            {
+                auto actual = dictionary.getScrabbleScore("nope");
+
+                THEN("A negative score is returned")
+                {
+                    REQUIRE(actual == -1);
+                }
+            }
+        }
+    }
 }
