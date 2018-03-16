@@ -87,6 +87,12 @@
     <ClInclude Include="IUserInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UnsupportedTaskException.h">
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -130,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="DictionaryTask.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnsupportedTaskException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

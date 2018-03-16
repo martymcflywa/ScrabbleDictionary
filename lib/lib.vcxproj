@@ -163,7 +163,9 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringExtractor.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TaskType.h" />
     <ClInclude Include="TextFileLoader.h" />
+    <ClInclude Include="UnsupportedTaskException.h" />
     <ClInclude Include="UnsupportedTypeException.h" />
     <ClInclude Include="Word.h" />
     <ClInclude Include="WordFactory.h" />
@@ -185,6 +187,7 @@
     </ClCompile>
     <ClCompile Include="StringExtractor.cpp" />
     <ClCompile Include="TextFileLoader.cpp" />
+    <ClCompile Include="UnsupportedTaskException.cpp" />
     <ClCompile Include="UnsupportedTypeException.cpp" />
     <ClCompile Include="Word.cpp" />
     <ClCompile Include="WordFactory.cpp" />

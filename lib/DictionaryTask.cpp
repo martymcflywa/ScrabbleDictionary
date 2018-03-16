@@ -1,27 +1,64 @@
 ﻿#include "stdafx.h"
 #include <algorithm>
 #include "DictionaryTask.h"
+#include "UnsupportedTaskException.h"
 
 using namespace std;
 using namespace lib;
+
+void DictionaryTask::handleTasks(const std::shared_ptr<Word> wordObj)
+{
+    setLongestWords(wordObj);
+    setLogyWords(wordObj);
+    setRhymes(wordObj);
+    setAnagrams(wordObj);
+}
+
+std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType)
+{
+    switch (taskType)
+    {
+    case LongestWords:
+        return getLongestWords();
+    case LogyWords:
+        return getLogyWords();
+    default:
+        throw UnsupportedTaskException(to_string(taskType));
+    }
+}
+
+std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType, const std::string& word)
+{
+    switch (taskType)
+    {
+    case Rhymes:
+        return getRhymes(word);
+    case Anagrams:
+        return getAnagrams(word);
+    default:
+        throw UnsupportedTaskException(to_string(taskType));
+    }
+}
 
 /**
 * \brief Sets a collection of longest words. It compares the current word length with the longest length seen so far.
 * If the lengths are equal, it adds the word to the collection. If the length is greater than max, it clears the list,
 * adds the current word to the fresh list and sets a new max threshold.
-* \param word The current word during extraction.
+* \param wordObj The current Word during extraction.
 */
-void DictionaryTask::setLongestWords(const string& word)
+void DictionaryTask::setLongestWords(const shared_ptr<Word> wordObj)
 {
+    const auto word = wordObj->getWord();
+
     // if current word length is equal to max, add it to the list
     if (word.length() == _maxWordLength)
-        _longestWords.insert(_longestWords.end(), word);
+        _longestWords.insert(_longestWords.end(), wordObj);
 
     // if current word length is greater than max, clear the list, add current word to fresh list, set new max threshold
     if (word.length() > _maxWordLength)
     {
         _longestWords.clear();
-        _longestWords.insert(_longestWords.end(), word);
+        _longestWords.insert(_longestWords.end(), wordObj);
         _maxWordLength = word.length();
     }
 }
@@ -29,16 +66,17 @@ void DictionaryTask::setLongestWords(const string& word)
 /**
 * \brief Checks if current word's length is equal to or greater than 'logy' length, and less than 8 char long,
 * and ends with 'logy'. If true, word is added to collection.
-* \param word The current word during extraction.
+* \param wordObj The current word during extraction.
 */
-void DictionaryTask::setLogyWords(const string& word)
+void DictionaryTask::setLogyWords(const shared_ptr<Word> wordObj)
 {
+    const auto word = wordObj->getWord();
 
     if (word.length() >= LOGY_ENDING.length()
             && word.length() <= MAX_LOGY_LENGTH
             && endsWith(word, LOGY_ENDING))
     {
-        _logyWords.insert(_logyWords.end(), word);
+        _logyWords.insert(_logyWords.end(), wordObj);
     }
 }
 
@@ -46,10 +84,12 @@ void DictionaryTask::setLogyWords(const string& word)
 * \brief Get the rhyme part of the word, used as key for rhyme map.
 * If true, checks if rhyme key exists in rhyme map. If true, add to list of values,
 * else create a new map entry, with last three letters as key, and word as list entry.
-* \param word The current word during extraction.
+* \param wordObj The current word during extraction.
 */
-void DictionaryTask::setRhymes(const std::string& word)
+void DictionaryTask::setRhymes(const shared_ptr<Word> wordObj)
 {
+    const auto word = wordObj->getWord();
+
     // get the rhyme part
     const auto key = getRhymeKey(word);
     // don't add entries with empty keys
@@ -62,13 +102,13 @@ void DictionaryTask::setRhymes(const std::string& word)
     // if not found, add a new k/v pair
     if (it == _rhymes.end())
     {
-        auto value = list<string>{ word };
-        _rhymes.insert(pair<string, list<string>>(key, value));
+        auto value = list<shared_ptr<Word>>{ wordObj };
+        _rhymes.insert(pair<string, list<shared_ptr<Word>>>(key, value));
         return;
     }
 
     // if found, add word to the list
-    it->second.push_back(word);
+    it->second.push_back(wordObj);
 }
 
 /**
@@ -76,32 +116,32 @@ void DictionaryTask::setRhymes(const std::string& word)
 * If key exists, add to value (list of shared_ptr<Word>). If it doesn't exist,
 * add new k/v pair of alphabetically sorted letters as key, and a new list of shared_ptr<Word>,
 * inserting current shared_ptr<Word> into it.
-* \param word The current word during extraction.
+* \param wordObj The current word during extraction.
 */
-void DictionaryTask::setAnagrams(const shared_ptr<Word> word)
+void DictionaryTask::setAnagrams(const shared_ptr<Word> wordObj)
 {
     // convert word into key (no '-', alphabetically sorted)
-    const auto key = getAnagramKey(word->getWord());
+    const auto key = getAnagramKey(wordObj->getWord());
     // try to find key in anagram map
     const auto it = _anagrams.find(key);
 
     // if not found, add a new k/v pair
     if (it == _anagrams.end())
     {
-        auto value = list<shared_ptr<Word>>{ word };
+        auto value = list<shared_ptr<Word>>{ wordObj };
         _anagrams.insert(pair<string, list<shared_ptr<Word>>>(key, value));
         return;
     }
 
     // else we found an anagram, add it to the list
-    it->second.push_back(word);
+    it->second.push_back(wordObj);
 }
 
 /**
 * \brief Returns the collection of longest words found in dictionary.
 * \returns The collection of longest words found in dictionary.
 */
-list<string> DictionaryTask::getLongestWords()
+list<shared_ptr<Word>> DictionaryTask::getLongestWords() const
 {
     return _longestWords;
 }
@@ -110,7 +150,7 @@ list<string> DictionaryTask::getLongestWords()
 * \brief Returns the collection of words ending in 'logy' with length of seven or less.
 * \returns The collection of words ending in 'logy' with length of seven or less.
 */
-list<string> DictionaryTask::getLogyWords()
+list<shared_ptr<Word>> DictionaryTask::getLogyWords() const
 {
     return _logyWords;
 }
@@ -120,14 +160,14 @@ list<string> DictionaryTask::getLogyWords()
 * \param word The word to search for rhymes.
 * \returns Word/s that rhyme with parameter word.
 */
-list<string> DictionaryTask::getRhymes(const string& word)
+list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 {
     const auto key = getRhymeKey(word);
     const auto it = _rhymes.find(key);
 
     // if not found, return an empty list
     if (it == _rhymes.end())
-        return list<string>();
+        return list<shared_ptr<Word>>();
 
     return it->second;
 }
