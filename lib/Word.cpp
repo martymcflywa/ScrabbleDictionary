@@ -49,6 +49,15 @@ string Word::printDefinition() const
 }
 
 /**
+* \brief Returns true if word is not misc, proper noun or hyphenated.
+* \return True if word type is not misc, proper noun or hyphenated.
+*/
+bool Word::isLegalScrabbleWord() const
+{
+    return !(_type == Misc || _type == ProperNoun || _word.find("-") != string::npos);
+}
+
+/**
 * \brief Implementation of operator ==, really useful for unit tests.
 * \param that The other Word to compare to.
 * \returns true if both Words contain the same values.
@@ -71,7 +80,7 @@ Type Word::resolveType(const string& type)
     const auto initialType = static_cast<Type>(-1);
     auto out = initialType;
 
-    // would rather switch case it up here but... https://stackoverflow.com/a/650218
+    // would rather switch here but... https://stackoverflow.com/a/650218
     if (type == "v")
         out = Verb;
     if (type == "n")
@@ -97,24 +106,24 @@ Type Word::resolveType(const string& type)
 }
 
 /**
-* \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
-* \returns The score for the word if not Misc, ProperNoun and hyphenated, else returns 0.
+* \brief Calculates the score for the word. Misc, proper noun or hyphenated words always return 0;
+* \returns The score for the word if not misc, proper noun or hyphenated words, else returns 0.
 */
 int Word::calculateScrabbleScore() const
 {
     // cannot score with misc, proper noun and hyphenated words
-    if (_type == Misc || _type == ProperNoun || _word.find("-") != string::npos)
+    if (!isLegalScrabbleWord())
         return 0;
 
-    // already have a solution for this in github, so borrowing it:
+    // I already have a solution for this in github, so borrowing it:
     // https://github.com/martymcflywa/exercism/blob/master/java/scrabble-score/src/main/java/Scrabble.java
 
     const auto capitalA = 'A';
     const int letterScores[] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
 
     // map each uppercase char to corresponding index on letterScores, 
-    // by (char ascii value - 'A' ascii value) then reduce to sum
-    // TODO: can we do this with map/reduce in cpp?
+    // by (uppercase letter ascii value minus 'A' ascii value) then reduce to sum
+    // TODO: find out how to do this with map/reduce in cpp
     auto score = 0;
     for (auto letter : _word)
         score += letterScores[toupper(letter) - capitalA];

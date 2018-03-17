@@ -12,6 +12,13 @@ namespace cli
     {
         lib::Dictionary& _dictionary;
         std::string _menu;
+
+        const std::string SEARCH_DEFINITION_TITLE = "Find a word definition and scrabble score";
+        const std::string LONGEST_WORDS_TITLE = "Find longest word/s in the dictionary";
+        const std::string LOGY_WORDS_TITLE = "Find word/s that end in 'logy' and have a length of seven or less characters";
+        const std::string RHYME_WORDS_TITLE = "Find word/s that rhyme";
+        const std::string ANAGRAM_WORD_TITLE = "Find anagram/s of a word in the dictionary";
+        const std::string ANAGRAM_STRING_TITLE = "Find legal scrabble anagram/s and their (scores) for a string of letters";
         const unsigned MIN_RHYME_LENGTH = 3;
 
     public:
@@ -50,6 +57,15 @@ namespace cli
          */
         void rhymeWords();
         /**
+         * \brief Find anagram/s for a word from the dictionary.
+         */
+        void wordAnagrams();
+        /**
+         * \brief Find anagram/s for a string of letters, doesn't have to be a word or exist in dictionary.
+         * Prints any anagram/s found, else notifies user no anagrams are found.
+         */
+        void stringAnagrams();
+        /**
          * \brief Shutdown console app gracefully.
          */
         void shutdown() const;
@@ -65,6 +81,13 @@ namespace cli
         * \return True if word length is at least MIN_RHYME_LENGTH.
         */
         bool isValidRhymeWord(const std::string& word) const;
+        /**
+         * \brief Returns true if word is the only element in the collection.
+         * \param words The collection of words to search.
+         * \param word The word to search for.
+         * \returns True if word is the only element in the collection
+         */
+        static bool isOnlySameWord(const std::list<std::shared_ptr<lib::Word>>& words, const std::string& word);
         /**
          * \brief Returns true of the word is a control char.
          * \param word The word to check if a control char.
