@@ -90,7 +90,6 @@ void CliUserInterface::findDefinition()
         
         Logger::log(Output, "Definition for '" + word + "':");
         Logger::log(_dictionary.getDefinition(word));
-        Logger::log(Output, "Scrabble score for '" + word + "': " + to_string(_dictionary.getScrabbleScore(word)));
     }
     while (!isControlChar(word));
 

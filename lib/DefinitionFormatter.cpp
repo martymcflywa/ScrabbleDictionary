@@ -11,5 +11,6 @@ using namespace lib;
 */
 string DefinitionFormatter::format(const Word& word)
 {
-    return WordType::getName(word.getType()) + " " + word.getDefinition();
+    return WordType::getName(word.getType()) + " " + word.getDefinition() +
+        "\nScrabble score for '" + word.getWord() + "': " + to_string(word.getScrabbleScore());
 }
