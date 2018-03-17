@@ -15,8 +15,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
 {
 }
 
-TestDictionaryBuilder::TestDictionaryBuilder(const std::list<std::string>& words,
-    const std::list<std::string>& typeAndDefs) :
+TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words, const list<string>& typeAndDefs) :
     _content(buildContent(words, typeAndDefs)),
     _loader(TestLoader()),
     _formatter(DefinitionFormatter()),
@@ -57,8 +56,7 @@ string TestDictionaryBuilder::buildContent(const list<string>& words) const
     return content;
 }
 
-string TestDictionaryBuilder::buildContent(const list<string>& words,
-    const list<string> typeAndDefs)
+string TestDictionaryBuilder::buildContent(const list<string>& words, const list<string> typeAndDefs)
 {
     string content = "";
 
@@ -71,7 +69,7 @@ string TestDictionaryBuilder::buildContent(const list<string>& words,
     return content;
 }
 
-std::string TestDictionaryBuilder::buildContent(const std::string& word, const std::string& typeAndDef)
+string TestDictionaryBuilder::buildContent(const string& word, const string& typeAndDef)
 {
     return word + typeAndDef;
 }
