@@ -14,11 +14,13 @@ namespace lib {
     {
         ILoad& _loader;
         IExtract& _extractor;
+        ITask& _task;
+
         /**
-         * \brief Using std::unordered_map for O(1) lookup. No constraints re memory,
-         * and data set isn't too large so it is a better choice over std::map when
-         * searching for definition/scrabble score.
-         * Using std::shared_ptr<Word> as value as Word is shared by anagram map.
+         * \brief Was initially using std::map, but switched to std::unordered_map for O(1) lookup.
+         * No constraints re memory, and data set isn't too large, seems a better choice over std::map when
+         * searching for definition/scrabble score. Using std::shared_ptr<Word> to 
+         * share instance with ITask cache.
          */
         std::unordered_map<std::string, std::shared_ptr<Word>> _dictionary{};
 
@@ -28,8 +30,9 @@ namespace lib {
         * Using dependency injection to decouple implementation details of loading and extracting.
         * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
         * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
+        * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
         */
-        Dictionary(ILoad& loader, IExtract& extractor);
+        Dictionary(ILoad& loader, IExtract& extractor, ITask& task);
         /**
         * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents
         * from the source.

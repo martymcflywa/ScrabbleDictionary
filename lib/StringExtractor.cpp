@@ -39,10 +39,10 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
         if (currentLine == lastLine)
         {
             // the last line of the entry, time to construct the word and add it to collection.
-            const auto wordObj = WordFactory::build(word, type, definition, _printer);
+            const auto wordObj = make_shared<Word>(WordFactory::build(word, type, definition, _printer));
             output.insert(pair<string, shared_ptr<Word>>(word, wordObj));
 
-            // optimisation: handle tasks in the one loop while loading,
+            // optimisation: handle tasks in the extract loop while loading,
             // rather than multiple loops later on
             _task.handleTasks(wordObj);
 
@@ -64,16 +64,6 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
         currentLine++;
     }
     return output;
-}
-
-std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType)
-{
-    return _task.getTaskResult(taskType);
-}
-
-std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType, const std::string& word)
-{
-    return _task.getTaskResult(taskType, word);
 }
 
 /**

@@ -32,8 +32,6 @@ namespace lib
         * \return The dictionary as a map<string, Word> where the key is the word itself.
         */
         std::unordered_map<std::string, std::shared_ptr<Word>> extract(std::istream& content) override;
-        std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType) override;
-        std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType, const std::string& word) override;
     private:
         std::string extractWord(const std::string& line) const;
         /**

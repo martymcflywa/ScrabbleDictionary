@@ -18,7 +18,5 @@ namespace lib
     public:
         virtual ~IExtract() = default;
         virtual std::unordered_map<std::string, std::shared_ptr<Word>> extract(std::istream& content) = 0;
-        virtual std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType) = 0;
-        virtual std::list<std::shared_ptr<Word>> getTaskResults(TaskType taskType, const std::string& word) = 0;
     };
 }
