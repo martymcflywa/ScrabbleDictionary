@@ -66,16 +66,6 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
     return output;
 }
 
-std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType)
-{
-    return _task.getTaskResult(taskType);
-}
-
-std::list<std::shared_ptr<Word>> StringExtractor::getTaskResults(const TaskType taskType, const std::string& word)
-{
-    return _task.getTaskResult(taskType, word);
-}
-
 /**
 * \brief Uses '[' to determine location of word in the line.
 * \param line The current line being inspected from the source file.
