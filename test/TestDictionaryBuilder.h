@@ -1,20 +1,17 @@
 ﻿#pragma once
 #include <string>
-#include "TestFileFactory.h"
+#include "TestLoader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
 #include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
-#include "../lib/TextFileLoader.h"
 
 class TestDictionaryBuilder
 {
-    const std::string FILEPATH = ".\\test.txt";
     const std::string TYPE_AND_DEF = " [n]\nSome definition.\n\n";
     std::string _content;
-    TestFileFactory _fileFactory;
-    lib::TextFileLoader _loader;
+    TestLoader _loader;
     lib::DefinitionFormatter _formatter;
     lib::DefinitionPrinter _printer;
     lib::DictionaryTask _task;

@@ -11,20 +11,15 @@ using namespace lib;
 
 namespace dictionaryTaskTests
 {
-    const std::string filepath = ".\\test.txt";
-
-    auto formatter = DefinitionFormatter();
-    auto printer = DefinitionPrinter(formatter);
-
     SCENARIO("Find a word definition")
     {
+        const string foundWord = "first";
+        const string type = " [adj]\n";
+        const string definition = "The definition.";
+        const auto typeAndDef = type + definition + "\n\n";
+
         GIVEN("A dictionary with a word")
         {
-            const string foundWord = "first";
-            const string type = " [adj]\n";
-            const string definition = "The definition.";
-            const auto typeAndDef = type + definition + "\n\n";
-
             auto builder = TestDictionaryBuilder(foundWord, typeAndDef);
             auto dictionary = builder.build();
 
@@ -56,7 +51,7 @@ namespace dictionaryTaskTests
         }
     }
 
-    SCENARIO("Find longest word where the dictionary contains a single longest word")
+    SCENARIO("Find longest words in the dictionary")
     {
         GIVEN("A dictionary with a short word and a long word")
         {
@@ -82,10 +77,7 @@ namespace dictionaryTaskTests
                 }
             }
         }
-    }
 
-    SCENARIO("Find the longest words where the dictionary contains multiple longest words")
-    {
         GIVEN("A dictionary with a short word and two longest words")
         {
             const string shortWord = "AB";
@@ -116,24 +108,24 @@ namespace dictionaryTaskTests
 
     SCENARIO("Find words that end in 'logy' that have a length of seven or less characters")
     {
+        const string logy1 = "logy";
+        const string logy2 = "5logy";
+        const string logy3 = "56logy";
+        const string logy4 = "567logy";
+        const string notLogy1 = "5678logy";
+        const string notLogy2 = "logynot";
+        const auto words = list<string>
+        {
+            logy1,
+            logy2,
+            logy3,
+            logy4,
+            notLogy1,
+            notLogy2
+        };
+
         GIVEN("A dictionary with words that end in 'logy' that have a length of seven or less characters")
         {
-            const string logy1 = "logy";
-            const string logy2 = "5logy";
-            const string logy3 = "56logy";
-            const string logy4 = "567logy";
-            const string notLogy1 = "5678logy";
-            const string notLogy2 = "logynot";
-            const auto words = list<string>
-            {
-                logy1,
-                logy2,
-                logy3,
-                logy4,
-                notLogy1,
-                notLogy2
-            };
-
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
@@ -160,24 +152,24 @@ namespace dictionaryTaskTests
 
     SCENARIO("Find words that rhyme")
     {
+        const string rhyme1 = "roy";
+        const string rhyme2 = "troy";
+        const string rhyme3 = "destroy";
+        const string notRhyme1 = "oy";
+        const string notRhyme2 = "joy";
+        const string notRhyme3 = "royal";
+        const auto words = list<string>
+        {
+            rhyme1,
+            rhyme2,
+            rhyme3,
+            notRhyme1,
+            notRhyme2,
+            notRhyme3
+        };
+
         GIVEN("A dictionary with words")
         {
-            const string rhyme1 = "roy";
-            const string rhyme2 = "troy";
-            const string rhyme3 = "destroy";
-            const string notRhyme1 = "oy";
-            const string notRhyme2 = "joy";
-            const string notRhyme3 = "royal";
-            const auto words = list<string>
-            {
-                rhyme1,
-                rhyme2,
-                rhyme3,
-                notRhyme1,
-                notRhyme2,
-                notRhyme3
-            };
-
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
@@ -228,69 +220,69 @@ namespace dictionaryTaskTests
     {
         const string definition = "\nTest definition.\n\n";
 
+        const string adjectiveWord = "quixotic";
+        const auto adjectiveTypeDef = " [adj]" + definition;
+        const auto expectedAdjectiveScore = 26;
+
+        const string adverbWord = "quizzically";
+        const auto adverbTypeDef = " [adv]" + definition;
+        const auto expectedAdverbScore = 43;
+
+        const string nounWord = "zephyr";
+        const auto nounTypeDef = " [n]" + definition;
+        const auto expectedNounScore = 23;
+
+        const string nounAndVerbWord = "whistle";
+        const auto nounAndVerbTypeDef = " [n_and_v]" + definition;
+        const auto expectedNounAndVerbScore = 13;
+
+        const string prepositionWord = "versus";
+        const auto prepositionTypeDef = " [prep]" + definition;
+        const auto expectedPrepositionScore = 9;
+
+        const string verbWord = "quadruplicated";
+        const auto verbTypeDef = " [v]" + definition;
+        const auto expectedVerbScore = 29;
+
+        const string miscWord = "misc";
+        const auto miscWordTypeDef = " [misc]" + definition;
+        const auto expectedMiscScore = 0;
+
+        const string properNounWord = "propernoun";
+        const auto properNounTypeDef = " [pn]" + definition;
+        const auto expectedProperNounScore = 0;
+
+        const string hyphenWord = "hyphen-word";
+        const auto hyphenTypeDef = " [v]" + definition;
+        const auto expectedHyphenScore = 0;
+
+        const auto words = list<string>
+        {
+            adjectiveWord,
+            adverbWord,
+            nounWord,
+            nounAndVerbWord,
+            prepositionWord,
+            verbWord,
+            miscWord,
+            properNounWord,
+            hyphenWord
+        };
+        const auto typeAndDefs = list<string>
+        {
+            adjectiveTypeDef,
+            adverbTypeDef,
+            nounTypeDef,
+            nounAndVerbTypeDef,
+            prepositionTypeDef,
+            verbTypeDef,
+            miscWordTypeDef,
+            properNounTypeDef,
+            hyphenTypeDef
+        };
+
         GIVEN("A dictionary with all word types")
         {
-            const string adjectiveWord = "quixotic";
-            const auto adjectiveTypeDef = " [adj]" + definition;
-            const auto expectedAdjectiveScore = 26;
-
-            const string adverbWord = "quizzically";
-            const auto adverbTypeDef = " [adv]" + definition;
-            const auto expectedAdverbScore = 43;
-
-            const string nounWord = "zephyr";
-            const auto nounTypeDef = " [n]" + definition;
-            const auto expectedNounScore = 23;
-
-            const string nounAndVerbWord = "whistle";
-            const auto nounAndVerbTypeDef = " [n_and_v]" + definition;
-            const auto expectedNounAndVerbScore = 13;
-
-            const string prepositionWord = "versus";
-            const auto prepositionTypeDef = " [prep]" + definition;
-            const auto expectedPrepositionScore = 9;
-
-            const string verbWord = "quadruplicated";
-            const auto verbTypeDef = " [v]" + definition;
-            const auto expectedVerbScore = 29;
-
-            const string miscWord = "misc";
-            const auto miscWordTypeDef = " [misc]" + definition;
-            const auto expectedMiscScore = 0;
-
-            const string properNounWord = "propernoun";
-            const auto properNounTypeDef = " [pn]" + definition;
-            const auto expectedProperNounScore = 0;
-
-            const string hyphenWord = "hyphen-word";
-            const auto hyphenTypeDef = " [v]" + definition;
-            const auto expectedHyphenScore = 0;
-
-            const auto words = list<string>
-            {
-                adjectiveWord,
-                adverbWord,
-                nounWord,
-                nounAndVerbWord,
-                prepositionWord,
-                verbWord,
-                miscWord,
-                properNounWord,
-                hyphenWord
-            };
-            const auto typeAndDefs = list<string>
-            {
-                adjectiveTypeDef,
-                adverbTypeDef,
-                nounTypeDef,
-                nounAndVerbTypeDef,
-                prepositionTypeDef,
-                verbTypeDef,
-                miscWordTypeDef,
-                properNounTypeDef,
-                hyphenTypeDef
-            };
-
             auto builder = TestDictionaryBuilder(words, typeAndDefs);
             auto dictionary = builder.build();
 
@@ -366,25 +358,25 @@ namespace dictionaryTaskTests
 
     SCENARIO("Find anagrams")
     {
+        const string anagram1 = "tesla";
+        const string anagram2 = "least";
+        const string anagram3 = "slate";
+        const string anagram4 = "steal";
+        const string notAnagram1 = "abcde";
+        const string notAnagram2 = "slat";
+
+        const auto words = list<string>
+        {
+            anagram1,
+            anagram2,
+            anagram3,
+            anagram4,
+            notAnagram1,
+            notAnagram2
+        };
+
         GIVEN("A dictionary with words")
         {
-            const string anagram1 = "tesla";
-            const string anagram2 = "least";
-            const string anagram3 = "slate";
-            const string anagram4 = "steal";
-            const string notAnagram1 = "abcde";
-            const string notAnagram2 = "slat";
-
-            const auto words = list<string>
-            {
-                anagram1,
-                anagram2,
-                anagram3,
-                anagram4,
-                notAnagram1,
-                notAnagram2
-            };
-
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
