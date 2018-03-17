@@ -18,7 +18,8 @@ CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(diction
     _menu = 
         string("[" + MenuItem::SEARCH_DEFINITION + "] Find a word definition\n") +
         string("[" + MenuItem::LONGEST_WORDS + "] Find longest word/s in the dictionary\n") +
-        string("[" + MenuItem::WORDS_END_WITH_LOGY + "] Find words that end in 'logy' and have a length of seven or less characters\n") +
+        string("[" + MenuItem::WORDS_END_WITH_LOGY + "] Find word/s that end in 'logy' and have a length of seven or less characters\n") +
+        string("[" + MenuItem::RHYME_WORDS + "] Find word/s that rhyme\n") +
         string("[" + MenuItem::QUIT + "] Quit");
 }
 
@@ -57,6 +58,11 @@ void CliUserInterface::start()
         wordsEndWithLogy();
         return;
     }
+    if (selection == MenuItem::RHYME_WORDS)
+    {
+        rhymeWords();
+        return;
+    }
     if (selection == MenuItem::QUIT)
     {
         shutdown();
@@ -79,13 +85,13 @@ void CliUserInterface::findDefinition()
         getline(cin, word);
 
         // don't print definition for control chars
-        if (word != MenuItem::BACK && word != MenuItem::QUIT)
-        {
-            Logger::log(Output, "Definition for '" + word + "':");
-            Logger::log(_dictionary.getDefinition(word));
-        }
+        if (isControlChar(word))
+            continue;
+        
+        Logger::log(Output, "Definition for '" + word + "':");
+        Logger::log(_dictionary.getDefinition(word));
     }
-    while (word != MenuItem::BACK && word != MenuItem::QUIT);
+    while (!isControlChar(word));
 
     if (word == MenuItem::BACK)
         start();
@@ -134,6 +140,54 @@ void CliUserInterface::wordsEndWithLogy()
 }
 
 /**
+* \brief Find words that rhyme with another (last 3 letters are the same).
+*/
+void CliUserInterface::rhymeWords()
+{
+    string word;
+    do
+    {
+        Logger::log(Info, "Find word/s that rhyme:");
+        Logger::log(Input, "Enter word at least 3 letters long to find words that rhyme, [" + 
+                MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+
+        Logger::printPrompt();
+        getline(cin, word);
+
+        // don't print rhymes for control chars
+        if (isControlChar(word))
+            continue;
+        // validate input
+        if (!isValidRhymeWord(word))
+            continue;
+
+        auto rhymes = _dictionary.getRhymes(word);
+
+        // if we found nothing, or only found same word
+        if (rhymes.size() == 0 || (rhymes.size() == 1 && rhymes.begin()->get()->getWord() == word))
+        {
+            Logger::log(Output, "No rhymes found for '" + word + "'");
+            continue;
+        }
+
+        Logger::log(Output, "Found " + to_string(rhymes.size()) + " word/s that rhyme with '" + word + "':");
+
+        for (auto& it : rhymes)
+        {
+            if (it->getWord() != word)
+                Logger::log(it->getWord());
+        }
+
+    }
+    while (!isControlChar(word));
+
+    if (word == MenuItem::BACK)
+        start();
+    if (word == MenuItem::QUIT)
+        shutdown();
+}
+
+/**
 * \brief Shutdown console app gracefully.
 */
 void CliUserInterface::shutdown() const
@@ -152,10 +206,36 @@ bool CliUserInterface::isValidMenuSelection(const string& selection) const
     const auto isValid = selection == MenuItem::SEARCH_DEFINITION
         || selection == MenuItem::LONGEST_WORDS
         || selection == MenuItem::WORDS_END_WITH_LOGY
+        || selection == MenuItem::RHYME_WORDS
         || selection == MenuItem::QUIT;
 
     if (!isValid)
         Logger::log(Error, "'" + selection + "' is not a valid selection, try again");
 
     return isValid;
+}
+
+/**
+* \brief Returns true if word length is at least MIN_RHYME_LENGTH.
+* \param word The word to search for rhymes.
+* \return True if word length is at least MIN_RHYME_LENGTH.
+*/
+bool CliUserInterface::isValidRhymeWord(const std::string& word) const
+{
+    const auto isValid = word.length() >= MIN_RHYME_LENGTH;
+
+    if (!isValid)
+        Logger::log(Error, "'" + word + "' must be at least " + to_string(MIN_RHYME_LENGTH) + " letters long, try again");
+
+    return isValid;
+}
+
+/**
+* \brief Returns true of the word is a control char.
+* \param word The word to check if a control char.
+* \returns True if the word is a control char.
+*/
+bool CliUserInterface::isControlChar(const std::string& word)
+{
+    return word == MenuItem::BACK || word == MenuItem::QUIT;
 }

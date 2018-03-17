@@ -12,6 +12,7 @@ namespace cli
     {
         lib::Dictionary& _dictionary;
         std::string _menu;
+        const unsigned MIN_RHYME_LENGTH = 3;
 
     public:
         /**
@@ -45,6 +46,10 @@ namespace cli
         */
         void wordsEndWithLogy();
         /**
+         * \brief Find words that rhyme with another (last 3 letters are the same).
+         */
+        void rhymeWords();
+        /**
          * \brief Shutdown console app gracefully.
          */
         void shutdown() const;
@@ -54,5 +59,17 @@ namespace cli
          * \returns true if input matches any MenuItem.
          */
         bool isValidMenuSelection(const std::string& selection) const;
+        /**
+        * \brief Returns true if word length is at least MIN_RHYME_LENGTH.
+        * \param word The word to search for rhymes.
+        * \return True if word length is at least MIN_RHYME_LENGTH.
+        */
+        bool isValidRhymeWord(const std::string& word) const;
+        /**
+         * \brief Returns true of the word is a control char.
+         * \param word The word to check if a control char.
+         * \returns True if the word is a control char. 
+         */
+        static bool isControlChar(const std::string& word);
     };
 }

@@ -33,24 +33,24 @@ namespace lib
         /**
         * \brief Checks if current word's length is equal to or greater than 'logy' length, and less than 8 char long,
         * and ends with 'logy'. If true, word is added to collection.
-        * \param word The current word during extraction.
+        * \param wordObj The current word during extraction.
         */
-        void setLogyWords(std::shared_ptr<Word> word);
+        void setLogyWords(std::shared_ptr<Word> wordObj);
         /**
         * \brief Checks if current word's length is equal to or greater than min rhyme length.
         * If true, checks if rhyme key exists in rhyme map. If true, add to list of values,
         * else create a new map entry, with last three letters as key, and word as list entry.
-        * \param word The current word during extraction.
+        * \param wordObj The current word during extraction.
         */
-        void setRhymes(std::shared_ptr<Word> word);
+        void setRhymes(std::shared_ptr<Word> wordObj);
         /**
         * \brief Sort letters alphabetically, strip any '-'. Result is key to anagram map.
         * If key exists, add to value (list of shared_ptr<Word>). If it doesn't exist,
         * add new k/v pair of alphabetically sorted letters as key, and a new list of shared_ptr<Word>,
         * inserting current shared_ptr<Word> into it.
-        * \param word The current word during extraction.
+        * \param wordObj The current word during extraction.
         */
-        void setAnagrams(std::shared_ptr<Word> word);
+        void setAnagrams(std::shared_ptr<Word> wordObj);
         /**
         * \brief Returns the collection of longest words found in dictionary.
         * \returns The collection of longest words found in dictionary.
