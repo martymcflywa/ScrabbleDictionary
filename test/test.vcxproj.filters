@@ -56,13 +56,13 @@
     <ClCompile Include="TestFileFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StringExtractorTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DictionaryTaskTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestDictionaryBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DictionaryExtractorTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

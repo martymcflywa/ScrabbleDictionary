@@ -3,8 +3,8 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
+#include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
-#include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
 
 namespace app
@@ -16,7 +16,7 @@ namespace app
         lib::DefinitionFormatter _formatter;
         lib::DefinitionPrinter _printer;
         lib::DictionaryTask _task;
-        lib::StringExtractor _extractor;
+        lib::DictionaryExtractor _extractor;
         lib::Dictionary _dictionary;
         cli::CliUserInterface _ui;
 
