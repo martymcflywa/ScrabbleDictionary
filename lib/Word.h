@@ -32,6 +32,11 @@ namespace lib
         int getScrabbleScore() const;
         std::string printDefinition() const;
         /**
+         * \brief Returns true if word is not misc, proper noun or hyphenated.
+         * \return True if word type is not misc, proper noun or hyphenated.
+         */
+        bool isLegalScrabbleWord() const;
+        /**
          * \brief Implementation of operator ==, really useful for unit tests.
          * \param that The other Word to compare to.
          * \returns true if both Words contain the same values.
@@ -41,8 +46,8 @@ namespace lib
     private:
         static Type resolveType(const std::string& type);
         /**
-        * \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
-        * \returns The score for the word if not Misc, ProperNoun and hyphenated, else returns 0.
+        * \brief Calculates the score for the word. Misc, proper noun or hyphenated words always return 0;
+        * \returns The score for the word if not misc, proper noun or hyphenated words, else returns 0.
         */
         int calculateScrabbleScore() const;
         static std::string validate(const std::string& input);
