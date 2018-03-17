@@ -38,9 +38,9 @@ void Application::init()
 
 
 /**
- * \brief Start at main menu.
+ * \brief Starts at main menu.
  */
 void Application::run()
 {
-    _ui.mainMenu();
+    _ui.start();
 }

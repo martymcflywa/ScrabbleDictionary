@@ -28,7 +28,7 @@ CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(diction
 * or rage quits with CTRL+C.
 * \return The selection made by the user.
 */
-void CliUserInterface::mainMenu()
+void CliUserInterface::start()
 {
     // handy input validation from module 5 loops
     string selection;
@@ -59,8 +59,7 @@ void CliUserInterface::mainMenu()
     }
     if (selection == MenuItem::QUIT)
     {
-        Logger::log(Info, "Shutting down, goodbye");
-        exit(0);
+        shutdown();
     }
 }
 
@@ -75,20 +74,23 @@ void CliUserInterface::findDefinition()
     do
     {
         Logger::log(Info, "Find a word definition:");
-        Logger::log(Input, "Enter word to find definition, or [" + MenuItem::BACK + "] to go back");
+        Logger::log(Input, "Enter word to find definition, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
         Logger::printPrompt();
         getline(cin, word);
 
-        // don't print definition for back 'button'
-        if (word != MenuItem::BACK)
+        // don't print definition for control chars
+        if (word != MenuItem::BACK && word != MenuItem::QUIT)
         {
             Logger::log(Output, "Definition for '" + word + "':");
             Logger::log(_dictionary.getDefinition(word));
         }
     }
-    while (word != MenuItem::BACK);
+    while (word != MenuItem::BACK && word != MenuItem::QUIT);
 
-    mainMenu();
+    if (word == MenuItem::BACK)
+        start();
+    if (word == MenuItem::QUIT)
+        shutdown();
 }
 
 /**
@@ -108,7 +110,7 @@ void CliUserInterface::longestWords()
     }
 
     // head back to main menu when task complete
-    mainMenu();
+    start();
 }
 
 /**
@@ -128,7 +130,16 @@ void CliUserInterface::wordsEndWithLogy()
     }
 
     // head back to main menu when task complete
-    mainMenu();
+    start();
+}
+
+/**
+* \brief Shutdown console app gracefully.
+*/
+void CliUserInterface::shutdown() const
+{
+    Logger::log(Info, "Shutting down, goodbye");
+    exit(0);
 }
 
 /**
