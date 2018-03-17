@@ -5,19 +5,19 @@
 #include "TestLoader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
+#include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
 #include "../lib/EmptyStringException.h"
-#include "../lib/StringExtractor.h"
 
 using namespace std;
 using namespace lib;
 
-namespace stringExtractorTests
+namespace dictionaryExtractorTests
 {
     auto formatter = DefinitionFormatter();
     auto printer = DefinitionPrinter(formatter);
     auto task = DictionaryTask();
-    auto extractor = StringExtractor(printer, task);
+    auto extractor = DictionaryExtractor(printer, task);
 
     SCENARIO("String extractor reads valid file")
     {

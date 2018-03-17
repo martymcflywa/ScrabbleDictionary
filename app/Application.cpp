@@ -19,7 +19,7 @@ Application::Application() :
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
-    _extractor(StringExtractor(_printer, _task)),
+    _extractor(DictionaryExtractor(_printer, _task)),
     _dictionary(Dictionary(_loader, _extractor, _task)),
     _ui(CliUserInterface(_dictionary))
 {

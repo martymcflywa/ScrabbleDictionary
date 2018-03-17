@@ -1,17 +1,17 @@
 ﻿#include "stdafx.h"
-#include "StringExtractor.h"
+#include "DictionaryExtractor.h"
 #include "WordFactory.h"
 
 using namespace std;
 using namespace lib;
 
 /**
-* \brief StringExtractor constructor.
+* \brief DictionaryExtractor constructor.
 * \param printer Implementation of IPrinter interface, dependency of constructing Words.
 * \param task Implementation of ITask interface, responsible for performing tasks outlined in the brief,
 * ie. Get longest word, get words that end with 'logy'.
 */
-StringExtractor::StringExtractor(IPrint& printer, ITask& task) : _printer(printer), _task(task)
+DictionaryExtractor::DictionaryExtractor(IPrint& printer, ITask& task) : _printer(printer), _task(task)
 {
 }
 
@@ -21,7 +21,7 @@ StringExtractor::StringExtractor(IPrint& printer, ITask& task) : _printer(printe
 * \param content The stream from source dictionary.
 * \return The dictionary as a map<string, Word> where the key is the word itself.
 */
-unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& content)
+unordered_map<string, shared_ptr<Word>> DictionaryExtractor::extract(istream& content)
 {
     const auto firstLine = 0;
     const auto lastLine = 2;
@@ -71,7 +71,7 @@ unordered_map<string, shared_ptr<Word>> StringExtractor::extract(istream& conten
 * \param line The current line being inspected from the source file.
 * \returns The word.
 */
-string StringExtractor::extractWord(const string& line) const
+string DictionaryExtractor::extractWord(const string& line) const
 {
     const auto start = 0;
     const auto length = line.find("[", start) - 1;
@@ -83,7 +83,7 @@ string StringExtractor::extractWord(const string& line) const
 * \param line The current line being inspected from the source file.
 * \returns The type.
 */
-string StringExtractor::extractType(const string& line) const
+string DictionaryExtractor::extractType(const string& line) const
 {
     const auto start = line.find("[", 0) + 1;
     const auto end = line.find("]", start);
@@ -98,7 +98,7 @@ string StringExtractor::extractType(const string& line) const
 * \param length The length of the word.
 * \returns The word.
 */
-string StringExtractor::extract(const string& line, const int start, const int length)
+string DictionaryExtractor::extract(const string& line, const int start, const int length)
 {
     if (start < 0 || length < 1)
         return "";

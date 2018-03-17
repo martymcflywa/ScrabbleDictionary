@@ -12,19 +12,19 @@ namespace lib
     * Second line contains definition.
     * Third line is empty, delimiter for the next entry.
     */
-    class StringExtractor : public IExtract
+    class DictionaryExtractor : public IExtract
     {
         IPrint& _printer;
         ITask& _task;
 
     public:
         /**
-        * \brief StringExtractor constructor.
+        * \brief DictionaryExtractor constructor.
         * \param printer Implementation of IPrinter interface, dependency of constructing Words.
         * \param task Implementation of ITask interface, responsible for performing tasks outlined in the brief,
         * ie. Get longest word, get words that end with 'logy'.
         */
-        StringExtractor(IPrint& printer, ITask& task);
+        DictionaryExtractor(IPrint& printer, ITask& task);
         /**
         * \brief Extracts/parses words, types and definitions from a source dictionary. It adds an optimization where dictionary tasks
         * are evaluated in this loop as well by using ITask, improves response times when user requests answers for questions.

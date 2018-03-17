@@ -4,8 +4,8 @@
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
+#include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
-#include "../lib/StringExtractor.h"
 #include "../lib/TextFileLoader.h"
 
 class TestDictionaryBuilder
@@ -18,7 +18,7 @@ class TestDictionaryBuilder
     lib::DefinitionFormatter _formatter;
     lib::DefinitionPrinter _printer;
     lib::DictionaryTask _task;
-    lib::StringExtractor _extractor;
+    lib::DictionaryExtractor _extractor;
     lib::Dictionary _dictionary;
 public:
     TestDictionaryBuilder(const std::list<std::string>& words);

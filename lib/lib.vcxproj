@@ -161,7 +161,7 @@
     <ClInclude Include="ITask.h" />
     <ClInclude Include="IUserInterface.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StringExtractor.h" />
+    <ClInclude Include="DictionaryExtractor.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TaskType.h" />
     <ClInclude Include="TextFileLoader.h" />
@@ -185,7 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="StringExtractor.cpp" />
+    <ClCompile Include="DictionaryExtractor.cpp" />
     <ClCompile Include="TextFileLoader.cpp" />
     <ClCompile Include="UnsupportedTaskException.cpp" />
     <ClCompile Include="UnsupportedTypeException.cpp" />
