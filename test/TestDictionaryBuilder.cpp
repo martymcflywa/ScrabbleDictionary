@@ -12,7 +12,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(StringExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor))
+    _dictionary(Dictionary(_loader, _extractor, _task))
 {
 }
 
@@ -25,7 +25,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const std::list<std::string>& words
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(StringExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor))
+    _dictionary(Dictionary(_loader, _extractor, _task))
 {
 }
 
@@ -37,7 +37,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const string& word, const string& t
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(StringExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor))
+    _dictionary(Dictionary(_loader, _extractor, _task))
 {
 }
 

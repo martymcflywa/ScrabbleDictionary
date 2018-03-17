@@ -9,8 +9,12 @@ using namespace lib;
  * Using dependency injection to decouple implementation details of loading and extracting.
  * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
  * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
+ * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
  */
-Dictionary::Dictionary(ILoad& loader, IExtract& extractor) : _loader(loader), _extractor(extractor)
+Dictionary::Dictionary(ILoad& loader, IExtract& extractor, ITask& task) : 
+    _loader(loader), 
+    _extractor(extractor),
+    _task(task)
 {
 }
 
@@ -46,7 +50,7 @@ string Dictionary::getDefinition(const string& word)
 */
 list<shared_ptr<Word>> Dictionary::getLongestWords() const
 {
-    return _extractor.getTaskResults(LongestWords);
+    return _task.getTaskResult(LongestWords);
 }
 
 /**
@@ -55,7 +59,7 @@ list<shared_ptr<Word>> Dictionary::getLongestWords() const
 */
 list<shared_ptr<Word>> Dictionary::getLogyWords() const
 {
-    return _extractor.getTaskResults(LogyWords);
+    return _task.getTaskResult(LogyWords);
 }
 
 /**
@@ -65,7 +69,7 @@ list<shared_ptr<Word>> Dictionary::getLogyWords() const
 */
 list<shared_ptr<Word>> Dictionary::getRhymes(const string& word) const
 {
-    return _extractor.getTaskResults(Rhymes, word);
+    return _task.getTaskResult(Rhymes, word);
 }
 
 /**
@@ -109,7 +113,7 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 */
 list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
 {
-    return _extractor.getTaskResults(Anagrams, letters);
+    return _task.getTaskResult(Anagrams, letters);
 }
 
 /**
