@@ -16,7 +16,7 @@ using namespace lib;
 CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(dictionary)
 {
     _menu = 
-        string("[" + MenuItem::SEARCH_DEFINITION + "] Find a word definition\n") +
+        string("[" + MenuItem::SEARCH_DEFINITION + "] Find a word definition and scrabble score\n") +
         string("[" + MenuItem::LONGEST_WORDS + "] Find longest word/s in the dictionary\n") +
         string("[" + MenuItem::WORDS_END_WITH_LOGY + "] Find word/s that end in 'logy' and have a length of seven or less characters\n") +
         string("[" + MenuItem::RHYME_WORDS + "] Find word/s that rhyme\n") +
@@ -79,8 +79,8 @@ void CliUserInterface::findDefinition()
     string word;
     do
     {
-        Logger::log(Info, "Find a word definition:");
-        Logger::log(Input, "Enter word to find definition, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Info, "Find a word definition and scrabble score:");
+        Logger::log(Input, "Enter word to find its definition and scrabble score, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
         Logger::printPrompt();
         getline(cin, word);
 
@@ -90,6 +90,7 @@ void CliUserInterface::findDefinition()
         
         Logger::log(Output, "Definition for '" + word + "':");
         Logger::log(_dictionary.getDefinition(word));
+        Logger::log(Output, "Scrabble score for '" + word + "': " + to_string(_dictionary.getScrabbleScore(word)));
     }
     while (!isControlChar(word));
 
