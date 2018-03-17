@@ -1,25 +1,40 @@
 ﻿#pragma once
-#include <memory>
 #include <list>
+#include <memory>
 #include "../lib/Word.h"
 
 class TestHelpers
 {
 public:
+    static bool stringContains(const std::string& expected, const std::string& actual)
+    {
+        return actual.find(expected) != std::string::npos;
+    }
     /**
      * \brief Returns true if list of strings contains word.
      * \param list The list to search.
      * \param target The word to search for.
      * \returns True if the list contains the word.
      */
-    static bool listContainsWord(std::list<std::string> list, const std::string& target);
+    static bool listContainsWord(std::list<std::string> list, const std::string& target)
+    {
+        return find(list.begin(), list.end(), target) != list.end();
+    }
     /**
      * \brief Overload which searches list of std::shared_ptr<lib::Word>
      * \param list The list to search.
      * \param target The word to search for.
      * \returns True if the list contains the word. 
      */
-    static bool listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target);
+    static bool listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target)
+    {
+        for (const auto word : list)
+        {
+            if (word->getWord() == target)
+                return true;
+        }
+        return false;
+    }
     /**
     * \brief Test helper to compare smart ptr managed object equality,
     * see https://stackoverflow.com/a/38391135. Overload for shared_ptr.
@@ -31,7 +46,14 @@ public:
     * both expected and actual objects are the same
     */
     template<class TExpected, class TActual>
-    static bool isSmartPtrEqual(const std::shared_ptr<TExpected> expected, const std::shared_ptr<TActual> actual);
+    static bool isSmartPtrEqual(const std::shared_ptr<TExpected> expected, const std::shared_ptr<TActual> actual)
+    {
+        if (expected == actual)
+            return true;
+        if (expected && actual)
+            return *expected == *actual;
+        return false;
+    }
     /**
     * \brief Test helper to compare smart ptr managed object equality,
     * see https://stackoverflow.com/a/38391135. Overload for unique_ptr.
@@ -43,40 +65,12 @@ public:
     * both expected and actual objects are the same
     */
     template<class TExpected, class TActual>
-    static bool isSmartPtrEqual(const std::unique_ptr<TExpected> expected, const std::unique_ptr<TActual> actual);
-};
-
-inline bool TestHelpers::listContainsWord(std::list<std::string> list, const std::string& target)
-{
-    return find(list.begin(), list.end(), target) != list.end();
-}
-
-inline bool TestHelpers::listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target)
-{
-    for (const auto word : list)
+    static bool isSmartPtrEqual(const std::unique_ptr<TExpected> expected, const std::unique_ptr<TActual> actual)
     {
-        if (word->getWord() == target)
+        if (expected == actual)
             return true;
+        if (expected && actual)
+            return *expected == *actual;
+        return false;
     }
-    return false;
-}
-
-template <class TExpected, class TActual>
-bool TestHelpers::isSmartPtrEqual(const std::shared_ptr<TExpected> expected, const std::shared_ptr<TActual> actual)
-{
-    if (expected == actual)
-        return true;
-    if (expected && actual)
-        return *expected == *actual;
-    return false;
-}
-
-template <class TExpected, class TActual>
-bool TestHelpers::isSmartPtrEqual(const std::unique_ptr<TExpected> expected, const std::unique_ptr<TActual> actual)
-{
-    if (expected == actual)
-        return true;
-    if (expected && actual)
-        return *expected == *actual;
-    return false;
-}
+};

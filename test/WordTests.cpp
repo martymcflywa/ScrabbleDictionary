@@ -6,6 +6,7 @@
 #include "../lib/EmptyStringException.h"
 #include "../lib/UnsupportedTypeException.h"
 #include "../lib/Word.h"
+#include "TestHelpers.h"
 
 using namespace std;
 using namespace lib;
@@ -20,7 +21,7 @@ namespace wordTests
     auto formatter = DefinitionFormatter();
     auto printer = DefinitionPrinter(formatter);
 
-    SCENARIO("Word with valid type")
+    SCENARIO("Word getters")
     {
         GIVEN("An entry with a word, valid type and definition")
         {
@@ -36,26 +37,26 @@ namespace wordTests
                 {
                     REQUIRE(testWord == actualWord);
                     REQUIRE(testType == actualType);
-                    REQUIRE(testDefinition == actualDefinition);
+                    REQUIRE(TestHelpers::stringContains(testDefinition, actualDefinition));
                 }
             }
 
-            AND_WHEN("The entry is printed")
+            AND_WHEN("The definition is printed")
             {
                 const auto actual = word.printDefinition();
 
-                THEN("The print output contains a type header with definition")
+                THEN("The output includes the word type")
                 {
                     const auto expectedType = WordType::getName(testType) + " ";
                     const auto expected = expectedType + testDefinition;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
     }
 
-    SCENARIO("Word with invalid type")
+    SCENARIO("Word validation")
     {
         GIVEN("An entry with a word, invalid type and definition")
         {
@@ -76,10 +77,7 @@ namespace wordTests
                 }
             }
         }
-    }
 
-    SCENARIO("Word with empty word")
-    {
         GIVEN("An entry with an empty word, valid type and definition")
         {
             const string emptyWord = "";
@@ -99,10 +97,7 @@ namespace wordTests
                 }
             }
         }
-    }
 
-    SCENARIO("Word with empty type")
-    {
         GIVEN("An entry with a word, empty type, and definition")
         {
             const string emptyType = "";
@@ -123,10 +118,7 @@ namespace wordTests
                 }
             }
         }
-    }
 
-    SCENARIO("Word with empty definition")
-    {
         GIVEN("An entry with a word, valid type, and empty definition")
         {
             const string emptyDefinition = "";
@@ -148,7 +140,7 @@ namespace wordTests
         }
     }
 
-    SCENARIO("Word verb definition printing")
+    SCENARIO("Word definitions")
     {
         GIVEN("A verb Word")
         {
@@ -167,14 +159,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Verb) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word noun definition printing")
-    {
         GIVEN("A noun Word")
         {
             const string word = "test";
@@ -192,14 +181,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Noun) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word adverb definition printing")
-    {
         GIVEN("An adverb Word")
         {
             const string word = "test";
@@ -217,14 +203,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Adverb) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word adjective definition printing")
-    {
         GIVEN("An adjective Word")
         {
             const string word = "test";
@@ -242,14 +225,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Adjective) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word preposition definition printing")
-    {
         GIVEN("A preposition Word")
         {
             const string word = "test";
@@ -267,14 +247,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Preposition) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word proper noun definition printing")
-    {
         GIVEN("A proper noun Word")
         {
             const string word = "test";
@@ -292,14 +269,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(ProperNoun) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word noun and verb definition printing")
-    {
         GIVEN("A noun and verb Word")
         {
             const string word = "test";
@@ -317,14 +291,11 @@ namespace wordTests
                     const auto expectedType = WordType::getName(NounAndVerb) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }
-    }
 
-    SCENARIO("Word misc definition printing")
-    {
         GIVEN("A misc Word")
         {
             const string word = "test";
@@ -342,7 +313,7 @@ namespace wordTests
                     const auto expectedType = WordType::getName(Misc) + " ";
                     const auto expected = expectedType + definiton;
 
-                    REQUIRE(expected == actual);
+                    REQUIRE(TestHelpers::stringContains(expected, actual));
                 }
             }
         }

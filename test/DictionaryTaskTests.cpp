@@ -2,8 +2,6 @@
 #include "catch.hpp"
 #include "TestDictionaryBuilder.h"
 #include "TestHelpers.h"
-#include "../lib/DefinitionFormatter.h"
-#include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
 
 using namespace std;
@@ -11,7 +9,7 @@ using namespace lib;
 
 namespace dictionaryTaskTests
 {
-    SCENARIO("Find a word definition")
+    SCENARIO("Find a word definition and scrabble score")
     {
         const string foundWord = "first";
         const string type = " [adj]\n";
@@ -27,10 +25,12 @@ namespace dictionaryTaskTests
             {
                 const auto actual = dictionary.getDefinition(foundWord);
 
-                THEN("The definition is printed")
+                THEN("The definition and scrabble score is printed")
                 {
                     const auto expectedType = WordType::getName(Adjective);
-                    const auto expected = expectedType + " " + definition;
+                    const auto expectedScore = dictionary.getScrabbleScore(foundWord);
+                    const auto expected = expectedType + " " + definition + 
+                        "\nScrabble score for '" + foundWord + "': " + to_string(expectedScore);
 
                     REQUIRE(expected == actual);
                 }
