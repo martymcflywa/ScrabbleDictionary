@@ -26,24 +26,28 @@ namespace cli
         * or rage quits with CTRL+C.
         * \return The selection made by the user.
         */
-        void mainMenu() override;
+        void start() override;
+    private:
         /**
         * \brief Ask user to enter a word to search the dictionary with.
         * If word is found, print the definition, else notify user word is not found.
         * Repeat until user chooses to go back to main menu.
         */
-        void findDefinition() override;
+        void findDefinition();
         /**
         * \brief Show user the longest word/s in the dictionary.
         * Then go back to main menu.
         */
-        void longestWords() override;
+        void longestWords();
         /**
-         * \brief Show user words that end in 'logy' that have a length of seven or less chars.
-         * Then go back to main menu.
+        * \brief Show user words that end in 'logy' that have a length of seven or less chars.
+        * Then go back to main menu.
+        */
+        void wordsEndWithLogy();
+        /**
+         * \brief Shutdown console app gracefully.
          */
-        void wordsEndWithLogy() override;
-    private:
+        void shutdown() const;
         /**
          * \brief Returns true if user selection at main menu matches any MenuItem.
          * \param selection The selection made by the user at main menu.
