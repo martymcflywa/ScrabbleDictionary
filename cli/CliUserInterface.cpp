@@ -16,10 +16,12 @@ using namespace lib;
 CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(dictionary)
 {
     _menu = 
-        string("[" + MenuItem::SEARCH_DEFINITION + "] Find a word definition and scrabble score\n") +
-        string("[" + MenuItem::LONGEST_WORDS + "] Find longest word/s in the dictionary\n") +
-        string("[" + MenuItem::WORDS_END_WITH_LOGY + "] Find word/s that end in 'logy' and have a length of seven or less characters\n") +
-        string("[" + MenuItem::RHYME_WORDS + "] Find word/s that rhyme\n") +
+        string("[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + "\n") +
+        string("[" + MenuItem::LONGEST_WORDS + "] " + LONGEST_WORDS_TITLE + "\n") +
+        string("[" + MenuItem::LOGY_WORDS + "] " + LOGY_WORDS_TITLE + "\n") +
+        string("[" + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + "\n") +
+        string("[" + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + "\n") +
+        string("[" + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + "\n") +
         string("[" + MenuItem::QUIT + "] Quit");
 }
 
@@ -43,7 +45,7 @@ void CliUserInterface::start()
     } 
     while (!isValidMenuSelection(selection));
 
-    if (selection == MenuItem::SEARCH_DEFINITION)
+    if (selection == MenuItem::SEARCH_DEFINITION_SCORE)
     {
         findDefinition();
         return;
@@ -53,7 +55,7 @@ void CliUserInterface::start()
         longestWords();
         return;
     }
-    if (selection == MenuItem::WORDS_END_WITH_LOGY)
+    if (selection == MenuItem::LOGY_WORDS)
     {
         wordsEndWithLogy();
         return;
@@ -61,6 +63,16 @@ void CliUserInterface::start()
     if (selection == MenuItem::RHYME_WORDS)
     {
         rhymeWords();
+        return;
+    }
+    if (selection == MenuItem::ANAGRAM_WORD)
+    {
+        wordAnagrams();
+        return;
+    }
+    if (selection == MenuItem::ANAGRAM_STRING)
+    {
+        stringAnagrams();
         return;
     }
     if (selection == MenuItem::QUIT)
@@ -79,8 +91,8 @@ void CliUserInterface::findDefinition()
     string word;
     do
     {
-        Logger::log(Info, "Find a word definition and scrabble score:");
-        Logger::log(Input, "Enter word to find its definition and scrabble score, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Info, SEARCH_DEFINITION_TITLE + ":");
+        Logger::log(Input, "Enter a word to find its definition and scrabble score, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
         Logger::printPrompt();
         getline(cin, word);
 
@@ -88,7 +100,7 @@ void CliUserInterface::findDefinition()
         if (isControlChar(word))
             continue;
         
-        Logger::log(Output, "Definition for '" + word + "':");
+        Logger::log(Output, "Definition and scrabble score for '" + word + "':");
         Logger::log(_dictionary.getDefinition(word));
     }
     while (!isControlChar(word));
@@ -147,8 +159,8 @@ void CliUserInterface::rhymeWords()
     string word;
     do
     {
-        Logger::log(Info, "Find word/s that rhyme:");
-        Logger::log(Input, "Enter word at least 3 letters long to find words that rhyme, [" + 
+        Logger::log(Info, RHYME_WORDS_TITLE + ":");
+        Logger::log(Input, "Enter a word at least 3 letters long to find words that rhyme, [" + 
                 MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
 
         Logger::printPrompt();
@@ -163,8 +175,8 @@ void CliUserInterface::rhymeWords()
 
         auto rhymes = _dictionary.getRhymes(word);
 
-        // if we found nothing, or only found same word
-        if (rhymes.size() == 0 || (rhymes.size() == 1 && rhymes.begin()->get()->getWord() == word))
+        // if nothing found, or only found same word
+        if (rhymes.empty() || isOnlySameWord(rhymes, word))
         {
             Logger::log(Output, "No rhymes found for '" + word + "'");
             continue;
@@ -174,12 +186,112 @@ void CliUserInterface::rhymeWords()
 
         for (auto& it : rhymes)
         {
+            // don't print if its the input word
             if (it->getWord() != word)
                 Logger::log(it->getWord());
         }
 
     }
     while (!isControlChar(word));
+
+    if (word == MenuItem::BACK)
+        start();
+    if (word == MenuItem::QUIT)
+        shutdown();
+}
+
+/**
+* \brief Find anagram/s for a word from the dictionary.
+*/
+void CliUserInterface::wordAnagrams()
+{
+    string word;
+    do
+    {
+        Logger::log(Info, ANAGRAM_WORD_TITLE + ":");
+        Logger::log(Input, "Enter a word from the dictionary to find it's anagram/s, [" +
+            MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+
+        Logger::printPrompt();
+        getline(cin, word);
+
+        // don't print anagrams for control chars
+        if (isControlChar(word))
+            continue;
+
+        auto anagrams = _dictionary.getWordAnagrams(word);
+
+        // if nothing found, or only found same word
+        if (anagrams.empty() || isOnlySameWord(anagrams, word))
+        {
+            Logger::log(Output, "No anagrams found for '" + word + "'");
+            continue;
+        }
+
+        Logger::log(Output, "Found " + to_string(anagrams.size() - 1) + " anagram/s of '" + word + "':");
+
+        for (const auto& it : anagrams)
+        {
+            // filter out input word
+            if (it->getWord() != word)
+                Logger::log(it->getWord());
+        }
+
+    } while (!isControlChar(word));
+
+    if (word == MenuItem::BACK)
+        start();
+    if (word == MenuItem::QUIT)
+        shutdown();
+}
+
+/**
+* \brief Find anagram/s for a string of letters, doesn't have to be a word or exist in dictionary.
+* Prints any anagram/s found, else notifies user no anagrams are found.
+*/
+void CliUserInterface::stringAnagrams()
+{
+    string word;
+    do
+    {
+        Logger::log(Info, ANAGRAM_STRING_TITLE + ":");
+        Logger::log(Input, "Enter a string of letters to find anagram/s with its (score), [" +
+            MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+
+        Logger::printPrompt();
+        getline(cin, word);
+
+        // don't print anagrams for control chars
+        if (isControlChar(word))
+            continue;
+
+        auto anagrams = _dictionary.getStringAnagrams(word);
+
+        // if we found nothing, or only found the same word
+        if (anagrams.empty() || isOnlySameWord(anagrams, word))
+        {
+            Logger::log(Output, "No anagrams found for '" + word + "'");
+            continue;
+        }
+
+        // accumulate results to this list
+        auto legalAnagrams = list<string>();
+        for (const auto& it : anagrams)
+        {
+            // filter out input word, or illegal scrabble words
+            if (it->getWord() == word || !it->isLegalScrabbleWord())
+                continue;
+
+            legalAnagrams.push_back(string(it->getWord() + " (" + to_string(it->getScrabbleScore()) + ")"));
+        }
+
+        // print results
+        Logger::log(Output, "Found " + to_string(legalAnagrams.size()) + " legal scrabble anagram/s of '" + word + "':");
+        for(const auto& anagram : legalAnagrams)
+        {
+            Logger::log(anagram);
+        }
+    } while (!isControlChar(word));
 
     if (word == MenuItem::BACK)
         start();
@@ -203,10 +315,12 @@ void CliUserInterface::shutdown() const
 */
 bool CliUserInterface::isValidMenuSelection(const string& selection) const
 {
-    const auto isValid = selection == MenuItem::SEARCH_DEFINITION
+    const auto isValid = selection == MenuItem::SEARCH_DEFINITION_SCORE
         || selection == MenuItem::LONGEST_WORDS
-        || selection == MenuItem::WORDS_END_WITH_LOGY
+        || selection == MenuItem::LOGY_WORDS
         || selection == MenuItem::RHYME_WORDS
+        || selection == MenuItem::ANAGRAM_WORD
+        || selection == MenuItem::ANAGRAM_STRING
         || selection == MenuItem::QUIT;
 
     if (!isValid)
@@ -220,7 +334,7 @@ bool CliUserInterface::isValidMenuSelection(const string& selection) const
 * \param word The word to search for rhymes.
 * \return True if word length is at least MIN_RHYME_LENGTH.
 */
-bool CliUserInterface::isValidRhymeWord(const std::string& word) const
+bool CliUserInterface::isValidRhymeWord(const string& word) const
 {
     const auto isValid = word.length() >= MIN_RHYME_LENGTH;
 
@@ -228,6 +342,17 @@ bool CliUserInterface::isValidRhymeWord(const std::string& word) const
         Logger::log(Error, "'" + word + "' must be at least " + to_string(MIN_RHYME_LENGTH) + " letters long, try again");
 
     return isValid;
+}
+
+/**
+* \brief Returns true if word is the only element in the collection.
+* \param words The collection of words to search.
+* \param word The word to search for.
+* \returns True if word is the only element in the collection
+*/
+bool CliUserInterface::isOnlySameWord(const list<shared_ptr<Word>>& words, const string& word)
+{
+    return words.size() == 1 && words.begin()->get()->getWord() == word;
 }
 
 /**

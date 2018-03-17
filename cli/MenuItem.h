@@ -8,10 +8,12 @@ namespace cli
      */
     struct MenuItem
     {
-        static const std::string SEARCH_DEFINITION;
+        static const std::string SEARCH_DEFINITION_SCORE;
         static const std::string LONGEST_WORDS;
-        static const std::string WORDS_END_WITH_LOGY;
+        static const std::string LOGY_WORDS;
         static const std::string RHYME_WORDS;
+        static const std::string ANAGRAM_WORD;
+        static const std::string ANAGRAM_STRING;
         static const std::string QUIT;
         static const std::string BACK;
     };
