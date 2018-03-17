@@ -10,7 +10,7 @@ namespace lib
     class WordFactory
     {
     public:
-        static std::shared_ptr<Word> build(
+        static Word build(
             const std::string& word,
             const std::string& type,
             const std::string& definition,
