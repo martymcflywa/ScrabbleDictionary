@@ -6,8 +6,7 @@ using namespace lib;
 
 TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
     _content(buildContent(words)),
-    _fileFactory(TestFileFactory(FILEPATH, _content)),
-    _loader(TextFileLoader(FILEPATH)),
+    _loader(TestLoader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
@@ -19,8 +18,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
 TestDictionaryBuilder::TestDictionaryBuilder(const std::list<std::string>& words,
     const std::list<std::string>& typeAndDefs) :
     _content(buildContent(words, typeAndDefs)),
-    _fileFactory(TestFileFactory(FILEPATH, _content)),
-    _loader(TextFileLoader(FILEPATH)),
+    _loader(TestLoader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
@@ -31,8 +29,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const std::list<std::string>& words
 
 TestDictionaryBuilder::TestDictionaryBuilder(const string& word, const string& typeAndDef) :
     _content(buildContent(word, typeAndDef)),
-    _fileFactory(TestFileFactory(FILEPATH, _content)),
-    _loader(TextFileLoader(FILEPATH)),
+    _loader(TestLoader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
@@ -43,9 +40,9 @@ TestDictionaryBuilder::TestDictionaryBuilder(const string& word, const string& t
 
 Dictionary& TestDictionaryBuilder::build()
 {
+    _loader.setTestFile(_content);
     _dictionary.loadDictionary();
     _loader.dispose();
-    _fileFactory.cleanup();
 
     return _dictionary;
 }
