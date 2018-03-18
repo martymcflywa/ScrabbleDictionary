@@ -11,7 +11,10 @@ using namespace lib;
  * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
  * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
  */
-Dictionary::Dictionary(ILoad& loader, IExtract& extractor, ITask& task) : 
+Dictionary::Dictionary(
+        ILoad& loader,
+        IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& extractor,
+        ITask& task) :
     _loader(loader), 
     _extractor(extractor),
     _task(task)

@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "IExtract.h"
 #include "ILoad.h"
+#include "ITask.h"
 #include "Word.h"
 
 namespace lib {
@@ -13,14 +14,21 @@ namespace lib {
     class Dictionary
     {
         ILoad& _loader;
-        IExtract& _extractor;
+        IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& _extractor;
         ITask& _task;
 
         /**
-         * \brief Was initially using std::map, but switched to std::unordered_map for O(1) lookup.
-         * No constraints re memory, and data set isn't too large, seems a better choice over std::map when
-         * searching for definition/scrabble score. Using std::shared_ptr<Word> to 
-         * share instance with ITask cache.
+         * \brief Was initially using std::map, but switched to std::unordered_map for O(1) hash lookup.
+         * Apparently uses more memory but brief has no memory constraints, and data set isn't too large.
+         * Seems a better choice over std::map when searching for definition/scrabble score with O(log n) bst lookup. 
+         * Using std::shared_ptr<Word> to share instance with ITask result cache.
+         * 
+         * Further investigation:
+         * See discussion on stackoverflow re map vs. unordered_map: https://stackoverflow.com/q/2196995
+         * This answer advises map has better performance due to bst key search: https://stackoverflow.com/a/2197457
+         * But this answer argues that when inserting sorted to map, bst depth negates the performance: https://stackoverflow.com/a/12512109
+         * Since dictionary2018.txt is sorted, map's bst would be unbalanced on insert. Sticking with unoredered_map.
+         * Also interesting point re DoS vulnerability of unordered_map: https://stackoverflow.com/a/41384008
          */
         std::unordered_map<std::string, std::shared_ptr<Word>> _dictionary{};
 
@@ -32,7 +40,10 @@ namespace lib {
         * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
         * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
         */
-        Dictionary(ILoad& loader, IExtract& extractor, ITask& task);
+        Dictionary(
+            ILoad& loader, 
+            IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& extractor, 
+            ITask& task);
         /**
         * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents
         * from the source.
