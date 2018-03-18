@@ -169,7 +169,7 @@ list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
     if (it == _rhymes.end())
         return list<shared_ptr<Word>>();
 
-    return it->second;
+    return removeSearchWord(word, it->second);
 }
 
 /**
@@ -187,7 +187,7 @@ list<shared_ptr<Word>> DictionaryTask::getAnagrams(const string& word)
     if (it == _anagrams.end())
         return list<shared_ptr<Word>>();
 
-    return it->second;
+    return removeSearchWord(word, it->second);
 }
 
 /**
@@ -225,6 +225,29 @@ string DictionaryTask::getAnagramKey(const string& word)
     sort(key.begin(), key.end());
 
     return key;
+}
+
+/**
+* \brief Filters out the word being searched from the task result.
+* \param word The word being searched.
+* \param result The result from the task.
+* \return A new result without the word being searched.
+*/
+list<shared_ptr<Word>> DictionaryTask::removeSearchWord(const string& word, list<shared_ptr<Word>> result)
+{
+    // cool solution with lambda from https://stackoverflow.com/a/42723273
+    // and can do filter in place since we're not passing by reference
+    result.erase(
+        remove_if(
+            result.begin(), 
+            result.end(), 
+            [word](shared_ptr<Word> const& wordObj)
+            {
+                return wordObj->getWord() == word;
+            }),
+        result.end());
+
+    return result;
 }
 
 /**

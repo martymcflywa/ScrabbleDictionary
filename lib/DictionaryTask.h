@@ -90,6 +90,13 @@ namespace lib
          */
         static std::string getAnagramKey(const std::string& word);
         /**
+         * \brief Filters out the word being searched from the task result.
+         * \param word The word being searched.
+         * \param result The result from the task.
+         * \return A new result without the word being searched.
+         */
+        static std::list<std::shared_ptr<Word>> removeSearchWord(const std::string& word, std::list<std::shared_ptr<Word>> result);
+        /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.
         * \param ending The ending of the word we'd like to find.

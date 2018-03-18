@@ -173,15 +173,19 @@ namespace dictionaryTaskTests
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
-            WHEN("A word that rhymes is searched")
+            WHEN("A word is searched for rhymes")
             {
                 const auto actual = dictionary.getRhymes(rhyme1);
 
                 THEN("Words that rhyme are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, rhyme1));
                     REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
                     REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
+                }
+
+                AND_THEN("The word being searched for is not returned")
+                {
+                    REQUIRE(!TestHelpers::listContainsWord(actual, rhyme1));
                 }
 
                 AND_THEN("Words that don't rhyme are not returned")
@@ -380,16 +384,20 @@ namespace dictionaryTaskTests
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
-            WHEN("Anagrams of an existing word is requested")
+            WHEN("A word is searched for anagrams")
             {
                 const auto actual = dictionary.getWordAnagrams(anagram1);
 
                 THEN("Anagrams of the word are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram1));
                     REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
                     REQUIRE(TestHelpers::listContainsWord(actual, anagram3));
                     REQUIRE(TestHelpers::listContainsWord(actual, anagram4));
+                }
+
+                AND_THEN("The word being searched for is not returned")
+                {
+                    REQUIRE(!TestHelpers::listContainsWord(actual, anagram1));
                 }
 
                 AND_THEN("Non anagrams are not returned")
@@ -399,7 +407,7 @@ namespace dictionaryTaskTests
                 }
             }
 
-            AND_WHEN("Anagrams of a non existent word is requested")
+            AND_WHEN("Anagrams are not found for a word")
             {
                 const string target = "nope";
                 const auto actual = dictionary.getWordAnagrams(target);
@@ -430,7 +438,7 @@ namespace dictionaryTaskTests
                 }
             }
 
-            AND_WHEN("Anagrams of a collection of letters that do not have any anagrams are requested")
+            AND_WHEN("Anagrams are not found for a collection of letters")
             {
                 const string target = "nope";
                 const auto actual = dictionary.getStringAnagrams(target);
