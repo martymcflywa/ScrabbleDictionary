@@ -90,12 +90,13 @@ namespace lib
          */
         static std::string getAnagramKey(const std::string& word);
         /**
-         * \brief Filters out the word being searched from the task result.
-         * \param word The word being searched.
-         * \param result The result from the task.
-         * \return A new result without the word being searched.
-         */
-        static std::list<std::shared_ptr<Word>> removeSearchWord(const std::string& word, std::list<std::shared_ptr<Word>> result);
+        * \brief Filter the results based on a lambda predicate.
+        * \param result The collection of results from the task.
+        * \param predicate The predicate lambda expression, where if true, will exclude the result from the collection.
+        * \return A new result after filter is applied.
+        */
+        template<typename Predicate>
+        static std::list<std::shared_ptr<Word>> filterResult(std::list<std::shared_ptr<Word>> result, Predicate predicate);
         /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.
