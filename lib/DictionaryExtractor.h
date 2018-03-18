@@ -1,18 +1,19 @@
 ﻿#pragma once
 #include <memory>
+#include <unordered_map>
 #include "IExtract.h"
 #include "ITask.h"
 
 namespace lib
 {
     /**
-    * \brief Implementation of IExtract, using std::string::find() and std::string::substr(), following the expected format of 
-    * Dictionary2018.txt. It assumes that a single entry within the source dictionary will be composed of three separate lines.
-    * First line contains word and type.
-    * Second line contains definition.
-    * Third line is empty, delimiter for the next entry.
+    * \brief Implementation of IExtract, specific to extracting dictionary entries from dictionary2018.txt.
+    * Each dictionary entry is composed of three lines.
+    * First line: "word [type]\n"
+    * Second line: "definition\n"
+    * Third line: "\n" (empty line delimiter)
     */
-    class DictionaryExtractor : public IExtract
+    class DictionaryExtractor : public IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>
     {
         IPrint& _printer;
         ITask& _task;
