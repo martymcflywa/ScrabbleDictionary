@@ -362,25 +362,25 @@ namespace dictionaryTaskTests
 
     SCENARIO("Find anagrams")
     {
-        const string anagram1 = "tesla";
-        const string anagram2 = "least";
-        const string anagram3 = "slate";
-        const string anagram4 = "steal";
-        const string notAnagram1 = "abcde";
-        const string notAnagram2 = "slat";
-
-        const auto words = list<string>
-        {
-            anagram1,
-            anagram2,
-            anagram3,
-            anagram4,
-            notAnagram1,
-            notAnagram2
-        };
-
         GIVEN("A dictionary with words")
         {
+            const string anagram1 = "tesla";
+            const string anagram2 = "least";
+            const string anagram3 = "slate";
+            const string anagram4 = "steal";
+            const string notAnagram1 = "abcde";
+            const string notAnagram2 = "slat";
+
+            const auto words = list<string>
+            {
+                anagram1,
+                anagram2,
+                anagram3,
+                anagram4,
+                notAnagram1,
+                notAnagram2
+            };
+
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
@@ -418,12 +418,12 @@ namespace dictionaryTaskTests
                 }
             }
 
-            AND_WHEN("Anagrams of a collection of letters is requested")
+            AND_WHEN("Anagrams for a collection of letters is requested")
             {
                 const string target = "alset";
                 const auto actual = dictionary.getStringAnagrams(target);
 
-                THEN("Anagrams of the word are returned")
+                THEN("Anagrams of the collection of letters are returned")
                 {
                     REQUIRE(TestHelpers::listContainsWord(actual, anagram1));
                     REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
@@ -446,6 +446,59 @@ namespace dictionaryTaskTests
                 THEN("No anagrams are returned")
                 {
                     REQUIRE(actual.empty());
+                }
+            }
+        }
+
+        GIVEN("A dictionary with anagrams of legal and illegal scrabble words")
+        {
+            const string definition = "\nTest definition.\n\n";
+
+            const string nounWord = "word";
+            const auto nounTypeDef = " [n]" + definition;
+
+            const string miscWord = "dwor";
+            const auto miscTypeDef = " [misc]" + definition;
+
+            const string properNounWord = "rdwo";
+            const auto properNounTypeDef = " [pn]" + definition;
+
+            const string hyphenWord = "w-o-r-d";
+            const auto hyphenTypeDef = " [v]" + definition;
+
+            const auto words = list<string>
+            {
+                nounWord,
+                miscWord,
+                properNounWord,
+                hyphenWord
+            };
+            const auto typeAndDefs = list<string>
+            {
+                nounTypeDef,
+                miscTypeDef,
+                properNounTypeDef,
+                hyphenTypeDef
+            };
+
+            auto builder = TestDictionaryBuilder(words, typeAndDefs);
+            auto dictionary = builder.build();
+
+            WHEN("Anagrams for a collection of letters is requested")
+            {
+                const string target = "drow";
+                const auto actual = dictionary.getStringAnagrams(target);
+
+                THEN("Legal scrabble words are returned")
+                {
+                    REQUIRE(TestHelpers::listContainsWord(actual, nounWord));
+                }
+
+                AND_THEN("Illegal scrabble words are not returned")
+                {
+                    REQUIRE(!TestHelpers::listContainsWord(actual, miscWord));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, properNounWord));
+                    REQUIRE(!TestHelpers::listContainsWord(actual, hyphenWord));
                 }
             }
         }
