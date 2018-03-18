@@ -7,6 +7,7 @@ namespace lib
         LongestWords,
         LogyWords,
         Rhymes,
-        Anagrams
+        WordAnagrams,
+        StringAnagrams
     };
 }

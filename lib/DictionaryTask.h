@@ -70,10 +70,11 @@ namespace lib
         /**
         * \brief Sort word's letters alphabetically, as key to anagram map.
         * If key exists in anagram map, return list value for that key, else return an empty list.
+        * \param taskType Only WordAnagrams or StringAnagrams supported.
         * \param word The word to search for anagrams.
         * \returns Anagram/s of the word, if they exist, else returns an empty list.
         */
-        std::list<std::shared_ptr<Word>> getAnagrams(const std::string& word);
+        std::list<std::shared_ptr<Word>> getAnagrams(TaskType taskType, const std::string& word);
         /**
          * \brief Returns the rhyming part of the word if >= 3 letters,
          * else returns an empty string.
@@ -90,12 +91,13 @@ namespace lib
          */
         static std::string getAnagramKey(const std::string& word);
         /**
-         * \brief Filters out the word being searched from the task result.
-         * \param word The word being searched.
-         * \param result The result from the task.
-         * \return A new result without the word being searched.
-         */
-        static std::list<std::shared_ptr<Word>> removeSearchWord(const std::string& word, std::list<std::shared_ptr<Word>> result);
+        * \brief Filter the results based on a lambda predicate.
+        * \param result The collection of results from the task.
+        * \param predicate The predicate lambda expression, where if true, will exclude the result from the collection.
+        * \return A new result after filter is applied.
+        */
+        template<typename Predicate>
+        static std::list<std::shared_ptr<Word>> filterResult(std::list<std::shared_ptr<Word>> result, Predicate predicate);
         /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.
