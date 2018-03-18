@@ -15,8 +15,8 @@ namespace app
         lib::TextFileLoader _loader;
         lib::DefinitionFormatter _formatter;
         lib::DefinitionPrinter _printer;
-        lib::DictionaryTask _task;
-        lib::DictionaryExtractor _extractor;
+        lib::DictionaryTask _dictionaryTask;
+        lib::DictionaryExtractor _dictionaryExtractor;
         lib::Dictionary _dictionary;
         cli::CliUserInterface _ui;
 
