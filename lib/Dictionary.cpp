@@ -93,8 +93,8 @@ int Dictionary::getScrabbleScore(const std::string& word) const
 }
 
 /**
-* \brief Searches the dictionary for the word. If it exists, will look for anagrams of that word.
-* If it doesn't exist, or no anagrams exist, returns an empty list.
+* \brief Search the dictionary for the word. If it exists, will look for anagrams of that word.
+* If it doesn't exist, returns an empty list.
 * \param word The word to search for anagrams.
 * \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list.
 */
@@ -105,18 +105,18 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
     if (it == _dictionary.end())
         return list<shared_ptr<Word>>();
 
-    return getStringAnagrams(word);
+    return _task.getTaskResult(WordAnagrams, word);
 }
 
 /**
-* \brief Searches for any anagrams with the letters. Returns any anagrams that exist,
-* else returns an empty list.
+* \brief Search for anagrams of a string of letters.
+* Returns any anagrams that exist, else returns an empty list.
 * \param letters The letters to search for anagrams.
-* \returns Anagram/s made from the letters, if they exist, else returns an empty list.
+* \returns Anagram/s of the letters, if they exist, else returns an empty list.
 */
 list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
 {
-    return _task.getTaskResult(Anagrams, letters);
+    return _task.getTaskResult(StringAnagrams, letters);
 }
 
 /**

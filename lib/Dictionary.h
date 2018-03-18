@@ -81,17 +81,17 @@ namespace lib {
         int getScrabbleScore(const std::string& word) const;
         /**
          * \brief Search the dictionary for the word. If it exists, will look for anagrams of that word.
-         * If it doesn't exist, or no anagrams exist, returns an empty list.
+         * If it doesn't exist, returns an empty list.
          * \param word The word to search for anagrams.
          * \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list. 
          */
         std::list<std::shared_ptr<Word>> getWordAnagrams(const std::string& word) const;
         /**
-         * \brief Search for any anagrams of the letters. Returns any anagrams that exist,
-         * else returns an empty list.
-         * \param letters The letters to search for anagrams.
-         * \returns Anagram/s of the letters, if they exist, else returns an empty list. 
-         */
+        * \brief Search for anagrams of a string of letters.
+        * Returns any anagrams that exist, else returns an empty list.
+        * \param letters The letters to search for anagrams.
+        * \returns Anagram/s of the letters, if they exist, else returns an empty list.
+        */
         std::list<std::shared_ptr<Word>> getStringAnagrams(const std::string& letters) const;
         /**
          * \brief Returns how many entries are loaded in the dictionary.

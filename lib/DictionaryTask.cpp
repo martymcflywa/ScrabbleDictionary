@@ -33,8 +33,9 @@ std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType ta
     {
     case Rhymes:
         return getRhymes(word);
-    case Anagrams:
-        return getAnagrams(word);
+    case WordAnagrams:
+    case StringAnagrams:
+        return getAnagrams(taskType, word);
     default:
         throw UnsupportedTaskException(to_string(taskType));
     }
@@ -178,12 +179,13 @@ list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 }
 
 /**
-* \brief Convert word to key for anagram map. If key exists in map,
-* return list value for that key, else return an empty list.
+* \brief Sort word's letters alphabetically, as key to anagram map.
+* If key exists in anagram map, return list value for that key, else return an empty list.
+* \param taskType Only WordAnagrams or StringAnagrams supported.
 * \param word The word to search for anagrams.
 * \returns Anagram/s of the word, if they exist, else returns an empty list.
 */
-list<shared_ptr<Word>> DictionaryTask::getAnagrams(const string& word)
+list<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const string& word)
 {
     const auto key = getAnagramKey(word);
     const auto it = _anagrams.find(key);
@@ -192,12 +194,30 @@ list<shared_ptr<Word>> DictionaryTask::getAnagrams(const string& word)
     if (it == _anagrams.end())
         return list<shared_ptr<Word>>();
 
-    return filterResult(
-        it->second,
-        [word](shared_ptr<Word> const& wordObj)
-        {
-            return wordObj->getWord() == word;
-        });
+    // TODO: would rather init a function<bool()> variable up here to avoid repeated code...
+    // switch determines which predicate to store in the variable...
+    // then call return filterResult() once after the switch case...
+    // but had problems assigning the predicate to the variable... investigate further
+    switch (taskType)
+    {
+    case WordAnagrams: // remove words that match the search pattern
+        return filterResult(
+            it->second,
+            [word](shared_ptr<Word> const& wordObj)
+            {
+                return wordObj->getWord() == word;
+            });
+    case StringAnagrams: // remove words that match the search pattern or are not legal
+        return filterResult(
+            it->second,
+            [word](shared_ptr<Word> const& wordObj)
+            {
+                return wordObj->getWord() == word
+                    || !wordObj->isLegalScrabbleWord();
+            });
+    default:
+        throw UnsupportedTaskException(to_string(taskType));
+    }
 }
 
 /**
