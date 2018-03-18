@@ -2,7 +2,6 @@
 #include <iostream>
 #include "CliUserInterface.h"
 #include "Logger.h"
-#include "MenuItem.h"
 
 using namespace std;
 using namespace cli;
@@ -92,7 +91,8 @@ void CliUserInterface::findDefinition()
     do
     {
         Logger::log(Info, SEARCH_DEFINITION_TITLE + ":");
-        Logger::log(Input, "Enter a word to find its definition and scrabble score, [" + MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Input, "Enter a word to find its definition and scrabble score");
+        Logger::log(CONTROL_TITLE);
         Logger::printPrompt();
         getline(cin, word);
 
@@ -159,8 +159,8 @@ void CliUserInterface::rhymeWords()
     do
     {
         Logger::log(Info, RHYME_WORDS_TITLE + ":");
-        Logger::log(Input, "Enter a word at least 3 letters long to find words that rhyme, [" + 
-                MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Input, "Enter a word at least 3 letters long to find words that rhyme");
+        Logger::log(CONTROL_TITLE);
 
         Logger::printPrompt();
         getline(cin, word);
@@ -204,8 +204,8 @@ void CliUserInterface::wordAnagrams()
     do
     {
         Logger::log(Info, ANAGRAM_WORD_TITLE + ":");
-        Logger::log(Input, "Enter a word from the dictionary to find it's anagram/s, [" +
-            MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Input, "Enter a word from the dictionary to find it's anagram/s");
+        Logger::log(CONTROL_TITLE);
 
         Logger::printPrompt();
         getline(cin, word);
@@ -247,8 +247,8 @@ void CliUserInterface::stringAnagrams()
     do
     {
         Logger::log(Info, ANAGRAM_STRING_TITLE + ":");
-        Logger::log(Input, "Enter a string of letters to find legal scrabble anagram/s with its (score), [" +
-            MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
+        Logger::log(Input, "Enter a string of letters to find legal scrabble anagram/s with its (score)");
+        Logger::log(CONTROL_TITLE);
 
         Logger::printPrompt();
         getline(cin, word);

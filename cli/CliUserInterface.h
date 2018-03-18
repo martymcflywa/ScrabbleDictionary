@@ -2,6 +2,7 @@
 #include <string>
 #include "../lib/Dictionary.h"
 #include "../lib/IUserInterface.h"
+#include "MenuItem.h"
 
 namespace cli
 {
@@ -19,6 +20,7 @@ namespace cli
         const std::string RHYME_WORDS_TITLE = "Find word/s that rhyme";
         const std::string ANAGRAM_WORD_TITLE = "Find anagram/s of a word in the dictionary";
         const std::string ANAGRAM_STRING_TITLE = "Find legal scrabble anagram/s and their (scores) for a string of letters";
+        const std::string CONTROL_TITLE = "[" + MenuItem::BACK + "] Back\n[" + MenuItem::QUIT + "] Quit";
         const unsigned MIN_RHYME_LENGTH = 3;
 
     public:
