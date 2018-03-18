@@ -18,9 +18,9 @@ Application::Application() :
     _loader(TextFileLoader(_filepath)),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
-    _task(DictionaryTask()),
-    _extractor(DictionaryExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor, _task)),
+    _dictionaryTask(DictionaryTask()),
+    _dictionaryExtractor(DictionaryExtractor(_printer, _dictionaryTask)),
+    _dictionary(Dictionary(_loader, _dictionaryExtractor, _dictionaryTask)),
     _ui(CliUserInterface(_dictionary))
 {
 }
