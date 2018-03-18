@@ -82,13 +82,6 @@ namespace cli
         */
         bool isValidRhymeWord(const std::string& word) const;
         /**
-         * \brief Returns true if word is the only element in the collection.
-         * \param words The collection of words to search.
-         * \param word The word to search for.
-         * \returns True if word is the only element in the collection
-         */
-        static bool isOnlySameWord(const std::list<std::shared_ptr<lib::Word>>& words, const std::string& word);
-        /**
          * \brief Returns true of the word is a control char.
          * \param word The word to check if a control char.
          * \returns True if the word is a control char. 

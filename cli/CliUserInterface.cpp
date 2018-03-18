@@ -102,8 +102,7 @@ void CliUserInterface::findDefinition()
         
         Logger::log(Output, "Definition and scrabble score for '" + word + "':");
         Logger::log(_dictionary.getDefinition(word));
-    }
-    while (!isControlChar(word));
+    } while (!isControlChar(word));
 
     if (word == MenuItem::BACK)
         start();
@@ -175,24 +174,20 @@ void CliUserInterface::rhymeWords()
 
         auto rhymes = _dictionary.getRhymes(word);
 
-        // if nothing found, or only found same word
-        if (rhymes.empty() || isOnlySameWord(rhymes, word))
+        // tell user when nothing found then go back to top of loop
+        if (rhymes.empty())
         {
             Logger::log(Output, "No rhymes found for '" + word + "'");
             continue;
         }
 
+        // show result
         Logger::log(Output, "Found " + to_string(rhymes.size()) + " word/s that rhyme with '" + word + "':");
-
         for (auto& it : rhymes)
         {
-            // don't print if its the input word
-            if (it->getWord() != word)
-                Logger::log(it->getWord());
+            Logger::log(it->getWord());
         }
-
-    }
-    while (!isControlChar(word));
+    } while (!isControlChar(word));
 
     if (word == MenuItem::BACK)
         start();
@@ -221,22 +216,19 @@ void CliUserInterface::wordAnagrams()
 
         auto anagrams = _dictionary.getWordAnagrams(word);
 
-        // if nothing found, or only found same word
-        if (anagrams.empty() || isOnlySameWord(anagrams, word))
+        // tell user when nothing found then go back to top of loop
+        if (anagrams.empty())
         {
             Logger::log(Output, "No anagrams found for '" + word + "'");
             continue;
         }
 
-        Logger::log(Output, "Found " + to_string(anagrams.size() - 1) + " anagram/s of '" + word + "':");
-
+        // show result
+        Logger::log(Output, "Found " + to_string(anagrams.size()) + " anagram/s of '" + word + "':");
         for (const auto& it : anagrams)
         {
-            // filter out input word
-            if (it->getWord() != word)
-                Logger::log(it->getWord());
+            Logger::log(it->getWord());
         }
-
     } while (!isControlChar(word));
 
     if (word == MenuItem::BACK)
@@ -255,7 +247,7 @@ void CliUserInterface::stringAnagrams()
     do
     {
         Logger::log(Info, ANAGRAM_STRING_TITLE + ":");
-        Logger::log(Input, "Enter a string of letters to find anagram/s with its (score), [" +
+        Logger::log(Input, "Enter a string of letters to find legal scrabble anagram/s with its (score), [" +
             MenuItem::BACK + "] to go back, or [" + MenuItem::QUIT + "] to quit");
 
         Logger::printPrompt();
@@ -267,29 +259,18 @@ void CliUserInterface::stringAnagrams()
 
         auto anagrams = _dictionary.getStringAnagrams(word);
 
-        // if we found nothing, or only found the same word
-        if (anagrams.empty() || isOnlySameWord(anagrams, word))
+        // tell user when nothing found then go back to top of loop
+        if (anagrams.empty())
         {
             Logger::log(Output, "No anagrams found for '" + word + "'");
             continue;
         }
 
-        // accumulate results to this list
-        auto legalAnagrams = list<string>();
+        // show result
+        Logger::log(Output, "Found " + to_string(anagrams.size()) + " legal scrabble anagram/s of '" + word + "':");
         for (const auto& it : anagrams)
         {
-            // filter out input word, or illegal scrabble words
-            if (it->getWord() == word || !it->isLegalScrabbleWord())
-                continue;
-
-            legalAnagrams.push_back(string(it->getWord() + " (" + to_string(it->getScrabbleScore()) + ")"));
-        }
-
-        // print results
-        Logger::log(Output, "Found " + to_string(legalAnagrams.size()) + " legal scrabble anagram/s of '" + word + "':");
-        for(const auto& anagram : legalAnagrams)
-        {
-            Logger::log(anagram);
+            Logger::log(it->getWord() + " (" + to_string(it->getScrabbleScore()) + ")");
         }
     } while (!isControlChar(word));
 
@@ -342,17 +323,6 @@ bool CliUserInterface::isValidRhymeWord(const string& word) const
         Logger::log(Error, "'" + word + "' must be at least " + to_string(MIN_RHYME_LENGTH) + " letters long, try again");
 
     return isValid;
-}
-
-/**
-* \brief Returns true if word is the only element in the collection.
-* \param words The collection of words to search.
-* \param word The word to search for.
-* \returns True if word is the only element in the collection
-*/
-bool CliUserInterface::isOnlySameWord(const list<shared_ptr<Word>>& words, const string& word)
-{
-    return words.size() == 1 && words.begin()->get()->getWord() == word;
 }
 
 /**
