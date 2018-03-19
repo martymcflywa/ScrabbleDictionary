@@ -22,12 +22,13 @@ Dictionary::Dictionary(
 }
 
 /**
- * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents from the source.
+ * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract
+ * the contents from the source.
  */
 void Dictionary::loadDictionary()
 {
-    auto& content = _loader.load();
-    _dictionary = _extractor.extract(content);
+    // TODO: can we make this concurrent producer/consumer?
+    _dictionary = _extractor.extract(_loader.load());
     _loader.dispose();
 }
 
@@ -41,10 +42,7 @@ string Dictionary::getDefinition(const string& word)
 {
     const auto it = _dictionary.find(word);
 
-    if (it == _dictionary.end())
-        return "Word '" + word + "' not found";
-
-    return it->second->printDefinition();
+    return it == _dictionary.end() ? "Word '" + word + "' not found" : it->second->printDefinition();
 }
 
 /**
@@ -86,10 +84,7 @@ int Dictionary::getScrabbleScore(const std::string& word) const
 
     // if not found, return a negative value,
     // so we can tell difference between not found and words you can't use in scrabble
-    if (it == _dictionary.end())
-        return -1;
-
-    return it->second->getScrabbleScore();
+    return it == _dictionary.end() ? -1 : it->second->getScrabbleScore();
 }
 
 /**
@@ -102,10 +97,7 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 {
     const auto it = _dictionary.find(word);
 
-    if (it == _dictionary.end())
-        return list<shared_ptr<Word>>();
-
-    return _task.getTaskResult(WordAnagrams, word);
+    return it == _dictionary.end() ? list<shared_ptr<Word>>() : _task.getTaskResult(WordAnagrams, word);
 }
 
 /**
@@ -117,6 +109,39 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
 {
     return _task.getTaskResult(StringAnagrams, letters);
+}
+
+/**
+* \brief Increments a Word's usage if found in the dictionary.
+* \param word The word to search for and increment its usage.
+*/
+void Dictionary::incrementUsage(const std::string & word) const
+{
+    const auto it = _dictionary.find(word);
+
+    if (it != _dictionary.end())
+        it->second->incrementUsage();
+}
+
+/**
+* \brief Returns true if word exists and usage < 2.
+* \returns True if word exists and usage < 2.
+*/
+bool Dictionary::isRareWord(const std::string& word) const
+{
+    const auto it = _dictionary.find(word);
+
+    return it == _dictionary.end() ? false : it->second->isRareWord();
+}
+
+Word* Dictionary::get(const std::string& word)
+{
+    const auto it = _dictionary.find(word);
+    
+    if (it == _dictionary.end())
+        return nullptr;
+
+    return it->second.get();
 }
 
 /**

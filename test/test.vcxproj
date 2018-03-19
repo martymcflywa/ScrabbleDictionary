@@ -152,6 +152,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestDictionaryBuilder.h" />
     <ClInclude Include="TestFileFactory.h" />
+    <ClInclude Include="TestGlossaryBuilder.h" />
     <ClInclude Include="TestHelpers.h" />
     <ClInclude Include="TestLoader.h" />
   </ItemGroup>
@@ -159,8 +160,10 @@
     <ClCompile Include="DictionaryTaskTests.cpp" />
     <ClCompile Include="DictionaryExtractorTests.cpp" />
     <ClCompile Include="GlossaryExtractorTests.cpp" />
+    <ClCompile Include="GlossaryTests.cpp" />
     <ClCompile Include="TestDictionaryBuilder.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
+    <ClCompile Include="TestGlossaryBuilder.cpp" />
     <ClCompile Include="TextFileLoaderTests.cpp" />
     <ClCompile Include="TestLoader.cpp" />
     <ClCompile Include="WordTests.cpp" />

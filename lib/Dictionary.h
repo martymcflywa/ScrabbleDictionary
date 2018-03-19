@@ -94,6 +94,22 @@ namespace lib {
         */
         std::list<std::shared_ptr<Word>> getStringAnagrams(const std::string& letters) const;
         /**
+         * \brief Increments a Word's usage if found in the dictionary.
+         * \param word The word to search for and increment its usage.
+         */
+        void incrementUsage(const std::string& word) const;
+        /**
+        * \brief Returns true if word exists and usage < 2.
+        * \returns True if word exists and usage < 2.
+        */
+        bool isRareWord(const std::string& word) const;
+        /**
+         * \brief Returns the Word object, if exists.
+         * \param word The word to search for.
+         * \returns The Word object, if exists.
+         */
+        Word* get(const std::string& word);
+        /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 
          */

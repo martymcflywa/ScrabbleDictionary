@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <list>
+#include <map>
 #include <memory>
 #include "../lib/Word.h"
 
@@ -45,6 +46,17 @@ public:
                 return true;
         }
         return false;
+    }
+
+    /**
+     * \brief Returns true if map contains word.
+     * \param map The map to search.
+     * \param target The word to search for.
+     * \returns True if set contains the word.
+     */
+    static bool mapContains(const std::map<std::string, std::string>& map, const std::string& target)
+    {
+        return map.find(target) != map.end();
     }
     /**
     * \brief Test helper to compare smart ptr managed object equality,

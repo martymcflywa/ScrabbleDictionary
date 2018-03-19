@@ -19,6 +19,7 @@ Word::Word(const string& word, const string& type, const string& definition, IPr
     _type(resolveType(type)),
     _definition(validate(definition)),
     _scrabbleScore(calculateScrabbleScore()),
+    _usage(0),
     _printer(printer)
 {
 }
@@ -55,6 +56,23 @@ string Word::printDefinition() const
 bool Word::isLegalScrabbleWord() const
 {
     return !(_type == Misc || _type == ProperNoun || _word.find("-") != string::npos);
+}
+
+/**
+* \brief Increment the usage count of the word.
+*/
+void Word::incrementUsage()
+{
+    _usage++;
+}
+
+/**
+* \brief Returns true if usage < 2.
+* \returns True if usage < 2.
+*/
+bool Word::isRareWord() const
+{
+    return _usage < 2;
 }
 
 /**
