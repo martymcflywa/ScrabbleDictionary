@@ -20,7 +20,7 @@ vector<string> GlossaryExtractor::extract(istream& content)
     while(getline(content, line))
     {
         unsigned start = 0;
-        unsigned end = 0;
+        unsigned end;
 
         do
         {
