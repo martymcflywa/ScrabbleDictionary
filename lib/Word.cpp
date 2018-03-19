@@ -67,12 +67,12 @@ void Word::incrementUsage()
 }
 
 /**
-* \brief Returns true if usage < 2.
-* \returns True if usage < 2.
+* \brief Returns true if usage == 1.
+* \returns True if usage == 1.
 */
 bool Word::isRareWord() const
 {
-    return _usage < 2;
+    return _usage == 1;
 }
 
 /**

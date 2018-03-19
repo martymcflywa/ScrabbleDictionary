@@ -17,12 +17,13 @@ namespace glossaryTests
     const string word3 = "bca";
     const string word4 = "ab'c";
     const string word5 = "bac";
-    const string word6 = "acb";
+    const string usedTwice = "acb";
+    const string notUsed = "xyz";
     const auto words = list<string>
     {
-        word1, word2, word3, word4, word5, word6
+        word1, word2, word3, word4, word5, usedTwice, notUsed
     };
-    const string usageText = "“abc!” _CAB?_\nbca, bac.\nab'c--acb;";
+    const string usageText = "“abc!” _CAB?_\nbca, bac.\nab'c--acb; acb...";
 
     SCENARIO("Word usage")
     {
@@ -39,12 +40,25 @@ namespace glossaryTests
                 auto glossary = glossaryBuilder.build();
                 glossary.setUsageFrequency(loader);
 
-                THEN("Words that exist in the dictionary have their usage incremented")
+                THEN("Words used once are rare")
                 {
                     for (auto& word : words)
                     {
+                        if (word == usedTwice || word == notUsed)
+                            continue;
+
                         REQUIRE(dictionary.isRareWord(word));
                     }
+                }
+
+                AND_THEN("Words used more than once are not rare")
+                {
+                    REQUIRE(!dictionary.isRareWord(usedTwice));
+                }
+
+                AND_THEN("Words not used are not rare")
+                {
+                    REQUIRE(!dictionary.isRareWord(notUsed));
                 }
             }
         }
@@ -72,12 +86,25 @@ namespace glossaryTests
                 auto formatter = GlossaryFormatter();
                 const auto actual = glossary.generateGlossary(loader, formatter);
 
-                THEN("Rare words are found")
+                THEN("Rare words are included in the glossary")
                 {
                     for (auto& word : words)
                     {
+                        if (word == usedTwice || word == notUsed)
+                            continue;
+                            
                         REQUIRE(TestHelpers::mapContains(actual, word));
                     }
+                }
+
+                AND_THEN("Words used more than once are not included in the glossary")
+                {
+                    REQUIRE(!TestHelpers::mapContains(actual, usedTwice));
+                }
+
+                AND_THEN("Words not used are not included in the glossary")
+                {
+                    REQUIRE(!TestHelpers::mapContains(actual, notUsed));
                 }
             }
         }
