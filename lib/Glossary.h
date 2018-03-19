@@ -7,7 +7,7 @@
 namespace lib
 {
     class IFormat;
-    class ILoad;
+    class IRead;
 
     /**
      * \brief Responsible for
@@ -31,18 +31,18 @@ namespace lib
         /**
          * \brief Scans a text file and extracts all words from it. If word appears in the dictionary,
          * increment the Word's usage field.
-         * \param loader The file loader responsible for reading the text file.
+         * \param reader The file reader responsible for reading the text file.
          */
-        void setUsageFrequency(ILoad& loader) const;
+        void setUsageFrequency(IRead& reader) const;
         /**
         * \brief Scans a text file and extracts all words from it. If word is rare,
         * add its definition to collection.
         * Using std::map to keep words unique and in alphabetical order.
-        * \param loader The file loader responsible for reading the text file.
+        * \param reader The file reader responsible for reading the text file.
         * \param formatter The formatter for glossary entries.
         * \returns A collection of unique rare word definitions
         */
-        std::map<std::string, std::string> generateGlossary(ILoad& loader, IFormat& formatter) const;
+        std::map<std::string, std::string> generateGlossary(IRead& reader, IFormat& formatter) const;
     };
 }
 

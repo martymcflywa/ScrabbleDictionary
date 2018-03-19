@@ -6,30 +6,28 @@ using namespace lib;
 
 /**
  * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. 
- * Using dependency injection to decouple implementation details of loading and extracting.
- * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
+ * Using dependency injection to decouple implementation details of extracting and tasks.
  * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
- * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
+ * \param task Implementation of ITask, responsible for aggregating data from the dictionary during extract loop.
  */
 Dictionary::Dictionary(
-        ILoad& loader,
         IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& extractor,
         ITask& task) :
-    _loader(loader), 
     _extractor(extractor),
     _task(task)
 {
 }
 
 /**
- * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract
- * the contents from the source.
- */
-void Dictionary::loadDictionary()
+* \brief Loads dictionary entries from a source. Depends on IRead and IExtract to read and extract the contents
+* from a source.
+* \param reader Implementation of IReader. In this case, it should be able to read text files.
+*/
+void Dictionary::loadDictionary(IRead& reader)
 {
     // TODO: can we make this concurrent producer/consumer?
-    _dictionary = _extractor.extract(_loader.load());
-    _loader.dispose();
+    _dictionary = _extractor.extract(reader.read());
+    reader.dispose();
 }
 
 /**

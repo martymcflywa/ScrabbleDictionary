@@ -9,12 +9,12 @@
 #include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
 #include "../lib/FileNotFoundException.h"
-#include "../lib/TextFileLoader.h"
+#include "../lib/TextFileReader.h"
 
 using namespace std;
 using namespace lib;
 
-namespace textFileLoaderTests
+namespace textFileReaderTests
 {
     string filepath = ".\\test.txt";
 
@@ -23,7 +23,7 @@ namespace textFileLoaderTests
     auto task = DictionaryTask();
     auto extractor = DictionaryExtractor(printer, task);
 
-    SCENARIO("File loader loads existing file")
+    SCENARIO("File reader reads existing file")
     {
         GIVEN("A file that exists")
         {
@@ -34,13 +34,13 @@ namespace textFileLoaderTests
 
             WHEN("The file is loaded")
             {
-                auto loader = TextFileLoader(filepath);
-                auto& fileContent = loader.load();
+                auto reader = TextFileReader(filepath);
+                auto& fileContent = reader.read();
 
                 auto actual = extractor.extract(fileContent);
 
                 // delete the test file, keep it out of version control
-                loader.dispose();
+                reader.dispose();
                 fileFactory.cleanup();
 
                 THEN("The content matches input")
@@ -63,21 +63,21 @@ namespace textFileLoaderTests
         }
     }
 
-    SCENARIO("File loader loads non existent file")
+    SCENARIO("File reader reads non existent file")
     {
         GIVEN("A file that doesn't exist")
         {
-            WHEN("The file is loaded")
+            WHEN("The file is read")
             {
-                unique_ptr<TextFileLoader> actual;
+                unique_ptr<TextFileReader> actual;
 
                 try
                 {
-                    actual.reset(new TextFileLoader(filepath));    
+                    actual.reset(new TextFileReader(filepath));    
                 }
                 catch (FileNotFoundException&) {}
 
-                THEN("Loader is not created")
+                THEN("File cannot be read")
                 {
                     REQUIRE(actual == nullptr);
                 }

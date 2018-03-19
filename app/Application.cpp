@@ -14,13 +14,13 @@ using namespace lib;
 */
 Application::Application() :
     // Switched to hardcoded path, replaces FileResolver::getFilepath()
-    _filepath(string(".\\dictionary2018.txt")),
-    _loader(TextFileLoader(_filepath)),
-    _formatter(DefinitionFormatter()),
-    _printer(DefinitionPrinter(_formatter)),
+    _dictionaryFilepath(string(".\\dictionary2018.txt")),
+    _dictionaryReader(TextFileReader(_dictionaryFilepath)),
+    _dictionaryFormatter(DefinitionFormatter()),
+    _dictionaryPrinter(DefinitionPrinter(_dictionaryFormatter)),
     _dictionaryTask(DictionaryTask()),
-    _dictionaryExtractor(DictionaryExtractor(_printer, _dictionaryTask)),
-    _dictionary(Dictionary(_loader, _dictionaryExtractor, _dictionaryTask)),
+    _dictionaryExtractor(DictionaryExtractor(_dictionaryPrinter, _dictionaryTask)),
+    _dictionary(Dictionary(_dictionaryExtractor, _dictionaryTask)),
     _ui(CliUserInterface(_dictionary))
 {
 }
@@ -31,7 +31,7 @@ Application::Application() :
 void Application::init()
 {
     Logger::log(Info, "Loading dictionary...");
-    _dictionary.loadDictionary();
+    _dictionary.loadDictionary(_dictionaryReader);
     const auto message = "Loaded dictionary with " + to_string(_dictionary.size()) + " entries";
     Logger::log(Info, message);
 }

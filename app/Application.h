@@ -5,16 +5,16 @@
 #include "../lib/Dictionary.h"
 #include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
-#include "../lib/TextFileLoader.h"
+#include "../lib/TextFileReader.h"
 
 namespace app
 {
     class Application
     {
-        const std::string _filepath;
-        lib::TextFileLoader _loader;
-        lib::DefinitionFormatter _formatter;
-        lib::DefinitionPrinter _printer;
+        const std::string _dictionaryFilepath;
+        lib::TextFileReader _dictionaryReader;
+        lib::DefinitionFormatter _dictionaryFormatter;
+        lib::DefinitionPrinter _dictionaryPrinter;
         lib::DictionaryTask _dictionaryTask;
         lib::DictionaryExtractor _dictionaryExtractor;
         lib::Dictionary _dictionary;

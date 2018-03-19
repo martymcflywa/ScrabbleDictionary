@@ -45,13 +45,7 @@
     <ClInclude Include="WordFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ILoad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IPrint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IFormat.h">
@@ -102,6 +96,12 @@
     <ClInclude Include="GlossaryFormatter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IRead.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -117,9 +117,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WordFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DefinitionFormatter.cpp">
@@ -156,6 +153,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GlossaryFormatter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,13 +21,13 @@ Glossary::Glossary(Dictionary& dictionary, IExtract<vector<string>, istream&>& e
 /**
 * \brief Scans a text file and extracts all words from it. If word appears in the dictionary,
 * increment the Word's usage field.
-* \param loader The file loader responsible for reading the text file.
+* \param reader The file reader responsible for reading the text file.
 */
-void Glossary::setUsageFrequency(ILoad& loader) const
+void Glossary::setUsageFrequency(IRead& reader) const
 {
     // TODO: can we make this concurrent producer/consumer?
-    auto words = _extractor.extract(loader.load());
-    loader.dispose();
+    auto words = _extractor.extract(reader.read());
+    reader.dispose();
 
     for (auto& word : words)
     {
@@ -39,15 +39,15 @@ void Glossary::setUsageFrequency(ILoad& loader) const
 * \brief Scans a text file and extracts all words from it. If word is rare,
 * add its definition to collection.
 * Using std::map to keep words unique and in alphabetical order.
-* \param loader The file loader responsible for reading the text file.
+* \param reader The file reader responsible for reading the text file.
 * \param formatter The formatter for glossary entries.
 * \returns A collection of unique rare word definitions
 */
-map<string, string> Glossary::generateGlossary(ILoad& loader, IFormat& formatter) const
+map<string, string> Glossary::generateGlossary(IRead& reader, IFormat& formatter) const
 {
     // TODO: can we make this concurrent producer/consumer?
-    auto words = _extractor.extract(loader.load());
-    loader.dispose();
+    auto words = _extractor.extract(reader.read());
+    reader.dispose();
 
     map<string, string> glossary;
 
