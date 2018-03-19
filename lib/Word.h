@@ -10,7 +10,8 @@ namespace lib
         std::string _word;
         Type _type;
         std::string _definition;
-        int _scrabbleScore;
+        unsigned _scrabbleScore;
+        unsigned _usage;
         IPrint& _printer;
 
     public:
@@ -36,6 +37,15 @@ namespace lib
          * \return True if word type is not misc, proper noun or hyphenated.
          */
         bool isLegalScrabbleWord() const;
+        /**
+         * \brief Increment the usage count of the word.
+         */
+        void incrementUsage();
+        /**
+         * \brief Returns true if usage < 2.
+         * \returns True if usage < 2.
+         */
+        bool isRareWord() const;
         /**
          * \brief Implementation of operator ==, really useful for unit tests.
          * \param that The other Word to compare to.
