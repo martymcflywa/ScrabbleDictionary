@@ -153,7 +153,7 @@
     <ClInclude Include="DictionaryTask.h" />
     <ClInclude Include="EmptyStringException.h" />
     <ClInclude Include="FileNotFoundException.h" />
-    <ClInclude Include="FileReadException.h" />
+    <ClInclude Include="FileIoException.h" />
     <ClInclude Include="Glossary.h" />
     <ClInclude Include="GlossaryExtractor.h" />
     <ClInclude Include="GlossaryFormatter.h" />
@@ -181,7 +181,7 @@
     <ClCompile Include="DictionaryTask.cpp" />
     <ClCompile Include="EmptyStringException.cpp" />
     <ClCompile Include="FileNotFoundException.cpp" />
-    <ClCompile Include="FileReadException.cpp" />
+    <ClCompile Include="FileIoException.cpp" />
     <ClCompile Include="Glossary.cpp" />
     <ClCompile Include="GlossaryExtractor.cpp" />
     <ClCompile Include="GlossaryFormatter.cpp" />

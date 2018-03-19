@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "FileNotFoundException.h"
-#include "FileReadException.h"
+#include "FileIoException.h"
 #include "TextFileReader.h"
 
 using namespace std;
@@ -21,7 +21,7 @@ istream& TextFileReader::read()
     _file.open(_filepath);
 
     if(!_file)
-        throw FileReadException(_filepath);
+        throw FileIoException("reading", _filepath);
 
     return _file;
 }
