@@ -68,12 +68,12 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns the longest word")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, longWord));
+                    REQUIRE(TestHelpers::listContains(actual, longWord));
                 }
                 
                 AND_THEN("The dictionary does not return the short word")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
+                    REQUIRE(!TestHelpers::listContains(actual, shortWord));
                 }
             }
         }
@@ -94,13 +94,13 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns both longest words")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, longWord1));
-                    REQUIRE(TestHelpers::listContainsWord(actual, longWord2));
+                    REQUIRE(TestHelpers::listContains(actual, longWord1));
+                    REQUIRE(TestHelpers::listContains(actual, longWord2));
                 }
 
                 AND_THEN("The dictionary does not return the short word")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, shortWord));
+                    REQUIRE(!TestHelpers::listContains(actual, shortWord));
                 }
             }
         }
@@ -135,16 +135,16 @@ namespace dictionaryTaskTests
 
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, logy1));
-                    REQUIRE(TestHelpers::listContainsWord(actual, logy2));
-                    REQUIRE(TestHelpers::listContainsWord(actual, logy3));
-                    REQUIRE(TestHelpers::listContainsWord(actual, logy4));
+                    REQUIRE(TestHelpers::listContains(actual, logy1));
+                    REQUIRE(TestHelpers::listContains(actual, logy2));
+                    REQUIRE(TestHelpers::listContains(actual, logy3));
+                    REQUIRE(TestHelpers::listContains(actual, logy4));
                 }
 
                 AND_THEN("Non logy words are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy1));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notLogy2));
+                    REQUIRE(!TestHelpers::listContains(actual, notLogy1));
+                    REQUIRE(!TestHelpers::listContains(actual, notLogy2));
                 }
             }
         }
@@ -179,20 +179,20 @@ namespace dictionaryTaskTests
 
                 THEN("Words that rhyme are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
-                    REQUIRE(TestHelpers::listContainsWord(actual, rhyme2));
+                    REQUIRE(TestHelpers::listContains(actual, rhyme2));
+                    REQUIRE(TestHelpers::listContains(actual, rhyme2));
                 }
 
                 AND_THEN("The word being searched for is not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, rhyme1));
+                    REQUIRE(!TestHelpers::listContains(actual, rhyme1));
                 }
 
                 AND_THEN("Words that don't rhyme are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme1));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme2));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notRhyme3));
+                    REQUIRE(!TestHelpers::listContains(actual, notRhyme1));
+                    REQUIRE(!TestHelpers::listContains(actual, notRhyme2));
+                    REQUIRE(!TestHelpers::listContains(actual, notRhyme3));
                 }
             }
 
@@ -390,20 +390,20 @@ namespace dictionaryTaskTests
 
                 THEN("Anagrams of the word are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram3));
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram4));
+                    REQUIRE(TestHelpers::listContains(actual, anagram2));
+                    REQUIRE(TestHelpers::listContains(actual, anagram3));
+                    REQUIRE(TestHelpers::listContains(actual, anagram4));
                 }
 
                 AND_THEN("The word being searched for is not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, anagram1));
+                    REQUIRE(!TestHelpers::listContains(actual, anagram1));
                 }
 
                 AND_THEN("Non anagrams are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram1));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram2));
+                    REQUIRE(!TestHelpers::listContains(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::listContains(actual, notAnagram2));
                 }
             }
 
@@ -425,16 +425,16 @@ namespace dictionaryTaskTests
 
                 THEN("Anagrams of the collection of letters are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram1));
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram2));
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram3));
-                    REQUIRE(TestHelpers::listContainsWord(actual, anagram4));
+                    REQUIRE(TestHelpers::listContains(actual, anagram1));
+                    REQUIRE(TestHelpers::listContains(actual, anagram2));
+                    REQUIRE(TestHelpers::listContains(actual, anagram3));
+                    REQUIRE(TestHelpers::listContains(actual, anagram4));
                 }
 
                 AND_THEN("Non anagrams are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram1));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, notAnagram2));
+                    REQUIRE(!TestHelpers::listContains(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::listContains(actual, notAnagram2));
                 }
             }
 
@@ -491,14 +491,14 @@ namespace dictionaryTaskTests
 
                 THEN("Legal scrabble words are returned")
                 {
-                    REQUIRE(TestHelpers::listContainsWord(actual, nounWord));
+                    REQUIRE(TestHelpers::listContains(actual, nounWord));
                 }
 
                 AND_THEN("Illegal scrabble words are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContainsWord(actual, miscWord));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, properNounWord));
-                    REQUIRE(!TestHelpers::listContainsWord(actual, hyphenWord));
+                    REQUIRE(!TestHelpers::listContains(actual, miscWord));
+                    REQUIRE(!TestHelpers::listContains(actual, properNounWord));
+                    REQUIRE(!TestHelpers::listContains(actual, hyphenWord));
                 }
             }
         }

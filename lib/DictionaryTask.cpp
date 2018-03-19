@@ -53,13 +53,13 @@ void DictionaryTask::setLongestWords(const shared_ptr<Word> wordObj)
 
     // if current word length is equal to max, add it to the list
     if (word.length() == _maxWordLength)
-        _longestWords.insert(_longestWords.end(), wordObj);
+        _longestWords.push_back(wordObj);
 
     // if current word length is greater than max, clear the list, add current word to fresh list, set new max threshold
     if (word.length() > _maxWordLength)
     {
         _longestWords.clear();
-        _longestWords.insert(_longestWords.end(), wordObj);
+        _longestWords.push_back(wordObj);
         _maxWordLength = word.length();
     }
 }
@@ -77,7 +77,7 @@ void DictionaryTask::setLogyWords(const shared_ptr<Word> wordObj)
             && word.length() <= MAX_LOGY_LENGTH
             && endsWith(word, LOGY_ENDING))
     {
-        _logyWords.insert(_logyWords.end(), wordObj);
+        _logyWords.push_back(wordObj);
     }
 }
 
@@ -172,7 +172,7 @@ list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 
     return filterResult(
         it->second,
-        [word](shared_ptr<Word> const& wordObj)
+        [&word](shared_ptr<Word> const& wordObj)
         {
             return wordObj->getWord() == word;
         });
@@ -194,25 +194,26 @@ list<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const stri
     if (it == _anagrams.end())
         return list<shared_ptr<Word>>();
 
-    // TODO: would rather init a function<bool()> variable up here to avoid repeated code...
-    // switch determines which predicate to store in the variable...
-    // then call return filterResult() once after the switch case...
-    // but had problems assigning the predicate to the variable... investigate further
+    // TODO: Investigate below
+    // Would rather init a variable called 'predicate' up here to avoid repeated code.
+    // Switch determines the appropriate unary predicate to store in the variable.
+    // Then call 'return filterResult(list, predicate)' after the switch case.
+    // But what type is a lambda?? Tried std::function<>, doesnt work...
     switch (taskType)
     {
-    case WordAnagrams: // remove words that match the search pattern
+    case WordAnagrams: // remove word that matches the search pattern
         return filterResult(
             it->second,
-            [word](shared_ptr<Word> const& wordObj)
+            [&word](shared_ptr<Word> const& wordObj)
             {
-                return wordObj->getWord() == word;
+                return word == wordObj->getWord();
             });
-    case StringAnagrams: // remove words that match the search pattern or are not legal
+    case StringAnagrams: // remove word that matches the search pattern or illegal scrabble words
         return filterResult(
             it->second,
-            [word](shared_ptr<Word> const& wordObj)
+            [&word](shared_ptr<Word> const& wordObj)
             {
-                return wordObj->getWord() == word
+                return word == wordObj->getWord()
                     || !wordObj->isLegalScrabbleWord();
             });
     default:
@@ -258,9 +259,10 @@ string DictionaryTask::getAnagramKey(const string& word)
 }
 
 /**
-* \brief Filter the results based on a predicate lambda expression.
+* \brief Filter the results based on a unary predicate lambda expression.
 * \param result The collection of results from the task.
-* \param predicate The predicate lambda expression, where if true, will exclude the result from the collection.
+* \param predicate The unary predicate lambda expression, where if true, 
+* will exclude the result from the collection.
 * \return A new result after filter is applied.
 */
 template<typename Predicate>

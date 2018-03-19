@@ -10,13 +10,24 @@ public:
     {
         return actual.find(expected) != std::string::npos;
     }
+
+    /**
+     * \brief Returns true if vector of strings contains word.
+     * \param vector The vector to search.
+     * \param target The word to search for.
+     * \returns True if the vector contains the word.
+     */
+    static bool vectorContains(const std::vector<std::string>& vector, const std::string& target)
+    {
+        return find(vector.begin(), vector.end(), target) != vector.end();
+    }
     /**
      * \brief Returns true if list of strings contains word.
      * \param list The list to search.
      * \param target The word to search for.
      * \returns True if the list contains the word.
      */
-    static bool listContainsWord(std::list<std::string> list, const std::string& target)
+    static bool listContains(const std::list<std::string>& list, const std::string& target)
     {
         return find(list.begin(), list.end(), target) != list.end();
     }
@@ -26,7 +37,7 @@ public:
      * \param target The word to search for.
      * \returns True if the list contains the word. 
      */
-    static bool listContainsWord(std::list<std::shared_ptr<lib::Word>> list, const std::string& target)
+    static bool listContains(const std::list<std::shared_ptr<lib::Word>>& list, const std::string& target)
     {
         for (const auto word : list)
         {
@@ -46,7 +57,7 @@ public:
     * both expected and actual objects are the same
     */
     template<class TExpected, class TActual>
-    static bool isSmartPtrEqual(const std::shared_ptr<TExpected> expected, const std::shared_ptr<TActual> actual)
+    static bool isSmartPtrEqual(const std::shared_ptr<TExpected>& expected, const std::shared_ptr<TActual> actual)
     {
         if (expected == actual)
             return true;
@@ -65,7 +76,7 @@ public:
     * both expected and actual objects are the same
     */
     template<class TExpected, class TActual>
-    static bool isSmartPtrEqual(const std::unique_ptr<TExpected> expected, const std::unique_ptr<TActual> actual)
+    static bool isSmartPtrEqual(const std::unique_ptr<TExpected>& expected, const std::unique_ptr<TActual> actual)
     {
         if (expected == actual)
             return true;
