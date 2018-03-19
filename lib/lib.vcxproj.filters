@@ -93,6 +93,9 @@
     <ClInclude Include="DictionaryExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlossaryExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -138,6 +141,9 @@
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DictionaryExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GlossaryExtractor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

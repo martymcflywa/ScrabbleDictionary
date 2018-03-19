@@ -19,7 +19,7 @@ namespace dictionaryExtractorTests
     auto task = DictionaryTask();
     auto extractor = DictionaryExtractor(printer, task);
 
-    SCENARIO("String extractor reads valid file")
+    SCENARIO("Dictionary extractor reads valid file")
     {
         GIVEN("A file containing valid dictionary entries")
         {
@@ -53,7 +53,7 @@ namespace dictionaryExtractorTests
         }
     }
 
-    SCENARIO("String extractor reads file with missing word")
+    SCENARIO("Dictionary extractor reads file with missing word")
     {
         GIVEN("A file containing a dictionary entry with missing word")
         {
@@ -81,7 +81,7 @@ namespace dictionaryExtractorTests
         }
     }
 
-    SCENARIO("String extractor reads file with missing type")
+    SCENARIO("Dictionary extractor reads file with missing type")
     {
         GIVEN("A file containing a dictionary entry with missing type")
         {
@@ -109,7 +109,7 @@ namespace dictionaryExtractorTests
         }
     }
 
-    SCENARIO("String extractor reads file with missing definition")
+    SCENARIO("Dictionary extractor reads file with missing definition")
     {
         GIVEN("A file containing a dictionary entry with missing definition")
         {

@@ -154,6 +154,7 @@
     <ClInclude Include="EmptyStringException.h" />
     <ClInclude Include="FileNotFoundException.h" />
     <ClInclude Include="FileReadException.h" />
+    <ClInclude Include="GlossaryExtractor.h" />
     <ClInclude Include="IExtract.h" />
     <ClInclude Include="IFormat.h" />
     <ClInclude Include="ILoad.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="EmptyStringException.cpp" />
     <ClCompile Include="FileNotFoundException.cpp" />
     <ClCompile Include="FileReadException.cpp" />
+    <ClCompile Include="GlossaryExtractor.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
