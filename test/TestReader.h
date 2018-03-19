@@ -1,15 +1,15 @@
 ﻿#pragma once
-#include <string>
 #include <sstream>
-#include "../lib/ILoad.h"
+#include <string>
+#include "../lib/IRead.h"
 
-class TestLoader : public lib::ILoad
+class TestReader : public lib::IRead
 {
     std::istringstream _testDictionary;
 
 public:
-    TestLoader() = default;
+    TestReader() = default;
     void setTestFile(const std::string& testFile);
-    std::istream& load() override;
+    std::istream& read() override;
     void dispose() override;
 };

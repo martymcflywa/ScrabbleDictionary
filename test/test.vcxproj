@@ -154,7 +154,7 @@
     <ClInclude Include="TestFileFactory.h" />
     <ClInclude Include="TestGlossaryBuilder.h" />
     <ClInclude Include="TestHelpers.h" />
-    <ClInclude Include="TestLoader.h" />
+    <ClInclude Include="TestReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DictionaryTaskTests.cpp" />
@@ -164,8 +164,8 @@
     <ClCompile Include="TestDictionaryBuilder.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TestGlossaryBuilder.cpp" />
-    <ClCompile Include="TextFileLoaderTests.cpp" />
-    <ClCompile Include="TestLoader.cpp" />
+    <ClCompile Include="TextFileReaderTests.cpp" />
+    <ClCompile Include="TestReader.cpp" />
     <ClCompile Include="WordTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

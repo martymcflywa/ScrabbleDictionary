@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include "TestHelpers.h"
-#include "TestLoader.h"
+#include "TestReader.h"
 #include "../lib/GlossaryExtractor.h"
 
 using namespace std;
@@ -29,12 +29,12 @@ namespace glossaryExtractorTests
                 "_" + word5 + "_" + "\tFILE" + "\n" +
                 word7;
 
-            auto loader = TestLoader();
-            loader.setTestFile(testFile);
+            auto reader = TestReader();
+            reader.setTestFile(testFile);
 
             WHEN("The extractor reads the file")
             {
-                auto& content = loader.load();
+                auto& content = reader.read();
                 auto actual = extractor.extract(content);
 
                 THEN("Words without punctuation are returned")

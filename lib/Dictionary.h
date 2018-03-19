@@ -2,7 +2,7 @@
 #include <list>
 #include <unordered_map>
 #include "IExtract.h"
-#include "ILoad.h"
+#include "IRead.h"
 #include "ITask.h"
 #include "Word.h"
 
@@ -13,7 +13,6 @@ namespace lib {
      */
     class Dictionary
     {
-        ILoad& _loader;
         IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& _extractor;
         ITask& _task;
 
@@ -34,22 +33,20 @@ namespace lib {
 
     public:
         /**
-        * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary. 
-        * Using dependency injection to decouple implementation details of loading and extracting.
-        * \param loader Implementation of ILoad, responsible for loading dictionary entries from a source.
+        * \brief Constructs the Dictionary. Responsible for loading entries from a source dictionary.
+        * Using dependency injection to decouple implementation details of extracting and tasks.
         * \param extractor Implementation of IExtract, responsible for extracting values from the source dictionary.
-        * \param task Implementation of ITask, responsible for aggregating dictionary entries to answer questions about it.
+        * \param task Implementation of ITask, responsible for aggregating data from the dictionary during extract loop.
         */
         Dictionary(
-            ILoad& loader, 
             IExtract<std::unordered_map<std::string, std::shared_ptr<Word>>, std::istream&>& extractor, 
             ITask& task);
         /**
-        * \brief Loads dictionary entries from a source. Depends on ILoad and IExtract to load and extract the contents
-        * from the source.
-        * \returns map<string, Word> populated with entries from the source dictionary.
+        * \brief Loads dictionary entries from a source. Depends on IRead and IExtract to read and extract the contents
+        * from a source.
+        * \param reader Implementation of IReader. In this case, it should be able to read text files.
         */
-        void loadDictionary();
+        void loadDictionary(IRead& reader);
         /**
          * \brief Searches for the word in collection. If it exists, returns the type and definition, 
          * else return message that word does not exist.

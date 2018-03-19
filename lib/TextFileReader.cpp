@@ -1,22 +1,22 @@
 ﻿#include "stdafx.h"
 #include "FileNotFoundException.h"
 #include "FileReadException.h"
-#include "TextFileLoader.h"
+#include "TextFileReader.h"
 
 using namespace std;
 using namespace lib;
 
 /**
 * \brief Validates filepath during construction. If it fails validation, throw.
-* \param filepath The filepath to the source dictionary.
+* \param filepath The filepath to the text file.
 */
-TextFileLoader::TextFileLoader(const string& filepath) : _filepath(filepath)
+TextFileReader::TextFileReader(const string& filepath) : _filepath(filepath)
 {
     if(!isFileExists(_filepath))
         throw FileNotFoundException(_filepath);
 }
 
-istream& TextFileLoader::load()
+istream& TextFileReader::read()
 {
     _file.open(_filepath);
 
@@ -26,12 +26,17 @@ istream& TextFileLoader::load()
     return _file;
 }
 
-void TextFileLoader::dispose()
+void TextFileReader::dispose()
 {
     _file.close();
 }
 
-bool TextFileLoader::isFileExists(const string& filepath)
+/**
+* \brief Checks if file exists at filepath.
+* \param filepath The filepath to check.
+* \return true if file exists.
+*/
+bool TextFileReader::isFileExists(const string& filepath)
 {
     // found solution here https://stackoverflow.com/a/12774387
     auto file = ifstream(filepath.c_str());

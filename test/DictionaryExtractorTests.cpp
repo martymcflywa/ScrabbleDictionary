@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include <string>
 #include "TestHelpers.h"
-#include "TestLoader.h"
+#include "TestReader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/DictionaryExtractor.h"
@@ -27,10 +27,10 @@ namespace dictionaryExtractorTests
 
             WHEN("The extractor reads the file")
             {
-                auto loader = TestLoader();
-                loader.setTestFile(testFile);
+                auto reader = TestReader();
+                reader.setTestFile(testFile);
 
-                auto& content = loader.load();
+                auto& content = reader.read();
                 auto actual = extractor.extract(content);
 
                 THEN("A corresponding collection of Words is created")
@@ -61,10 +61,10 @@ namespace dictionaryExtractorTests
 
             WHEN("The extracor reads the file")
             {
-                auto loader = TestLoader();
-                loader.setTestFile(testFile);
+                auto reader = TestReader();
+                reader.setTestFile(testFile);
 
-                auto& content = loader.load();
+                auto& content = reader.read();
                 unordered_map<string, shared_ptr<Word>> actual;
 
                 try
@@ -89,10 +89,10 @@ namespace dictionaryExtractorTests
 
             WHEN("The extractor reads the file")
             {
-                auto loader = TestLoader();
-                loader.setTestFile(testFile);
+                auto reader = TestReader();
+                reader.setTestFile(testFile);
 
-                auto& content = loader.load();
+                auto& content = reader.read();
                 unordered_map<string, shared_ptr<Word>> actual;
 
                 try
@@ -117,10 +117,10 @@ namespace dictionaryExtractorTests
 
             WHEN("The extractor reads the file")
             {
-                auto loader = TestLoader();
-                loader.setTestFile(testFile);
+                auto reader = TestReader();
+                reader.setTestFile(testFile);
 
-                auto& content = loader.load();
+                auto& content = reader.read();
                 unordered_map<string, shared_ptr<Word>> actual;
 
                 try

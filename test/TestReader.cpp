@@ -1,20 +1,20 @@
 ﻿#include "stdafx.h"
-#include "TestLoader.h"
+#include "TestReader.h"
 
 using namespace std;
 
-void TestLoader::setTestFile(const string& testFile)
+void TestReader::setTestFile(const string& testFile)
 {
     _testDictionary.str(testFile);
 }
 
-istream& TestLoader::load()
+istream& TestReader::read()
 {
     istream& is(_testDictionary);
     return is;
 }
 
-void TestLoader::dispose()
+void TestReader::dispose()
 {
     // do nothing, no file or resource to close here
 }

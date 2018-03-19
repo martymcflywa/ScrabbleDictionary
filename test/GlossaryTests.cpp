@@ -34,11 +34,11 @@ namespace glossaryTests
 
             WHEN("Glossary scans a text file for word usage")
             {
-                auto loader = TestLoader();
-                loader.setTestFile(usageText);
+                auto reader = TestReader();
+                reader.setTestFile(usageText);
                 auto glossaryBuilder = TestGlossaryBuilder(dictionary);
                 auto glossary = glossaryBuilder.build();
-                glossary.setUsageFrequency(loader);
+                glossary.setUsageFrequency(reader);
 
                 THEN("Words used once are rare")
                 {
@@ -71,20 +71,20 @@ namespace glossaryTests
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
-            auto loader = TestLoader();
-            loader.setTestFile(usageText);
+            auto reader = TestReader();
+            reader.setTestFile(usageText);
             auto glossaryBuilder = TestGlossaryBuilder(dictionary);
             auto glossary = glossaryBuilder.build();
-            glossary.setUsageFrequency(loader);
+            glossary.setUsageFrequency(reader);
 
             WHEN("Glossary scans a text file for rare words")
             {
                 const string rareText = "abc? Cab\ncab--BCA!\n_ab'c_ ABC\n“bac!” acb--";
-                loader = TestLoader();
-                loader.setTestFile(rareText);
+                reader = TestReader();
+                reader.setTestFile(rareText);
 
                 auto formatter = GlossaryFormatter();
-                const auto actual = glossary.generateGlossary(loader, formatter);
+                const auto actual = glossary.generateGlossary(reader, formatter);
 
                 THEN("Rare words are included in the glossary")
                 {

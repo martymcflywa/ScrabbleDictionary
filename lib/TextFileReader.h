@@ -1,14 +1,14 @@
 ﻿#pragma once
 #include <fstream>
 #include <string>
-#include "ILoad.h"
+#include "IRead.h"
 
 namespace lib
 {
     /**
-    * \brief Implementation of ILoad, which expects the source dictionary to be provided as a text file.
+    * \brief Implementation of IRead, which reads stuff from a text file.
     */
-    class TextFileLoader : public ILoad
+    class TextFileReader : public IRead
     {
         std::string _filepath;
         std::ifstream _file;
@@ -16,10 +16,10 @@ namespace lib
     public:
         /**
         * \brief Validates filepath during construction. If it fails validation, throw.
-        * \param filepath The filepath to the source dictionary.
+        * \param filepath The filepath to the text file.
         */
-        TextFileLoader(const std::string& filepath);
-        std::istream& load() override;
+        TextFileReader(const std::string& filepath);
+        std::istream& read() override;
         void dispose() override;
     private:
         /**

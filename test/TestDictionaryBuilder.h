@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <string>
-#include "TestLoader.h"
+#include "TestReader.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
@@ -11,7 +11,7 @@ class TestDictionaryBuilder
 {
     const std::string TYPE_AND_DEF = " [n]\nSome definition.\n\n";
     std::string _content;
-    TestLoader _loader;
+    TestReader _reader;
     lib::DefinitionFormatter _formatter;
     lib::DefinitionPrinter _printer;
     lib::DictionaryTask _task;

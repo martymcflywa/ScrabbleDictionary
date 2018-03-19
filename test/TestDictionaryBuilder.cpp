@@ -6,42 +6,42 @@ using namespace lib;
 
 TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
     _content(buildContent(words)),
-    _loader(TestLoader()),
+    _reader(TestReader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(DictionaryExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor, _task))
+    _dictionary(Dictionary(_extractor, _task))
 {
 }
 
 TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words, const list<string>& typeAndDefs) :
     _content(buildContent(words, typeAndDefs)),
-    _loader(TestLoader()),
+    _reader(TestReader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(DictionaryExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor, _task))
+    _dictionary(Dictionary(_extractor, _task))
 {
 }
 
 TestDictionaryBuilder::TestDictionaryBuilder(const string& word, const string& typeAndDef) :
     _content(buildContent(word, typeAndDef)),
-    _loader(TestLoader()),
+    _reader(TestReader()),
     _formatter(DefinitionFormatter()),
     _printer(DefinitionPrinter(_formatter)),
     _task(DictionaryTask()),
     _extractor(DictionaryExtractor(_printer, _task)),
-    _dictionary(Dictionary(_loader, _extractor, _task))
+    _dictionary(Dictionary(_extractor, _task))
 {
 }
 
 Dictionary& TestDictionaryBuilder::build()
 {
-    _loader.setTestFile(_content);
-    _dictionary.loadDictionary();
-    _loader.dispose();
+    _reader.setTestFile(_content);
+    _dictionary.loadDictionary(_reader);
+    _reader.dispose();
 
     return _dictionary;
 }
