@@ -39,6 +39,9 @@
     <ClInclude Include="TestReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextFileReaderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

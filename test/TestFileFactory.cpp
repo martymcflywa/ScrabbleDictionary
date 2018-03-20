@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include <fstream>
 #include "TestFileFactory.h"
+#include "../lib/FileIoException.h"
 
 using namespace std;
 
@@ -15,8 +16,8 @@ void TestFileFactory::write() const
 {
     auto file = ofstream(_filepath);
 
-    if(!file.is_open())
-        throw invalid_argument("Unable to write to file at " + _filepath);
+    if (!file.is_open())
+        throw lib::FileIoException("writing", _filepath);
 
     file << _content;
     file.close();
@@ -24,6 +25,6 @@ void TestFileFactory::write() const
 
 void TestFileFactory::cleanup() const
 {
-    if(remove(_filepath.c_str()) != 0)
-        throw invalid_argument("Unable to delete file at " + _filepath);
+    if (remove(_filepath.c_str()) != 0)
+        throw lib::FileIoException("deleting", _filepath);
 }

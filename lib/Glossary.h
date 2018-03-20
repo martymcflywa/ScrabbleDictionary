@@ -2,6 +2,7 @@
 #include <istream>
 #include "Dictionary.h"
 #include "IExtract.h"
+#include "IWrite.h"
 #include "Word.h"
 
 namespace lib
@@ -19,6 +20,8 @@ namespace lib
     {
         Dictionary& _dictionary;
         IExtract<std::vector<std::string>, std::istream&>& _extractor;
+        IWrite<const std::string&>& _writer;
+        std::map<std::string, std::string> _glossary {};
 
     public:
         /**
@@ -26,8 +29,12 @@ namespace lib
          * \param dictionary A reference to a Dictionary object. Must be completely loaded.
          * \param extractor An implementation of IExtract, responsible for extracting all
          * words from a text file, without punctuation, special or uppercase characters.
+         * \param writer An implementation of IWriter, responsible for writing the glossary.
          */
-        Glossary(Dictionary& dictionary, IExtract<std::vector<std::string>, std::istream&>& extractor);
+        Glossary(
+            Dictionary& dictionary, 
+            IExtract<std::vector<std::string>, std::istream&>& extractor,
+            IWrite<const std::string&>& writer);
         /**
          * \brief Scans a text file and extracts all words from it. If word appears in the dictionary,
          * increment the Word's usage field.
@@ -42,7 +49,11 @@ namespace lib
         * \param formatter The formatter for glossary entries.
         * \returns A collection of unique rare word definitions
         */
-        std::map<std::string, std::string> generateGlossary(IRead& reader, IFormat& formatter) const;
+        void generate(IRead& reader, IFormat& formatter);
+        /**
+         * \brief Writes the generated glossary to file.
+         */
+        void write() const;
     };
 }
 

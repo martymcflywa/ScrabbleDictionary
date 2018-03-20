@@ -153,7 +153,7 @@
     <ClInclude Include="DictionaryTask.h" />
     <ClInclude Include="EmptyStringException.h" />
     <ClInclude Include="FileNotFoundException.h" />
-    <ClInclude Include="FileReadException.h" />
+    <ClInclude Include="FileIoException.h" />
     <ClInclude Include="Glossary.h" />
     <ClInclude Include="GlossaryExtractor.h" />
     <ClInclude Include="GlossaryFormatter.h" />
@@ -163,11 +163,13 @@
     <ClInclude Include="IPrint.h" />
     <ClInclude Include="ITask.h" />
     <ClInclude Include="IUserInterface.h" />
+    <ClInclude Include="IWrite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="DictionaryExtractor.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TaskType.h" />
     <ClInclude Include="TextFileReader.h" />
+    <ClInclude Include="TextFileWriter.h" />
     <ClInclude Include="UnsupportedTaskException.h" />
     <ClInclude Include="UnsupportedTypeException.h" />
     <ClInclude Include="Word.h" />
@@ -181,7 +183,7 @@
     <ClCompile Include="DictionaryTask.cpp" />
     <ClCompile Include="EmptyStringException.cpp" />
     <ClCompile Include="FileNotFoundException.cpp" />
-    <ClCompile Include="FileReadException.cpp" />
+    <ClCompile Include="FileIoException.cpp" />
     <ClCompile Include="Glossary.cpp" />
     <ClCompile Include="GlossaryExtractor.cpp" />
     <ClCompile Include="GlossaryFormatter.cpp" />
@@ -193,6 +195,7 @@
     </ClCompile>
     <ClCompile Include="DictionaryExtractor.cpp" />
     <ClCompile Include="TextFileReader.cpp" />
+    <ClCompile Include="TextFileWriter.cpp" />
     <ClCompile Include="UnsupportedTaskException.cpp" />
     <ClCompile Include="UnsupportedTypeException.cpp" />
     <ClCompile Include="Word.cpp" />

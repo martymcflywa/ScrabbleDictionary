@@ -60,9 +60,6 @@
     <ClInclude Include="FileNotFoundException.h">
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileReadException.h">
-      <Filter>Exceptions\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UnsupportedTypeException.h">
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
@@ -102,6 +99,15 @@
     <ClInclude Include="TextFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IWrite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIoException.h">
+      <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -126,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileNotFoundException.cpp">
-      <Filter>Exceptions\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileReadException.cpp">
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UnsupportedTypeException.cpp">
@@ -156,6 +159,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextFileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIoException.cpp">
+      <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFileWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

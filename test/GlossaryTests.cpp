@@ -36,6 +36,7 @@ namespace glossaryTests
             {
                 auto reader = TestReader();
                 reader.setTestFile(usageText);
+
                 auto glossaryBuilder = TestGlossaryBuilder(dictionary);
                 auto glossary = glossaryBuilder.build();
                 glossary.setUsageFrequency(reader);
@@ -73,6 +74,7 @@ namespace glossaryTests
 
             auto reader = TestReader();
             reader.setTestFile(usageText);
+
             auto glossaryBuilder = TestGlossaryBuilder(dictionary);
             auto glossary = glossaryBuilder.build();
             glossary.setUsageFrequency(reader);
@@ -84,7 +86,10 @@ namespace glossaryTests
                 reader.setTestFile(rareText);
 
                 auto formatter = GlossaryFormatter();
-                const auto actual = glossary.generateGlossary(reader, formatter);
+                glossary.generate(reader, formatter);
+                glossary.write();
+
+                const auto& actual = glossaryBuilder.getWriter().getContent();
 
                 THEN("Rare words are included in the glossary")
                 {
@@ -93,18 +98,18 @@ namespace glossaryTests
                         if (word == usedTwice || word == notUsed)
                             continue;
                             
-                        REQUIRE(TestHelpers::mapContains(actual, word));
+                        REQUIRE(actual.find(word) != string::npos);
                     }
                 }
 
                 AND_THEN("Words used more than once are not included in the glossary")
                 {
-                    REQUIRE(!TestHelpers::mapContains(actual, usedTwice));
+                    REQUIRE(actual.find(usedTwice) == string::npos);
                 }
 
                 AND_THEN("Words not used are not included in the glossary")
                 {
-                    REQUIRE(!TestHelpers::mapContains(actual, notUsed));
+                    REQUIRE(actual.find(notUsed) == string::npos);
                 }
             }
         }
