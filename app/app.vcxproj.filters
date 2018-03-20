@@ -40,5 +40,11 @@
     <Text Include="dictionary2018.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="many_english_works.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="new_work.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
