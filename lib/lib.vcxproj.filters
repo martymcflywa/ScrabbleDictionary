@@ -105,7 +105,7 @@
     <ClInclude Include="FileIoException.h">
       <Filter>Exceptions\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextFileWriter.h">
+    <ClInclude Include="GlossaryWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -164,7 +164,7 @@
     <ClCompile Include="FileIoException.cpp">
       <Filter>Exceptions\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextFileWriter.cpp">
+    <ClCompile Include="GlossaryWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -157,6 +157,7 @@
     <ClInclude Include="Glossary.h" />
     <ClInclude Include="GlossaryExtractor.h" />
     <ClInclude Include="GlossaryFormatter.h" />
+    <ClInclude Include="GlossaryWriter.h" />
     <ClInclude Include="IExtract.h" />
     <ClInclude Include="IFormat.h" />
     <ClInclude Include="IRead.h" />
@@ -169,7 +170,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TaskType.h" />
     <ClInclude Include="TextFileReader.h" />
-    <ClInclude Include="TextFileWriter.h" />
     <ClInclude Include="UnsupportedTaskException.h" />
     <ClInclude Include="UnsupportedTypeException.h" />
     <ClInclude Include="Word.h" />
@@ -187,6 +187,7 @@
     <ClCompile Include="Glossary.cpp" />
     <ClCompile Include="GlossaryExtractor.cpp" />
     <ClCompile Include="GlossaryFormatter.cpp" />
+    <ClCompile Include="GlossaryWriter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -195,7 +196,6 @@
     </ClCompile>
     <ClCompile Include="DictionaryExtractor.cpp" />
     <ClCompile Include="TextFileReader.cpp" />
-    <ClCompile Include="TextFileWriter.cpp" />
     <ClCompile Include="UnsupportedTaskException.cpp" />
     <ClCompile Include="UnsupportedTypeException.cpp" />
     <ClCompile Include="Word.cpp" />
