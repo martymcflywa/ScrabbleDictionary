@@ -2,6 +2,7 @@
 #include <iostream>
 #include "CliUserInterface.h"
 #include "Logger.h"
+#include "../lib/TextFileReader.h"
 
 using namespace std;
 using namespace cli;
@@ -9,10 +10,21 @@ using namespace lib;
 
 /**
 * \brief Constructor for CliUserInterface. Dictionary used to retrieve
-* values to show the user.
+* values to show the user. Glossary used to generate glossary of rare words.
 * \param dictionary The dictionary, once populated with Words.
+* \param usageFilepath Path of text file which determines word usage count.
+* \param rareFilepath Path of text file to generate a glossary for.
+* \param glossary The glossary to generate glossary of rare words.
 */
-CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(dictionary)
+CliUserInterface::CliUserInterface(
+        Dictionary& dictionary, 
+        string& usageFilepath, 
+        string& rareFilepath, 
+        Glossary& glossary) :
+    _dictionary(dictionary),
+    _usageFilepath(usageFilepath),
+    _rareFilepath(rareFilepath),
+    _glossary(glossary)
 {
     _menu = 
         string("[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + "\n") +
@@ -21,6 +33,7 @@ CliUserInterface::CliUserInterface(Dictionary& dictionary) : _dictionary(diction
         string("[" + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + "\n") +
         string("[" + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + "\n") +
         string("[" + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + "\n") +
+        string("[" + MenuItem::GLOSSARY + "] " + GLOSSARY_TITLE + "\n") +
         string("[" + MenuItem::QUIT + "] Quit");
 }
 
@@ -72,6 +85,11 @@ void CliUserInterface::start()
     if (selection == MenuItem::ANAGRAM_STRING)
     {
         stringAnagrams();
+        return;
+    }
+    if (selection == MenuItem::GLOSSARY)
+    {
+        generateGlossary();
         return;
     }
     if (selection == MenuItem::QUIT)
@@ -281,6 +299,30 @@ void CliUserInterface::stringAnagrams()
 }
 
 /**
+* \brief Generates a glossary of rare words and writes to text file.
+*/
+void CliUserInterface::generateGlossary()
+{
+    // TODO: try calling setUsageFrequency and generate with non-blocking async on start up
+    // User can still interact with rest of menu, but can't select glossary until promise fulfilled.
+
+    Logger::log(Info, "Reading '" + _usageFilepath + "' to determine word usage...");
+    auto usageReader = TextFileReader(_usageFilepath);
+    _glossary.setUsageFrequency(usageReader);
+
+    Logger::log(Info, "Reading '" + _rareFilepath + "' to generate a glossary of rare words...");
+    auto rareReader = TextFileReader(_rareFilepath);
+    _glossary.generate(rareReader);
+
+    Logger::log(Output, "Writing glossary to '" + _glossary.getOutputFilepath() + "'...");
+    _glossary.write();
+
+    Logger::log(Info, "Operation complete, glossary created at '" + _glossary.getOutputFilepath() + "'");
+
+    start();
+}
+
+/**
 * \brief Shutdown console app gracefully.
 */
 void CliUserInterface::shutdown() const
@@ -302,6 +344,7 @@ bool CliUserInterface::isValidMenuSelection(const string& selection) const
         || selection == MenuItem::RHYME_WORDS
         || selection == MenuItem::ANAGRAM_WORD
         || selection == MenuItem::ANAGRAM_STRING
+        || selection == MenuItem::GLOSSARY
         || selection == MenuItem::QUIT;
 
     if (!isValid)

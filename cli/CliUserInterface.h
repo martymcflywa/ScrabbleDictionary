@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include <string>
-#include "../lib/Dictionary.h"
-#include "../lib/IUserInterface.h"
 #include "MenuItem.h"
+#include "../lib/Dictionary.h"
+#include "../lib/Glossary.h"
+#include "../lib/IUserInterface.h"
 
 namespace cli
 {
@@ -12,6 +13,11 @@ namespace cli
     class CliUserInterface : public lib::IUserInterface
     {
         lib::Dictionary& _dictionary;
+
+        std::string& _usageFilepath;
+        std::string& _rareFilepath;
+        lib::Glossary& _glossary;
+
         std::string _menu;
 
         const std::string SEARCH_DEFINITION_TITLE = "Find a word definition and scrabble score";
@@ -20,16 +26,24 @@ namespace cli
         const std::string RHYME_WORDS_TITLE = "Find word/s that rhyme";
         const std::string ANAGRAM_WORD_TITLE = "Find anagram/s of a word in the dictionary";
         const std::string ANAGRAM_STRING_TITLE = "Find legal scrabble anagram/s and their (scores) for a string of letters";
+        const std::string GLOSSARY_TITLE = "Generate glossary";
         const std::string CONTROL_TITLE = "[" + MenuItem::BACK + "] Back\n[" + MenuItem::QUIT + "] Quit";
         const unsigned MIN_RHYME_LENGTH = 3;
 
     public:
         /**
          * \brief Constructor for CliUserInterface. Dictionary used to retrieve
-         * values to show the user.
+         * values to show the user. Glossary used to generate glossary of rare words.
          * \param dictionary The dictionary, once populated with Words.
+         * \param usageFilepath Path of text file which determines word usage count.
+         * \param rareFilepath Path of text file to generate a glossary for. 
+         * \param glossary The glossary to generate glossary of rare words.
          */
-        explicit CliUserInterface(lib::Dictionary& dictionary);
+        CliUserInterface(
+            lib::Dictionary& dictionary, 
+            std::string& usageFilepath,
+            std::string& rareFilepath,
+            lib::Glossary& glossary);
         /**
         * \brief Show user main menu. Ask user to select item from menu,
         * then perform task. If input is invalid, retry until user picks corrrect option,
@@ -67,6 +81,10 @@ namespace cli
          * Prints any anagram/s found, else notifies user no anagrams are found.
          */
         void stringAnagrams();
+        /**
+        * \brief Generates a glossary of rare words and writes to text file.
+        */
+        void generateGlossary();
         /**
          * \brief Shutdown console app gracefully.
          */
