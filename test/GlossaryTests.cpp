@@ -83,8 +83,7 @@ namespace glossaryTests
                 reader = TestReader();
                 reader.setTestFile(rareText);
 
-                auto formatter = GlossaryFormatter();
-                glossary.generate(reader, formatter);
+                glossary.generate(reader);
                 glossary.write();
 
                 const auto& actual = glossaryBuilder.getWriter().getContent();
