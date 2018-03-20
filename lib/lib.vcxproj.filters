@@ -99,8 +99,14 @@
     <ClInclude Include="TextFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IWrite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="FileIoException.h">
       <Filter>Exceptions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileWriter.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="FileIoException.cpp">
       <Filter>Exceptions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFileWriter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
