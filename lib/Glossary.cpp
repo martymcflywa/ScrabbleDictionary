@@ -10,14 +10,17 @@ using namespace lib;
 * \param dictionary A reference to a Dictionary object. Must be completely loaded.
 * \param extractor An implementation of IExtract, responsible for extracting all
 * words from a text file, without punctuation, special or uppercase characters.
+* \param formatter Formats the glossary entries when writing to file.
 * \param writer An implementation of IWriter, responsible for writing the glossary.
 */
 Glossary::Glossary(
         Dictionary& dictionary, 
         IExtract<vector<string>, istream&>& extractor,
+        IFormat& formatter,
         IWrite<const string&>& writer) :
     _dictionary(dictionary),
     _extractor(extractor),
+    _formatter(formatter),
     _writer(writer)
 {
 }
@@ -44,9 +47,9 @@ void Glossary::setUsageFrequency(IRead& reader) const
 * add its definition to collection.
 * Using std::map to keep words unique and in alphabetical order.
 * \param reader The file reader responsible for reading the text file.
-* \param formatter The formatter for glossary entries.
+* \returns A collection of unique rare word definitions
 */
-void Glossary::generate(IRead& reader, IFormat& formatter)
+void Glossary::generate(IRead& reader)
 {
     // TODO: can we make this concurrent producer/consumer?
     auto words = _extractor.extract(reader.read());
@@ -62,7 +65,7 @@ void Glossary::generate(IRead& reader, IFormat& formatter)
             if (rareWord == nullptr)
                 continue;
 
-            _glossary.insert(pair<string, string>(word, formatter.format(*rareWord)));
+            _glossary.insert(pair<string, string>(word, _formatter.format(*rareWord)));
         }
     }
 }
@@ -76,7 +79,12 @@ void Glossary::write() const
     string glossary = "";
 
     for (const auto& it : _glossary)
-        glossary += it.second;
+        glossary += it.second + "\n\n";
 
     _writer.write(glossary);
+}
+
+std::string Glossary::getOutputFilepath() const
+{
+    return _writer.getFilepath();
 }

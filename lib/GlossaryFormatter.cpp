@@ -8,8 +8,5 @@ using namespace lib;
 
 string GlossaryFormatter::format(const Word& word)
 {
-    return 
-        "[WORD] " + word.getWord() + "\n" +
-        "[TYPE] " + WordType::getName(word.getType()) + "\n"
-        "[DEFINITION] " + word.getDefinition() + "\n\n";
+    return word.getWord() + ":\n" + WordType::getName(word.getType()) + " " + word.getDefinition();
 }

@@ -10,5 +10,6 @@ const string MenuItem::LOGY_WORDS = "3";
 const string MenuItem::RHYME_WORDS = "4";
 const string MenuItem::ANAGRAM_WORD = "5";
 const string MenuItem::ANAGRAM_STRING = "6";
+const string MenuItem::GLOSSARY = "7";
 const string MenuItem::QUIT = "Q";
 const string MenuItem::BACK = "<";

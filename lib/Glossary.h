@@ -20,6 +20,7 @@ namespace lib
     {
         Dictionary& _dictionary;
         IExtract<std::vector<std::string>, std::istream&>& _extractor;
+        IFormat& _formatter;
         IWrite<const std::string&>& _writer;
         std::map<std::string, std::string> _glossary {};
 
@@ -29,11 +30,13 @@ namespace lib
          * \param dictionary A reference to a Dictionary object. Must be completely loaded.
          * \param extractor An implementation of IExtract, responsible for extracting all
          * words from a text file, without punctuation, special or uppercase characters.
+         * \param formatter Formats the glossary entries when writing to file.
          * \param writer An implementation of IWriter, responsible for writing the glossary.
          */
         Glossary(
-            Dictionary& dictionary, 
+            Dictionary& dictionary,
             IExtract<std::vector<std::string>, std::istream&>& extractor,
+            IFormat& formatter,
             IWrite<const std::string&>& writer);
         /**
          * \brief Scans a text file and extracts all words from it. If word appears in the dictionary,
@@ -46,14 +49,14 @@ namespace lib
         * add its definition to collection.
         * Using std::map to keep words unique and in alphabetical order.
         * \param reader The file reader responsible for reading the text file.
-        * \param formatter The formatter for glossary entries.
         * \returns A collection of unique rare word definitions
         */
-        void generate(IRead& reader, IFormat& formatter);
+        void generate(IRead& reader);
         /**
          * \brief Writes the generated glossary to file.
          */
         void write() const;
+        std::string getOutputFilepath() const;
     };
 }
 

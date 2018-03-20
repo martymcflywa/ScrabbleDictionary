@@ -7,8 +7,9 @@ using namespace lib;
 TestGlossaryBuilder::TestGlossaryBuilder(Dictionary& dictionary) :
     _dictionary(dictionary),
     _extractor(GlossaryExtractor()),
+    _formatter(GlossaryFormatter()),
     _writer(TestWriter()),
-    _glossary(Glossary(_dictionary, _extractor, _writer))
+    _glossary(Glossary(_dictionary, _extractor, _formatter, _writer))
 {
 }
 

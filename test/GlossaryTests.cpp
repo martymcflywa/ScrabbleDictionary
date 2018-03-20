@@ -1,10 +1,8 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <list>
-#include <map>
 #include "TestDictionaryBuilder.h"
 #include "TestGlossaryBuilder.h"
-#include "TestHelpers.h"
 #include "../lib/GlossaryFormatter.h"
 
 using namespace std;
@@ -85,8 +83,7 @@ namespace glossaryTests
                 reader = TestReader();
                 reader.setTestFile(rareText);
 
-                auto formatter = GlossaryFormatter();
-                glossary.generate(reader, formatter);
+                glossary.generate(reader);
                 glossary.write();
 
                 const auto& actual = glossaryBuilder.getWriter().getContent();

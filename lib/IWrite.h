@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace lib
 {
@@ -12,5 +13,6 @@ namespace lib
     public:
         virtual ~IWrite() = default;
         virtual void write(TInput) = 0;
+        virtual std::string getFilepath() = 0;
     };
 }

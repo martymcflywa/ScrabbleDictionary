@@ -14,6 +14,7 @@ namespace cli
         static const std::string RHYME_WORDS;
         static const std::string ANAGRAM_WORD;
         static const std::string ANAGRAM_STRING;
+        static const std::string GLOSSARY;
         static const std::string QUIT;
         static const std::string BACK;
     };

@@ -10,10 +10,10 @@ using namespace lib;
 
 /**
 * \brief Instantiate all the interface implementations, inject dependencies where needed, 
-* construct the Dictionary, then user interface.
+* construct the Dictionary and Glossary, then UI.
 */
 Application::Application() :
-    // Switched to hardcoded path, replaces FileResolver::getFilepath()
+    // build the dictionary
     _dictionaryFilepath(string(".\\dictionary2018.txt")),
     _dictionaryReader(TextFileReader(_dictionaryFilepath)),
     _dictionaryFormatter(DefinitionFormatter()),
@@ -21,7 +21,15 @@ Application::Application() :
     _dictionaryTask(DictionaryTask()),
     _dictionaryExtractor(DictionaryExtractor(_dictionaryPrinter, _dictionaryTask)),
     _dictionary(Dictionary(_dictionaryExtractor, _dictionaryTask)),
-    _ui(CliUserInterface(_dictionary))
+    // build the glossary
+    _usageFilepath(string(".\\many_english_works.txt")),
+    _rareWordFilepath(string(".\\new_work.txt")),
+    _glossaryFormatter(GlossaryFormatter()),
+    _glossaryExtractor(GlossaryExtractor()),
+    _glossaryWriter(string(".\\glossary.txt")),
+    _glossary(Glossary(_dictionary, _glossaryExtractor, _glossaryFormatter, _glossaryWriter)),
+    // build the ui
+    _ui(CliUserInterface(_dictionary, _usageFilepath, _rareWordFilepath, _glossary))
 {
 }
 
