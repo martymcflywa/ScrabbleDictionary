@@ -155,6 +155,7 @@
     <ClInclude Include="TestGlossaryBuilder.h" />
     <ClInclude Include="TestHelpers.h" />
     <ClInclude Include="TestReader.h" />
+    <ClInclude Include="TestWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DictionaryTaskTests.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="TestDictionaryBuilder.cpp" />
     <ClCompile Include="TestFileFactory.cpp" />
     <ClCompile Include="TestGlossaryBuilder.cpp" />
+    <ClCompile Include="TestWriter.cpp" />
     <ClCompile Include="TextFileReaderTests.cpp" />
     <ClCompile Include="TestReader.cpp" />
     <ClCompile Include="WordTests.cpp" />

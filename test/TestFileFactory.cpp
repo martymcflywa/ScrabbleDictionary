@@ -16,7 +16,7 @@ void TestFileFactory::write() const
 {
     auto file = ofstream(_filepath);
 
-    if(!file.is_open())
+    if (!file.is_open())
         throw lib::FileIoException("writing", _filepath);
 
     file << _content;
@@ -25,6 +25,6 @@ void TestFileFactory::write() const
 
 void TestFileFactory::cleanup() const
 {
-    if(remove(_filepath.c_str()) != 0)
+    if (remove(_filepath.c_str()) != 0)
         throw lib::FileIoException("deleting", _filepath);
 }

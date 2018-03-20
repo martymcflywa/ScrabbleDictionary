@@ -4,13 +4,20 @@
 
 using namespace lib;
 
-TestGlossaryBuilder::TestGlossaryBuilder(lib::Dictionary& dictionary) :
+TestGlossaryBuilder::TestGlossaryBuilder(Dictionary& dictionary) :
     _dictionary(dictionary),
-    _extractor(GlossaryExtractor())
+    _extractor(GlossaryExtractor()),
+    _writer(TestWriter()),
+    _glossary(Glossary(_dictionary, _extractor, _writer))
 {
 }
 
-Glossary TestGlossaryBuilder::build()
+Glossary& TestGlossaryBuilder::build()
 {
-    return Glossary(_dictionary, _extractor);
+    return _glossary;
+}
+
+TestWriter& TestGlossaryBuilder::getWriter()
+{
+    return _writer;
 }
