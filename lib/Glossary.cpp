@@ -84,7 +84,17 @@ void Glossary::write() const
     _writer.write(glossary);
 }
 
+const std::map<std::string, std::string>* Glossary::getGlossary() const
+{
+    return &_glossary;
+}
+
 std::string Glossary::getOutputFilepath() const
 {
     return _writer.getFilepath();
+}
+
+unsigned Glossary::size() const
+{
+    return _glossary.size();
 }

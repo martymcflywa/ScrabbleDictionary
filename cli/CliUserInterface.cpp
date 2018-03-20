@@ -315,10 +315,16 @@ void CliUserInterface::generateGlossary()
     _glossary.generate(rareReader);
 
     Logger::log(Output, "Writing glossary to '" + _glossary.getOutputFilepath() + "'...");
+
+    // print glossary
+    for (const auto& entry : *_glossary.getGlossary())
+    {
+        Logger::log(entry.second + "\n");
+    }
+    // write glossary
     _glossary.write();
 
-    Logger::log(Info, "Operation complete, glossary created at '" + _glossary.getOutputFilepath() + "'");
-
+    Logger::log(Info, "Operation complete, wrote " + to_string(_glossary.size()) + " entries to '" + _glossary.getOutputFilepath() + "'");
     start();
 }
 

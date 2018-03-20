@@ -56,7 +56,13 @@ namespace lib
          * \brief Writes the generated glossary to file.
          */
         void write() const;
+        /**
+         * \brief Returns ptr to glossary as const read only. Helper to print entries.
+         * \returns readonly const ptr to glossary so we can print it to CLI.
+         */
+        const std::map<std::string, std::string>* getGlossary() const;
         std::string getOutputFilepath() const;
+        unsigned size() const;
     };
 }
 
