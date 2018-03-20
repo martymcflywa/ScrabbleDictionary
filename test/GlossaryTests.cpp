@@ -3,7 +3,6 @@
 #include <list>
 #include "TestDictionaryBuilder.h"
 #include "TestGlossaryBuilder.h"
-#include "../lib/GlossaryFormatter.h"
 
 using namespace std;
 using namespace lib;
@@ -107,6 +106,24 @@ namespace glossaryTests
                 AND_THEN("Words not used are not included in the glossary")
                 {
                     REQUIRE(actual.find(notUsed) == string::npos);
+                }
+
+                // Test might seem unecessary since map is used to hold glossary (guarantees uniqueness).
+                // But scenario is brittle without it. A dev could change the data structure of glossary down
+                // the track and would not be able to guard against duplicated entries without this assertion.
+                AND_THEN("Entries in glossary are unique")
+                {
+                    auto check = vector<string>();
+
+                    for (const auto& entry : *glossary.getGlossary())
+                        check.push_back(entry.second);
+
+                    // assert that iterator reaches end during unique operation,
+                    // meaning that no duplicates were found
+                    // see http://www.cplusplus.com/reference/algorithm/unique/
+                    sort(check.begin(), check.end());
+                    const auto& it = unique(check.begin(), check.end());
+                    REQUIRE(it == check.end());
                 }
             }
         }
