@@ -1,10 +1,8 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <list>
-#include <map>
 #include "TestDictionaryBuilder.h"
 #include "TestGlossaryBuilder.h"
-#include "TestHelpers.h"
 #include "../lib/GlossaryFormatter.h"
 
 using namespace std;
