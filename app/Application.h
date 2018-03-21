@@ -14,7 +14,6 @@ namespace app
 {
     class Application
     {
-        const std::string _dictionaryFilepath;
         lib::TextFileReader _dictionaryReader;
         lib::DefinitionFormatter _dictionaryFormatter;
         lib::DefinitionPrinter _dictionaryPrinter;
@@ -22,8 +21,8 @@ namespace app
         lib::DictionaryExtractor _dictionaryExtractor;
         lib::Dictionary _dictionary;
 
-        std::string _usageFilepath;
-        std::string _rareWordFilepath;
+        lib::TextFileReader _usageReader;
+        lib::TextFileReader _rareWordReader;
         std::string _glossaryFilepath;
         lib::GlossaryFormatter _glossaryFormatter;
         lib::GlossaryExtractor _glossaryExtractor;
@@ -38,10 +37,8 @@ namespace app
         * construct the Dictionary, then user interface.
         */
         Application();
-        /**
-         * \brief Load the dictionary.
-         */
-        void init();
+        void loadDictionary();
+        void generateGlossaryAsync();
         /**
         * \brief Start at main menu.
         */

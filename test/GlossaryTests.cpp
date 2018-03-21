@@ -31,12 +31,9 @@ namespace glossaryTests
 
             WHEN("Glossary scans a text file for word usage")
             {
-                auto reader = TestReader();
-                reader.setTestFile(usageText);
-
-                auto glossaryBuilder = TestGlossaryBuilder(dictionary);
+                auto glossaryBuilder = TestGlossaryBuilder(dictionary, usageText, "");
                 auto glossary = glossaryBuilder.build();
-                glossary.setUsageFrequency(reader);
+                glossary.generateAsync();
 
                 THEN("Words used once are rare")
                 {
@@ -62,27 +59,20 @@ namespace glossaryTests
         }
     }
 
-    SCENARIO("Rare words")
+    SCENARIO("Generate glossary")
     {
         GIVEN("A dictionary with rare words and a text file with words and special characters")
         {
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
 
-            auto reader = TestReader();
-            reader.setTestFile(usageText);
-
-            auto glossaryBuilder = TestGlossaryBuilder(dictionary);
+            const string rareText = "abc? Cab\ncab--BCA!\n_ab'c_ ABC\n“bac!” acb--";
+            auto glossaryBuilder = TestGlossaryBuilder(dictionary, usageText, rareText);
             auto glossary = glossaryBuilder.build();
-            glossary.setUsageFrequency(reader);
+            glossary.generateAsync();
 
             WHEN("Glossary scans a text file for rare words")
             {
-                const string rareText = "abc? Cab\ncab--BCA!\n_ab'c_ ABC\n“bac!” acb--";
-                reader = TestReader();
-                reader.setTestFile(rareText);
-
-                glossary.generate(reader);
                 glossary.write();
 
                 const auto& actual = glossaryBuilder.getWriter().getContent();

@@ -1,13 +1,17 @@
 ﻿#include "stdafx.h"
 #include "Glossary.h"
 #include "IFormat.h"
+#include "TextFileReader.h"
 
 
 using namespace std;
 using namespace lib;
+
 /**
 * \brief Constructs the Glossary.
 * \param dictionary A reference to a Dictionary object. Must be completely loaded.
+* \param usageReader Reads the source which determines word usage.
+* \param rareWordReader Reads the source to generate a glossary of rare words from.
 * \param extractor An implementation of IExtract, responsible for extracting all
 * words from a text file, without punctuation, special or uppercase characters.
 * \param formatter Formats the glossary entries when writing to file.
@@ -15,14 +19,71 @@ using namespace lib;
 */
 Glossary::Glossary(
         Dictionary& dictionary, 
+        IRead& usageReader,
+        IRead& rareWordReader,
         IExtract<vector<string>, istream&>& extractor,
         IFormat& formatter,
         IWrite<const string&>& writer) :
     _dictionary(dictionary),
+    _usageReader(usageReader),
+    _rareWordReader(rareWordReader),
     _extractor(extractor),
     _formatter(formatter),
-    _writer(writer)
+    _writer(writer),
+    _isLoaded(false)
 {
+}
+
+/**
+* \brief Use as non-blocking asynchronous call to generate the glossary.
+*/
+void Glossary::generateAsync()
+{
+    setUsageFrequency(_usageReader);
+    generate(_rareWordReader);
+    _isLoaded = true;
+}
+
+/**
+* \brief Writes the generated glossary to file.
+*/
+void Glossary::write() const
+{
+    // build a string from the map
+    string glossary = "";
+
+    for (const auto& it : _glossary)
+        glossary += it.second + "\n\n";
+
+    _writer.write(glossary);
+}
+
+/**
+* \brief Returns ptr to glossary as const read only. Helper to print entries.
+* \returns readonly const ptr to glossary so we can print it to user interface.
+*/
+const std::map<std::string, std::string>* Glossary::getGlossary() const
+{
+    return &_glossary;
+}
+
+std::string Glossary::getOutputFilepath() const
+{
+    return _writer.getFilepath();
+}
+
+/**
+* \brief Returns true if generate glossary async task complete.
+* \returns True if generate glossary async task complete.
+*/
+bool Glossary::isLoaded() const
+{
+    return _isLoaded;
+}
+
+unsigned Glossary::size() const
+{
+    return _glossary.size();
 }
 
 /**
@@ -68,33 +129,4 @@ void Glossary::generate(IRead& reader)
             _glossary.insert(pair<string, string>(word, _formatter.format(*rareWord)));
         }
     }
-}
-
-/**
-* \brief Writes the generated glossary to file.
-*/
-void Glossary::write() const
-{
-    // build a string from the map
-    string glossary = "";
-
-    for (const auto& it : _glossary)
-        glossary += it.second + "\n\n";
-
-    _writer.write(glossary);
-}
-
-const std::map<std::string, std::string>* Glossary::getGlossary() const
-{
-    return &_glossary;
-}
-
-std::string Glossary::getOutputFilepath() const
-{
-    return _writer.getFilepath();
-}
-
-unsigned Glossary::size() const
-{
-    return _glossary.size();
 }

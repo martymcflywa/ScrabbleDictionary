@@ -13,9 +13,6 @@ namespace cli
     class CliUserInterface : public lib::IUserInterface
     {
         lib::Dictionary& _dictionary;
-
-        std::string& _usageFilepath;
-        std::string& _rareFilepath;
         lib::Glossary& _glossary;
 
         std::string _menu;
@@ -26,7 +23,7 @@ namespace cli
         const std::string RHYME_WORDS_TITLE = "Find word/s that rhyme";
         const std::string ANAGRAM_WORD_TITLE = "Find anagram/s of a word in the dictionary";
         const std::string ANAGRAM_STRING_TITLE = "Find legal scrabble anagram/s and their (scores) for a string of letters";
-        const std::string GLOSSARY_TITLE = "Generate glossary";
+        const std::string GLOSSARY_TITLE = "Write glossary";
         const std::string CONTROL_TITLE = "[" + MenuItem::BACK + "] Back\n[" + MenuItem::QUIT + "] Quit";
         const unsigned MIN_RHYME_LENGTH = 3;
 
@@ -35,15 +32,9 @@ namespace cli
          * \brief Constructor for CliUserInterface. Dictionary used to retrieve
          * values to show the user. Glossary used to generate glossary of rare words.
          * \param dictionary The dictionary, once populated with Words.
-         * \param usageFilepath Path of text file which determines word usage count.
-         * \param rareFilepath Path of text file to generate a glossary for. 
-         * \param glossary The glossary to generate glossary of rare words.
+         * \param glossary The glossary, generates glossary of rare words.
          */
-        CliUserInterface(
-            lib::Dictionary& dictionary, 
-            std::string& usageFilepath,
-            std::string& rareFilepath,
-            lib::Glossary& glossary);
+        CliUserInterface(lib::Dictionary& dictionary, lib::Glossary& glossary);
         /**
         * \brief Show user main menu. Ask user to select item from menu,
         * then perform task. If input is invalid, retry until user picks corrrect option,
@@ -84,7 +75,7 @@ namespace cli
         /**
         * \brief Generates a glossary of rare words and writes to text file.
         */
-        void generateGlossary();
+        void writeGlossary();
         /**
          * \brief Shutdown console app gracefully.
          */
