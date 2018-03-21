@@ -14,7 +14,7 @@ void DictionaryTask::handleTasks(const std::shared_ptr<Word> wordObj)
     setAnagrams(wordObj);
 }
 
-std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType)
+std::vector<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType)
 {
     switch (taskType)
     {
@@ -27,7 +27,7 @@ std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType ta
     }
 }
 
-std::list<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType, const std::string& word)
+std::vector<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType taskType, const std::string& word)
 {
     switch (taskType)
     {
@@ -103,8 +103,8 @@ void DictionaryTask::setRhymes(const shared_ptr<Word> wordObj)
     // if not found, add a new k/v pair
     if (it == _rhymes.end())
     {
-        auto value = list<shared_ptr<Word>>{ wordObj };
-        _rhymes.insert(pair<string, list<shared_ptr<Word>>>(key, value));
+        auto value = vector<shared_ptr<Word>>{ wordObj };
+        _rhymes.insert(pair<string, vector<shared_ptr<Word>>>(key, value));
         return;
     }
 
@@ -129,8 +129,8 @@ void DictionaryTask::setAnagrams(const shared_ptr<Word> wordObj)
     // if not found, add a new k/v pair
     if (it == _anagrams.end())
     {
-        auto value = list<shared_ptr<Word>>{ wordObj };
-        _anagrams.insert(pair<string, list<shared_ptr<Word>>>(key, value));
+        auto value = vector<shared_ptr<Word>>{ wordObj };
+        _anagrams.insert(pair<string, vector<shared_ptr<Word>>>(key, value));
         return;
     }
 
@@ -142,7 +142,7 @@ void DictionaryTask::setAnagrams(const shared_ptr<Word> wordObj)
 * \brief Returns the collection of longest words found in dictionary.
 * \returns The collection of longest words found in dictionary.
 */
-list<shared_ptr<Word>> DictionaryTask::getLongestWords() const
+vector<shared_ptr<Word>> DictionaryTask::getLongestWords() const
 {
     return _longestWords;
 }
@@ -151,7 +151,7 @@ list<shared_ptr<Word>> DictionaryTask::getLongestWords() const
 * \brief Returns the collection of words ending in 'logy' with length of seven or less.
 * \returns The collection of words ending in 'logy' with length of seven or less.
 */
-list<shared_ptr<Word>> DictionaryTask::getLogyWords() const
+vector<shared_ptr<Word>> DictionaryTask::getLogyWords() const
 {
     return _logyWords;
 }
@@ -161,14 +161,14 @@ list<shared_ptr<Word>> DictionaryTask::getLogyWords() const
 * \param word The word to search for rhymes.
 * \returns Word/s that rhyme with parameter word.
 */
-list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
+vector<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 {
     const auto key = getRhymeKey(word);
     const auto it = _rhymes.find(key);
 
     // if not found, return an empty list
     if (it == _rhymes.end())
-        return list<shared_ptr<Word>>();
+        return vector<shared_ptr<Word>>();
 
     return filterResult(
         it->second,
@@ -185,14 +185,14 @@ list<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 * \param word The word to search for anagrams.
 * \returns Anagram/s of the word, if they exist, else returns an empty list.
 */
-list<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const string& word)
+vector<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const string& word)
 {
     const auto key = getAnagramKey(word);
     const auto it = _anagrams.find(key);
 
     // if not found, return an empty list
     if (it == _anagrams.end())
-        return list<shared_ptr<Word>>();
+        return vector<shared_ptr<Word>>();
 
     // TODO: Investigate below
     // Would rather init a variable called 'predicate' up here to avoid repeated code.
@@ -266,7 +266,7 @@ string DictionaryTask::getAnagramKey(const string& word)
 * \return A new result after filter is applied.
 */
 template<typename Predicate>
-list<shared_ptr<Word>> DictionaryTask::filterResult(list<shared_ptr<Word>> result, Predicate predicate)
+vector<shared_ptr<Word>> DictionaryTask::filterResult(vector<shared_ptr<Word>> result, Predicate predicate)
 {
     // cool solution from https://stackoverflow.com/a/42723273
     // adapted to accept a predicate lambda exp for custom filtering

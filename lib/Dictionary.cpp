@@ -47,7 +47,7 @@ string Dictionary::getDefinition(const string& word)
 * \brief Returns the longest word/s in the dictionary.
 * \returns The longest word/s in the dictionary.
 */
-list<shared_ptr<Word>> Dictionary::getLongestWords() const
+vector<shared_ptr<Word>> Dictionary::getLongestWords() const
 {
     return _task.getTaskResult(LongestWords);
 }
@@ -56,7 +56,7 @@ list<shared_ptr<Word>> Dictionary::getLongestWords() const
 * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
 * \returns Words that end in 'logy' that have a length less than or equal to seven.
 */
-list<shared_ptr<Word>> Dictionary::getLogyWords() const
+vector<shared_ptr<Word>> Dictionary::getLogyWords() const
 {
     return _task.getTaskResult(LogyWords);
 }
@@ -66,7 +66,7 @@ list<shared_ptr<Word>> Dictionary::getLogyWords() const
 * \param word The word to search for rhymes.
 * \returns Word/s that rhyme with parameter word.
 */
-list<shared_ptr<Word>> Dictionary::getRhymes(const string& word) const
+vector<shared_ptr<Word>> Dictionary::getRhymes(const string& word) const
 {
     return _task.getTaskResult(Rhymes, word);
 }
@@ -91,11 +91,11 @@ int Dictionary::getScrabbleScore(const std::string& word) const
 * \param word The word to search for anagrams.
 * \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list.
 */
-list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
+vector<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 {
     const auto it = _dictionary.find(word);
 
-    return it == _dictionary.end() ? list<shared_ptr<Word>>() : _task.getTaskResult(WordAnagrams, word);
+    return it == _dictionary.end() ? vector<shared_ptr<Word>>() : _task.getTaskResult(WordAnagrams, word);
 }
 
 /**
@@ -104,7 +104,7 @@ list<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 * \param letters The letters to search for anagrams.
 * \returns Anagram/s of the letters, if they exist, else returns an empty list.
 */
-list<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
+vector<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) const
 {
     return _task.getTaskResult(StringAnagrams, letters);
 }

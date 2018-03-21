@@ -57,7 +57,7 @@ namespace dictionaryTaskTests
         {
             const string shortWord = "XY";
             const string longWord = "XYZ";
-            const auto words = list<string>{ shortWord, longWord };
+            const auto words = vector<string>{ shortWord, longWord };
 
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
@@ -68,12 +68,12 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns the longest word")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, longWord));
+                    REQUIRE(TestHelpers::vectorContains(actual, longWord));
                 }
                 
                 AND_THEN("The dictionary does not return the short word")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, shortWord));
+                    REQUIRE(!TestHelpers::vectorContains(actual, shortWord));
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace dictionaryTaskTests
             const string shortWord = "AB";
             const string longWord1 = "ABC";
             const string longWord2 = "XYZ";
-            const auto words = list<string>{ shortWord, longWord1, longWord2 };
+            const auto words = vector<string>{ shortWord, longWord1, longWord2 };
 
             auto builder = TestDictionaryBuilder(words);
             auto dictionary = builder.build();
@@ -94,13 +94,13 @@ namespace dictionaryTaskTests
 
                 THEN("The dictionary returns both longest words")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, longWord1));
-                    REQUIRE(TestHelpers::listContains(actual, longWord2));
+                    REQUIRE(TestHelpers::vectorContains(actual, longWord1));
+                    REQUIRE(TestHelpers::vectorContains(actual, longWord2));
                 }
 
                 AND_THEN("The dictionary does not return the short word")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, shortWord));
+                    REQUIRE(!TestHelpers::vectorContains(actual, shortWord));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace dictionaryTaskTests
         const string logy4 = "567logy";
         const string notLogy1 = "5678logy";
         const string notLogy2 = "logynot";
-        const auto words = list<string>
+        const auto words = vector<string>
         {
             logy1,
             logy2,
@@ -135,16 +135,16 @@ namespace dictionaryTaskTests
 
                 THEN("Only words that end in 'logy' and have a length of seven or less characters are returned")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, logy1));
-                    REQUIRE(TestHelpers::listContains(actual, logy2));
-                    REQUIRE(TestHelpers::listContains(actual, logy3));
-                    REQUIRE(TestHelpers::listContains(actual, logy4));
+                    REQUIRE(TestHelpers::vectorContains(actual, logy1));
+                    REQUIRE(TestHelpers::vectorContains(actual, logy2));
+                    REQUIRE(TestHelpers::vectorContains(actual, logy3));
+                    REQUIRE(TestHelpers::vectorContains(actual, logy4));
                 }
 
                 AND_THEN("Non logy words are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, notLogy1));
-                    REQUIRE(!TestHelpers::listContains(actual, notLogy2));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notLogy1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notLogy2));
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace dictionaryTaskTests
         const string notRhyme1 = "oy";
         const string notRhyme2 = "joy";
         const string notRhyme3 = "royal";
-        const auto words = list<string>
+        const auto words = vector<string>
         {
             rhyme1,
             rhyme2,
@@ -179,20 +179,20 @@ namespace dictionaryTaskTests
 
                 THEN("Words that rhyme are returned")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, rhyme2));
-                    REQUIRE(TestHelpers::listContains(actual, rhyme2));
+                    REQUIRE(TestHelpers::vectorContains(actual, rhyme2));
+                    REQUIRE(TestHelpers::vectorContains(actual, rhyme2));
                 }
 
                 AND_THEN("The word being searched for is not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, rhyme1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, rhyme1));
                 }
 
                 AND_THEN("Words that don't rhyme are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, notRhyme1));
-                    REQUIRE(!TestHelpers::listContains(actual, notRhyme2));
-                    REQUIRE(!TestHelpers::listContains(actual, notRhyme3));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notRhyme1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notRhyme2));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notRhyme3));
                 }
             }
 
@@ -260,7 +260,7 @@ namespace dictionaryTaskTests
         const auto hyphenTypeDef = " [v]" + definition;
         const auto expectedHyphenScore = 0;
 
-        const auto words = list<string>
+        const auto words = vector<string>
         {
             adjectiveWord,
             adverbWord,
@@ -272,7 +272,7 @@ namespace dictionaryTaskTests
             properNounWord,
             hyphenWord
         };
-        const auto typeAndDefs = list<string>
+        const auto typeAndDefs = vector<string>
         {
             adjectiveTypeDef,
             adverbTypeDef,
@@ -371,7 +371,7 @@ namespace dictionaryTaskTests
             const string notAnagram1 = "abcde";
             const string notAnagram2 = "slat";
 
-            const auto words = list<string>
+            const auto words = vector<string>
             {
                 anagram1,
                 anagram2,
@@ -390,20 +390,20 @@ namespace dictionaryTaskTests
 
                 THEN("Anagrams of the word are returned")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, anagram2));
-                    REQUIRE(TestHelpers::listContains(actual, anagram3));
-                    REQUIRE(TestHelpers::listContains(actual, anagram4));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram2));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram3));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram4));
                 }
 
                 AND_THEN("The word being searched for is not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, anagram1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, anagram1));
                 }
 
                 AND_THEN("Non anagrams are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, notAnagram1));
-                    REQUIRE(!TestHelpers::listContains(actual, notAnagram2));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram2));
                 }
             }
 
@@ -425,16 +425,16 @@ namespace dictionaryTaskTests
 
                 THEN("Anagrams of the collection of letters are returned")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, anagram1));
-                    REQUIRE(TestHelpers::listContains(actual, anagram2));
-                    REQUIRE(TestHelpers::listContains(actual, anagram3));
-                    REQUIRE(TestHelpers::listContains(actual, anagram4));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram1));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram2));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram3));
+                    REQUIRE(TestHelpers::vectorContains(actual, anagram4));
                 }
 
                 AND_THEN("Non anagrams are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, notAnagram1));
-                    REQUIRE(!TestHelpers::listContains(actual, notAnagram2));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram1));
+                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram2));
                 }
             }
 
@@ -466,14 +466,14 @@ namespace dictionaryTaskTests
             const string hyphenWord = "w-o-r-d";
             const auto hyphenTypeDef = " [v]" + definition;
 
-            const auto words = list<string>
+            const auto words = vector<string>
             {
                 nounWord,
                 miscWord,
                 properNounWord,
                 hyphenWord
             };
-            const auto typeAndDefs = list<string>
+            const auto typeAndDefs = vector<string>
             {
                 nounTypeDef,
                 miscTypeDef,
@@ -491,14 +491,14 @@ namespace dictionaryTaskTests
 
                 THEN("Legal scrabble words are returned")
                 {
-                    REQUIRE(TestHelpers::listContains(actual, nounWord));
+                    REQUIRE(TestHelpers::vectorContains(actual, nounWord));
                 }
 
                 AND_THEN("Illegal scrabble words are not returned")
                 {
-                    REQUIRE(!TestHelpers::listContains(actual, miscWord));
-                    REQUIRE(!TestHelpers::listContains(actual, properNounWord));
-                    REQUIRE(!TestHelpers::listContains(actual, hyphenWord));
+                    REQUIRE(!TestHelpers::vectorContains(actual, miscWord));
+                    REQUIRE(!TestHelpers::vectorContains(actual, properNounWord));
+                    REQUIRE(!TestHelpers::vectorContains(actual, hyphenWord));
                 }
             }
         }

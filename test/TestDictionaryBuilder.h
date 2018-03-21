@@ -18,12 +18,12 @@ class TestDictionaryBuilder
     lib::DictionaryExtractor _extractor;
     lib::Dictionary _dictionary;
 public:
-    TestDictionaryBuilder(const std::list<std::string>& words);
-    TestDictionaryBuilder(const std::list<std::string>& words, const std::list<std::string>& typeAndDefs);
+    TestDictionaryBuilder(const std::vector<std::string>& words);
+    TestDictionaryBuilder(const std::vector<std::string>& words, const std::vector<std::string>& typeAndDefs);
     TestDictionaryBuilder(const std::string& word, const std::string& typeAndDef);
     lib::Dictionary& build();
 private:
-    std::string buildContent(const std::list<std::string>& words) const;
-    static std::string buildContent(const std::list<std::string>& words, const std::list<std::string> typeAndDefs);
+    std::string buildContent(const std::vector<std::string>& words) const;
+    static std::string buildContent(const std::vector<std::string>& words, const std::vector<std::string> typeAndDefs);
     static std::string buildContent(const std::string& word, const std::string& typeAndDef);
 };
