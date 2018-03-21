@@ -12,19 +12,10 @@ using namespace lib;
 * \brief Constructor for CliUserInterface. Dictionary used to retrieve
 * values to show the user. Glossary used to generate glossary of rare words.
 * \param dictionary The dictionary, once populated with Words.
-* \param usageFilepath Path of text file which determines word usage count.
-* \param rareFilepath Path of text file to generate a glossary for.
-* \param glossary The glossary to generate glossary of rare words.
+* \param glossary The glossary, generates glossary of rare words.
 */
 CliUserInterface::CliUserInterface(
-        Dictionary& dictionary, 
-        string& usageFilepath, 
-        string& rareFilepath, 
-        Glossary& glossary) :
-    _dictionary(dictionary),
-    _usageFilepath(usageFilepath),
-    _rareFilepath(rareFilepath),
-    _glossary(glossary)
+    Dictionary& dictionary, Glossary& glossary) : _dictionary(dictionary), _glossary(glossary)
 {
     _menu = 
         string("[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + "\n") +
@@ -89,7 +80,7 @@ void CliUserInterface::start()
     }
     if (selection == MenuItem::GLOSSARY)
     {
-        generateGlossary();
+        writeGlossary();
         return;
     }
     if (selection == MenuItem::QUIT)
@@ -299,20 +290,18 @@ void CliUserInterface::stringAnagrams()
 }
 
 /**
-* \brief Generates a glossary of rare words and writes to text file.
+* \brief Glossary is generated asynchronously at main. This allows user to get answers for other
+* Dictionary tasks while glossary is generated on another thread in the background.
+* When the user selects this menu item, if task not yet complete, ask user to try again later,
+* else go ahead and write glossary to file.
 */
-void CliUserInterface::generateGlossary()
+void CliUserInterface::writeGlossary()
 {
-    // TODO: try calling setUsageFrequency and generate with non-blocking async on start up
-    // User can still interact with rest of menu, but can't select glossary until promise fulfilled.
-
-    Logger::log(Info, "Reading '" + _usageFilepath + "' to determine word usage...");
-    auto usageReader = TextFileReader(_usageFilepath);
-    _glossary.setUsageFrequency(usageReader);
-
-    Logger::log(Info, "Reading '" + _rareFilepath + "' to generate a glossary of rare words...");
-    auto rareReader = TextFileReader(_rareFilepath);
-    _glossary.generate(rareReader);
+    if (!_glossary.isLoaded())
+    {
+        Logger::log(Error, "Glossary not yet generated, try again in a few seconds");
+        start();
+    }
 
     Logger::log(Output, "Writing glossary to '" + _glossary.getOutputFilepath() + "'...");
 
