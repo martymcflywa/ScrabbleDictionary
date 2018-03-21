@@ -15,6 +15,13 @@ void Logger::log(Prefix response, char const* message)
 void Logger::log(Prefix response, const string& message)
 {
     const auto prefix = resolvePrefix(response);
+
+    if (response == Task)
+    {
+        cout << endl << prefix + message << endl;
+        return;
+    }
+        
     cout << prefix + message << endl;
 }
 
@@ -45,6 +52,8 @@ string Logger::resolvePrefix(Prefix response)
         return "[MENU] ";
     case Output:
         return "[OUTPUT] ";
+    case Task: 
+        return "[TASK] ";
     default:
         return "";
     }

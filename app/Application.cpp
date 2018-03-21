@@ -1,10 +1,13 @@
 ﻿#include "stdafx.h"
+#include <chrono>
+#include <future>
 #include "Application.h"
 #include "../cli/CliUserInterface.h"
 #include "../cli/Logger.h"
-#include <future>
+
 
 using namespace std;
+using namespace std::chrono;
 using namespace app;
 using namespace cli;
 using namespace lib;
@@ -51,13 +54,26 @@ void Application::loadDictionary()
 }
 
 /**
- * \brief Call this asynchronously. Glossary can be generated in the background while user interacts with
- * rest of menu. Stop user from selecting glossary item in menu until this task is complete.
+ * \brief Call this asynchronously. Glossary is generated in the background on another thread 
+ * while user interacts with rest of menu. Stop user from selecting glossary item in menu until this task is complete.
+ * Let user know when task complete.
  */
 void Application::generateGlossaryAsync()
 {
-    Logger::log(Info, "Generating glossary asynchronously...");
-    _glossary.generateAsync();
+    Logger::log(Task, "Generating glossary asynchronously...");
+
+    auto glossaryTask = async([&](){ _glossary.generateAsync(); });
+
+    // poll to check task is done
+    auto taskDone = false;
+    do
+    {
+        taskDone = glossaryTask.wait_for(milliseconds(300)) == future_status::ready;
+    }
+    while (!taskDone);
+
+    // let user know glossary is ready
+    Logger::log(Task, "Glossary now ready with " + to_string(_glossary.size()) + " entries");
 }
 
 

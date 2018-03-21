@@ -12,6 +12,7 @@ namespace cli
         Input,
         Menu,
         Output,
+        Task
     };
 
     /**
