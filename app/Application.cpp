@@ -60,7 +60,7 @@ void Application::loadDictionary()
  */
 void Application::generateGlossaryAsync()
 {
-    Logger::log(Task, "Generating glossary asynchronously...");
+    Logger::log(Info, "Generating glossary asynchronously...");
 
     auto glossaryTask = async([&](){ _glossary.generateAsync(); });
 
