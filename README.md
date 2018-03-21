@@ -1,5 +1,19 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/mtf9dxn6tweovo47/branch/master?svg=true)](https://ci.appveyor.com/project/martymcflywa/scrabbledictionary/branch/master)
+| CI/CD    | Build status |
+|----------|--------------|
+| AppVeyor | [![appveyor](https://ci.appveyor.com/api/projects/status/mtf9dxn6tweovo47/branch/master?svg=true)](https://ci.appveyor.com/project/martymcflywa/scrabbledictionary/branch/master) |
 
+# Implementation overview
+
+## Part 1
+- During dictionary parsing, answers for tasks are evaluated and cached in the same extraction loop
+    - No need for lookups, extra loops later on when requesting what the longest word is, etc.
+
+## Part 2
+- After dictionary is loaded, glossary is generated on a separate thread
+    - Allows user to interact and recall results for part 1
+- Any attempts to select the glossary menu item before glossary task is finished are denied
+- User is notified when glossary is generated
+    - User can then select glossary menu item
 
 # CSP2104 Assignment
 
@@ -79,3 +93,29 @@
 - Methods
     - `loadDictionary()`
     - Other appropriate methods to implement requirements
+
+# Part 2
+- An extension of Part 1
+- Implement these additional tasks and add them to the menu
+
+## Basic tasks
+1. Prompt user for a word and report all words that rhyme
+    - Last 3 letters must be the same
+2. Print a word's scrabble score following its definition
+    - Does not need its own menu
+    - Can be implemented as part of definition search in part 1
+    - See appendix for calculating scrabble score
+
+## Intermediate tasks
+1. Prompt user for a word and report all words that are anagrams of it
+2. Let user enter a string of letters and return the word with the highest scrabble score
+
+## Advanced tasks
+Create a glossary generator.
+
+1. Parse `many_english_works.txt` one word at a time
+    - Every time a word is found that exists in the dictionary, increment `usageFrequency`
+2. Parse `new_work.txt` one word at a time
+    - For every word that is in the dictionary and is `rareWord()`, print word and definition
+    - Do not print the same word twice
+3. Save glossary to text file
