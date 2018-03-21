@@ -1,10 +1,11 @@
 ﻿#pragma once
+#include "TestReader.h"
+#include "TestWriter.h"
 #include "../lib/Dictionary.h"
 #include "../lib/Glossary.h"
 #include "../lib/GlossaryExtractor.h"
-#include "TestWriter.h"
 #include "../lib/GlossaryFormatter.h"
-#include "TestReader.h"
+
 
 class TestGlossaryBuilder
 {

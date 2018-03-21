@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "TestGlossaryBuilder.h"
 #include "../lib/GlossaryExtractor.h"
+#include "TestReader.h"
 
 using namespace std;
 using namespace lib;

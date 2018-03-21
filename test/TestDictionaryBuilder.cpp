@@ -4,7 +4,7 @@
 using namespace std;
 using namespace lib;
 
-TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
+TestDictionaryBuilder::TestDictionaryBuilder(const vector<string>& words) :
     _content(buildContent(words)),
     _reader(TestReader()),
     _formatter(DefinitionFormatter()),
@@ -15,7 +15,7 @@ TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words) :
 {
 }
 
-TestDictionaryBuilder::TestDictionaryBuilder(const list<string>& words, const list<string>& typeAndDefs) :
+TestDictionaryBuilder::TestDictionaryBuilder(const vector<string>& words, const vector<string>& typeAndDefs) :
     _content(buildContent(words, typeAndDefs)),
     _reader(TestReader()),
     _formatter(DefinitionFormatter()),
@@ -46,7 +46,7 @@ Dictionary& TestDictionaryBuilder::build()
     return _dictionary;
 }
 
-string TestDictionaryBuilder::buildContent(const list<string>& words) const
+string TestDictionaryBuilder::buildContent(const vector<string>& words) const
 {
     string content = "";
 
@@ -56,7 +56,7 @@ string TestDictionaryBuilder::buildContent(const list<string>& words) const
     return content;
 }
 
-string TestDictionaryBuilder::buildContent(const list<string>& words, const list<string> typeAndDefs)
+string TestDictionaryBuilder::buildContent(const vector<string>& words, const vector<string> typeAndDefs)
 {
     string content = "";
 

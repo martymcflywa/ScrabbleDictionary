@@ -23,6 +23,21 @@ public:
         return find(vector.begin(), vector.end(), target) != vector.end();
     }
     /**
+    * \brief Overload which searches vector of std::shared_ptr<lib::Word>
+    * \param vector The vector to search.
+    * \param target The word to search for.
+    * \returns True if the vector contains the word.
+    */
+    static bool vectorContains(const std::vector<std::shared_ptr<lib::Word>>& vector, const std::string& target)
+    {
+        for (const auto word : vector)
+        {
+            if (word->getWord() == target)
+                return true;
+        }
+        return false;
+    }
+    /**
      * \brief Returns true if list of strings contains word.
      * \param list The list to search.
      * \param target The word to search for.

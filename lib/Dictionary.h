@@ -58,18 +58,18 @@ namespace lib {
         * \brief Returns the longest word/s in the dictionary.
         * \returns The longest word/s in the dictionary.
         */
-        std::list<std::shared_ptr<Word>> getLongestWords() const;
+        std::vector<std::shared_ptr<Word>> getLongestWords() const;
         /**
         * \brief Returns words that end in 'logy' that have a length less than or equal to seven.
         * \returns Words that end in 'logy' that have a length less than or equal to seven.
         */
-        std::list<std::shared_ptr<Word>> getLogyWords() const;
+        std::vector<std::shared_ptr<Word>> getLogyWords() const;
         /**
          * \brief Returns word/s that rhyme with the parameter word.
          * \param word The word to search for rhymes.
          * \returns Word/s that rhyme with parameter word.
          */
-        std::list<std::shared_ptr<Word>> getRhymes(const std::string& word) const;
+        std::vector<std::shared_ptr<Word>> getRhymes(const std::string& word) const;
         /**
          * \brief Returns the score for the word. Misc, ProperNoun and hyphenated words always return 0;
          * \param word The word to search for its score.
@@ -82,14 +82,14 @@ namespace lib {
          * \param word The word to search for anagrams.
          * \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list. 
          */
-        std::list<std::shared_ptr<Word>> getWordAnagrams(const std::string& word) const;
+        std::vector<std::shared_ptr<Word>> getWordAnagrams(const std::string& word) const;
         /**
         * \brief Search for anagrams of a string of letters.
         * Returns any anagrams that exist, else returns an empty list.
         * \param letters The letters to search for anagrams.
         * \returns Anagram/s of the letters, if they exist, else returns an empty list.
         */
-        std::list<std::shared_ptr<Word>> getStringAnagrams(const std::string& letters) const;
+        std::vector<std::shared_ptr<Word>> getStringAnagrams(const std::string& letters) const;
         /**
          * \brief Increments a Word's usage if found in the dictionary.
          * \param word The word to search for and increment its usage.

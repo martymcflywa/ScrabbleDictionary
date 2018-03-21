@@ -16,7 +16,7 @@ namespace glossaryTests
     const string word5 = "bac";
     const string usedTwice = "acb";
     const string notUsed = "xyz";
-    const auto words = list<string>
+    const auto words = vector<string>
     {
         word1, word2, word3, word4, word5, usedTwice, notUsed
     };
