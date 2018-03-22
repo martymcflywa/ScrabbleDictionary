@@ -34,7 +34,7 @@ namespace app
     public:
         /**
         * \brief Instantiate all the interface implementations, inject dependencies where needed,
-        * construct the Dictionary, then user interface.
+        * construct the Dictionary, Glossary then UI.
         */
         Application();
         void loadDictionary();
