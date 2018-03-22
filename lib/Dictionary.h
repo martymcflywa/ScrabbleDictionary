@@ -96,8 +96,8 @@ namespace lib {
          */
         void incrementUsage(const std::string& word) const;
         /**
-        * \brief Returns true if word exists and usage < 2.
-        * \returns True if word exists and usage < 2.
+        * \brief Returns true if word exists and usage == 1.
+        * \returns True if word exists and usage == 1.
         */
         bool isRareWord(const std::string& word) const;
         /**
