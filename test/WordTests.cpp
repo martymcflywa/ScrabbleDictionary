@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
+#include "TestHelpers.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/EmptyStringException.h"
 #include "../lib/UnsupportedTypeException.h"
 #include "../lib/Word.h"
-#include "TestHelpers.h"
+#include "../lib/WordFactory.h"
 
 using namespace std;
 using namespace lib;
@@ -25,7 +26,7 @@ namespace wordTests
     {
         GIVEN("An entry with a word, valid type and definition")
         {
-            auto word = Word(testWord, testTypeString, testDefinition, printer);
+            auto word = WordFactory::build(testWord, testTypeString, testDefinition, printer);
 
             WHEN("The getters are called")
             {
@@ -67,7 +68,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, invalidType, testDefinition, printer));
+                    actual = make_unique<Word>(WordFactory::build(testWord, invalidType, testDefinition, printer));
                 }
                 catch (UnsupportedTypeException&) {}
 
@@ -87,7 +88,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(emptyWord, testTypeString, testDefinition, printer));
+                    actual = make_unique<Word>(WordFactory::build(emptyWord, testTypeString, testDefinition, printer));
                 }
                 catch (EmptyStringException&) {}
 
@@ -107,10 +108,9 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, emptyType, testDefinition, printer));
+                    actual = make_unique<Word>(WordFactory::build(testWord, emptyType, testDefinition, printer));
                 }
                 catch (EmptyStringException&) {}
-                catch (UnsupportedTypeException&) {}
 
                 THEN("The word is not created")
                 {
@@ -128,7 +128,7 @@ namespace wordTests
             {
                 try
                 {
-                    actual.reset(new Word(testWord, testTypeString, emptyDefinition, printer));
+                    actual = make_unique<Word>(WordFactory::build(testWord, testTypeString, emptyDefinition, printer));
                 }
                 catch (EmptyStringException&) {}
 
@@ -148,7 +148,7 @@ namespace wordTests
             const string type = "v";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -170,7 +170,7 @@ namespace wordTests
             const string type = "n";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -192,7 +192,7 @@ namespace wordTests
             const string type = "adv";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -214,7 +214,7 @@ namespace wordTests
             const string type = "adj";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -236,7 +236,7 @@ namespace wordTests
             const string type = "prep";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -258,7 +258,7 @@ namespace wordTests
             const string type = "pn";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -280,7 +280,7 @@ namespace wordTests
             const string type = "n_and_v";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {
@@ -302,7 +302,7 @@ namespace wordTests
             const string type = "misc";
             const string definiton = "this is a test";
 
-            auto wordObj = Word(word, type, definiton, printer);
+            auto wordObj = WordFactory::build(word, type, definiton, printer);
 
             WHEN("The word is printed")
             {

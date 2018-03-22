@@ -18,11 +18,11 @@ namespace lib
         /**
          * \brief Constructs a Word object with values extracted from a source dictionary.
          * \param word The word itself.
-         * \param type The type of word, ie. adj, n, etc. Must not include brackets "[]".
+         * \param type Type of the word, ie. Noun, Adjective etc.
          * \param definition The definition of the word.
          * \param printer Inject implementation of IPrint so that Word is not coupled to implementation of printing.
          */
-        Word(const std::string& word, const std::string& type, const std::string& definition, IPrint& printer);
+        Word(const std::string& word, Type type, const std::string& definition, IPrint& printer);
         /**
          * \brief Don't want anyone using this.
          */
@@ -54,12 +54,10 @@ namespace lib
         bool operator==(const Word& that) const;
 
     private:
-        static Type resolveType(const std::string& type);
         /**
         * \brief Calculates the score for the word. Misc, proper noun or hyphenated words always return 0;
         * \returns The score for the word if not misc, proper noun or hyphenated words, else returns 0.
         */
         int calculateScrabbleScore() const;
-        static std::string validate(const std::string& input);
     };
 }

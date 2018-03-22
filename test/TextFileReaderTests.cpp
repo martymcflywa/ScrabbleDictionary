@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "catch.hpp"
 #include <string>
-#include "TestHelpers.h"
 #include "TestFileFactory.h"
+#include "TestHelpers.h"
 #include "../lib/DefinitionFormatter.h"
 #include "../lib/DefinitionPrinter.h"
 #include "../lib/Dictionary.h"
@@ -10,6 +10,7 @@
 #include "../lib/DictionaryTask.h"
 #include "../lib/FileNotFoundException.h"
 #include "../lib/TextFileReader.h"
+#include "../lib/WordFactory.h"
 
 using namespace std;
 using namespace lib;
@@ -47,13 +48,13 @@ namespace textFileReaderTests
                 {
                     auto expected = unordered_map<string, shared_ptr<Word>>
                     {
-                        { "first", make_shared<Word>(Word("first", "adj", "This is the first definition.", printer)) },
-                        { "second", make_shared<Word>(Word("second", "adv", "This is the second definition.", printer)) }
+                        { "first", make_shared<Word>(WordFactory::build("first", "adj", "This is the first definition.", printer)) },
+                        { "second", make_shared<Word>(WordFactory::build("second", "adv", "This is the second definition.", printer)) }
                     };
 
                     for (auto expectedIt = expected.begin(), actualIt = actual.begin();
-                        expectedIt != expected.end() || actualIt != actual.end();
-                        ++expectedIt, ++actualIt)
+                            expectedIt != expected.end() || actualIt != actual.end();
+                            ++expectedIt, ++actualIt)
                     {
                         REQUIRE(expectedIt->first == actualIt->first);
                         REQUIRE(TestHelpers::isSmartPtrEqual(expectedIt->second, actualIt->second));

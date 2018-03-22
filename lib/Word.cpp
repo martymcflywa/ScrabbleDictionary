@@ -1,6 +1,4 @@
 ﻿#include "stdafx.h"
-#include "EmptyStringException.h"
-#include "UnsupportedTypeException.h"
 #include "Word.h"
 
 using namespace std;
@@ -8,16 +6,15 @@ using namespace lib;
 
 /**
 * \brief Constructs a Word object with values extracted from a source dictionary.
-* Resolves word type to an enum and calculates scrabble score on construction.
 * \param word The word itself.
-* \param type The type of word, ie. adj, n, etc. Must not include brackets "[]".
+* \param type Type of the word, ie. Noun, Adjective etc.
 * \param definition The definition of the word.
 * \param printer Inject implementation of IPrint so that Word is not coupled to implementation of printing.
 */
-Word::Word(const string& word, const string& type, const string& definition, IPrint& printer) :
-    _word(validate(word)),
-    _type(resolveType(type)),
-    _definition(validate(definition)),
+Word::Word(const string& word, Type type, const string& definition, IPrint& printer) :
+    _word(word),
+    _type(type),
+    _definition(definition),
     _scrabbleScore(calculateScrabbleScore()),
     _usage(0),
     _printer(printer)
@@ -89,41 +86,6 @@ bool Word::operator==(const Word& that) const
 }
 
 /**
- * \brief Resolves a Word type from string to Type enum.
- * \param type The type as a string, extracted from the source dictionary.
- * \return The corresponding Type enum value.
- */
-Type Word::resolveType(const string& type)
-{
-    const auto initialType = static_cast<Type>(-1);
-    auto out = initialType;
-
-    // would rather switch here but... https://stackoverflow.com/a/650218
-    if (type == "v")
-        out = Verb;
-    if (type == "n")
-        out = Noun;
-    if (type == "adv")
-        out = Adverb;
-    if (type == "adj")
-        out = Adjective;
-    if (type == "prep")
-        out = Preposition;
-    if (type == "pn")
-        out = ProperNoun;
-    if (type == "n_and_v")
-        out = NounAndVerb;
-    if (type == "misc")
-        out = Misc;
-
-    // throw if we got some unexpected type
-    if (out == initialType)
-        throw UnsupportedTypeException(type);
-
-    return out;
-}
-
-/**
 * \brief Calculates the score for the word. Misc, proper noun or hyphenated words always return 0;
 * \returns The score for the word if not misc, proper noun or hyphenated words, else returns 0.
 */
@@ -147,17 +109,4 @@ int Word::calculateScrabbleScore() const
         score += letterScores[toupper(letter) - capitalA];
 
     return score;
-}
-
-/**
- * \brief Ensure we don't receive any empty strings. Throw if we do.
- * \param input The extracted value from the source dictionary.
- * \return The value if it passes validation, else throw.
- */
-string Word::validate(const string& input)
-{
-    if (input.empty())
-        throw EmptyStringException();
-
-    return input;
 }

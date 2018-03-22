@@ -8,6 +8,7 @@
 #include "../lib/DictionaryExtractor.h"
 #include "../lib/DictionaryTask.h"
 #include "../lib/EmptyStringException.h"
+#include "../lib/WordFactory.h"
 
 using namespace std;
 using namespace lib;
@@ -37,8 +38,8 @@ namespace dictionaryExtractorTests
                 {
                     auto expected = unordered_map<string, shared_ptr<Word>>
                     {
-                        { "first", make_shared<Word>(Word("first", "adj", "This is the first definition.", printer)) },
-                        { "second", make_shared<Word>(Word("second", "adv", "This is the second definition.", printer)) }
+                        { "first", make_shared<Word>(WordFactory::build("first", "adj", "This is the first definition.", printer)) },
+                        { "second", make_shared<Word>(WordFactory::build("second", "adv", "This is the second definition.", printer)) }
                     };
 
                     for(auto expectedIt = expected.begin(), actualIt = actual.begin();
