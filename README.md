@@ -2,7 +2,7 @@
 |----------|--------------|
 | AppVeyor | [![appveyor](https://ci.appveyor.com/api/projects/status/mtf9dxn6tweovo47/branch/master?svg=true)](https://ci.appveyor.com/project/martymcflywa/scrabbledictionary/branch/master) |
 
-# Implementation overview
+# Approach overview
 
 ## Part 1
 - During dictionary parsing, answers for tasks are evaluated and cached in the same extraction loop
@@ -10,12 +10,31 @@
 
 ## Part 2
 - After dictionary is loaded, glossary is generated on a separate thread
-    - Allows user to interact and recall results for part 1
+    - Allows user to interact with menu and recall results for part 1 tasks
 - Any attempts to select the glossary menu item before glossary task is finished are denied
 - User is notified when glossary is generated
     - User can then select glossary menu item
 
-# CSP2104 Assignment
+## Unit tests
+- See `.\test\`
+- Using [Catch2](https://github.com/catchorg/Catch2) framework for BDD test
+    - Given, when, then
+- Running tests
+    - With VS2017: [Resharper](https://www.jetbrains.com/resharper-cpp/) shortcut `CTRL+U, CTRL+L`
+        - Tests not discovered by VS2017's stock `test explorer`, unsure why
+    - With `cmd`: After build, invoke with `Debug\test.exe --reporter console --success`
+
+## Continuous integration
+- Using [AppVeyor](https://www.appveyor.com/)
+    - Free for public github repos
+- Pull requests to github [repository](https://github.com/martymcflywa/ScrabbleDictionary) triggers a build and test run on AppVeyor
+    - `master` branch is protected
+- Pull requests to `master` must pass status checks for merge approval
+    - Build must be successful
+    - Tests must be successful
+- See `.\appveyor.yml` for configuration
+
+# CSP2104 assignment
 
 ## Overview
 - Create an app which loads an English dictionary
