@@ -132,14 +132,16 @@ bool Dictionary::isRareWord(const std::string& word) const
     return it == _dictionary.end() ? false : it->second->isRareWord();
 }
 
-Word* Dictionary::get(const std::string& word)
+/**
+* \brief If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+* \param word The word to search for.
+* \return If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+*/
+const Word* Dictionary::get(const std::string& word)
 {
     const auto it = _dictionary.find(word);
     
-    if (it == _dictionary.end())
-        return nullptr;
-
-    return it->second.get();
+    return it == _dictionary.end() ? nullptr : it->second.get();
 }
 
 /**
