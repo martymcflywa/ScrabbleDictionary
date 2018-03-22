@@ -98,5 +98,15 @@ namespace cli
          * \returns True if the word is a control char. 
          */
         static bool isControlChar(const std::string& word);
+        /**
+         * \brief Handles the main menu selection by the user.
+         * \param selection The menu item selected by the user.
+         */
+        void onSelect(const std::string& selection);
+        /**
+         * \brief Handles the control option selected by the user.
+         * \param control The control option selected by the user.
+         */
+        void onControl(const std::string& control);
     };
 }

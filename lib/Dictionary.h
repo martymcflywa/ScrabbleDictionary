@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <list>
 #include <unordered_map>
 #include "IExtract.h"
 #include "IRead.h"
@@ -96,16 +95,16 @@ namespace lib {
          */
         void incrementUsage(const std::string& word) const;
         /**
-        * \brief Returns true if word exists and usage < 2.
-        * \returns True if word exists and usage < 2.
+        * \brief Returns true if word exists and usage == 1.
+        * \returns True if word exists and usage == 1.
         */
         bool isRareWord(const std::string& word) const;
         /**
-         * \brief Returns the Word object, if exists.
-         * \param word The word to search for.
-         * \returns The Word object, if exists.
-         */
-        Word* get(const std::string& word);
+        * \brief If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+        * \param word The word to search for.
+        * \return If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+        */
+        const Word* get(const std::string& word);
         /**
          * \brief Returns how many entries are loaded in the dictionary.
          * \returns How many entries are loaded in the dictionary. 

@@ -13,8 +13,8 @@ using namespace cli;
 using namespace lib;
 
 /**
-* \brief Instantiate all the interface implementations, inject dependencies where needed, 
-* construct the Dictionary and Glossary, then UI.
+* \brief Instantiate all the interface implementations, inject dependencies where needed,
+* construct the Dictionary, Glossary then UI.
 */
 Application::Application() :
     // build the dictionary
@@ -73,7 +73,7 @@ void Application::generateGlossaryAsync()
     while (!taskDone);
 
     // let user know glossary is ready
-    Logger::log(Task, "Glossary now ready with " + to_string(_glossary.size()) + " entries");
+    Logger::log(Task, "Glossary finished generating with " + to_string(_glossary.size()) + " entries");
 }
 
 

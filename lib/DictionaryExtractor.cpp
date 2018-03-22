@@ -74,7 +74,7 @@ unordered_map<string, shared_ptr<Word>> DictionaryExtractor::extract(istream& co
 string DictionaryExtractor::extractWord(const string& line) const
 {
     const auto start = 0;
-    const auto length = line.find("[", start) - 1;
+    const auto length = line.find_first_of("[") - 1;
     return extract(line, start, length);
 }
 
@@ -85,10 +85,9 @@ string DictionaryExtractor::extractWord(const string& line) const
 */
 string DictionaryExtractor::extractType(const string& line) const
 {
-    const auto start = line.find("[", 0) + 1;
-    const auto end = line.find("]", start);
-    const auto length = end - start;
-    return extract(line, start, length);
+    const auto start = line.find_first_of("[") + 1;
+    const auto end = line.find_first_of("]");
+    return extract(line, start, end - start);
 }
 
 /**
@@ -100,8 +99,5 @@ string DictionaryExtractor::extractType(const string& line) const
 */
 string DictionaryExtractor::extract(const string& line, const int start, const int length)
 {
-    if (start < 0 || length < 1)
-        return "";
-
-    return line.substr(start, length);
+    return start < 0 || length < 1 ? "" : line.substr(start, length);
 }

@@ -38,7 +38,7 @@ void Dictionary::loadDictionary(IRead& reader)
 */
 string Dictionary::getDefinition(const string& word)
 {
-    const auto it = _dictionary.find(word);
+    const auto& it = _dictionary.find(word);
 
     return it == _dictionary.end() ? "Word '" + word + "' not found" : it->second->printDefinition();
 }
@@ -78,7 +78,7 @@ vector<shared_ptr<Word>> Dictionary::getRhymes(const string& word) const
 */
 int Dictionary::getScrabbleScore(const std::string& word) const
 {
-    const auto it = _dictionary.find(word);
+    const auto& it = _dictionary.find(word);
 
     // if not found, return a negative value,
     // so we can tell difference between not found and words you can't use in scrabble
@@ -93,9 +93,8 @@ int Dictionary::getScrabbleScore(const std::string& word) const
 */
 vector<shared_ptr<Word>> Dictionary::getWordAnagrams(const string& word) const
 {
-    const auto it = _dictionary.find(word);
-
-    return it == _dictionary.end() ? vector<shared_ptr<Word>>() : _task.getTaskResult(WordAnagrams, word);
+    return _dictionary.find(word) == _dictionary.end() ? 
+        vector<shared_ptr<Word>>() : _task.getTaskResult(WordAnagrams, word);
 }
 
 /**
@@ -115,7 +114,7 @@ vector<shared_ptr<Word>> Dictionary::getStringAnagrams(const string& letters) co
 */
 void Dictionary::incrementUsage(const std::string & word) const
 {
-    const auto it = _dictionary.find(word);
+    const auto& it = _dictionary.find(word);
 
     if (it != _dictionary.end())
         it->second->incrementUsage();
@@ -127,19 +126,21 @@ void Dictionary::incrementUsage(const std::string & word) const
 */
 bool Dictionary::isRareWord(const std::string& word) const
 {
-    const auto it = _dictionary.find(word);
+    const auto& it = _dictionary.find(word);
 
     return it == _dictionary.end() ? false : it->second->isRareWord();
 }
 
-Word* Dictionary::get(const std::string& word)
+/**
+* \brief If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+* \param word The word to search for.
+* \return If Word exists in dictionary, return const readonly ptr to Word, else return nullptr.
+*/
+const Word* Dictionary::get(const std::string& word)
 {
-    const auto it = _dictionary.find(word);
+    const auto& it = _dictionary.find(word);
     
-    if (it == _dictionary.end())
-        return nullptr;
-
-    return it->second.get();
+    return it == _dictionary.end() ? nullptr : it->second.get();
 }
 
 /**
