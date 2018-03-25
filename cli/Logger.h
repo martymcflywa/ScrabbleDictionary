@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <chrono>
 
 namespace cli
 {
@@ -27,6 +28,13 @@ namespace cli
          * \param message The message to print.
          */
         static void log(Prefix response, char const* message);
+        /**
+        * \brief Overload to print message with operation duration.
+        * \param response The message response type.
+        * \param message The message to print.
+        * \param duration How long the operation took.
+        */
+        static void log(Prefix response, const std::string& message, const std::chrono::duration<double>& duration);
         /**
          * \brief Overload to print messages passed in as std::string.
          * \param response The message response type.

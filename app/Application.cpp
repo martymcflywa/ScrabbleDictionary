@@ -48,9 +48,17 @@ Application::Application() :
 void Application::loadDictionary()
 {
     Logger::log(Info, "Loading dictionary...");
+
+    // instrument this operation
+    const auto tStart = steady_clock::now();
+
     _dictionary.loadDictionary(_dictionaryReader);
+
+    const auto tEnd = steady_clock::now();
+    const auto tDelta = duration<double>(tEnd - tStart);
     const auto message = "Loaded dictionary with " + to_string(_dictionary.size()) + " entries";
-    Logger::log(Info, message);
+
+    Logger::log(Info, message, tDelta);
 }
 
 /**
@@ -62,18 +70,25 @@ void Application::generateGlossaryAsync()
 {
     Logger::log(Info, "Generating glossary asynchronously...");
 
+    // instrument this operation
+    const auto tStart = steady_clock::now();
+
     auto glossaryTask = async([&](){ _glossary.generateAsync(); });
 
     // poll to check task is done
     auto taskDone = false;
     do
     {
-        taskDone = glossaryTask.wait_for(milliseconds(300)) == future_status::ready;
+        taskDone = glossaryTask.wait_for(milliseconds(1)) == future_status::ready;
     }
     while (!taskDone);
 
+    const auto tEnd = steady_clock::now();
+    const auto tDelta = duration<double>(tEnd - tStart);
+    const auto message = "Generated glossary with " + to_string(_glossary.size()) + " entries";
+
     // let user know glossary is ready
-    Logger::log(Task, "Glossary finished generating with " + to_string(_glossary.size()) + " entries");
+    Logger::log(Task, message, tDelta);
 }
 
 
