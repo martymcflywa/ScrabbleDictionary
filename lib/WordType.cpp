@@ -6,7 +6,7 @@ using namespace std;
 
 namespace lib
 {
-    map<Type, string> WordType::_typeMap =
+    unordered_map<Type, string> WordType::_typeMap =
     {
         { Verb, "Verb (v.)" },
         { Noun, "Noun (n.)" },

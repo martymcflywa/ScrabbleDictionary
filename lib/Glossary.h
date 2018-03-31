@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <istream>
+#include <map>
 #include "Dictionary.h"
 #include "IExtract.h"
 #include "IWrite.h"

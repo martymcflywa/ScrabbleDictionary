@@ -19,14 +19,14 @@ CliUserInterface::CliUserInterface(Dictionary& dictionary, Glossary& glossary) :
     _glossary(glossary)
 {
     _menu = 
-        string("[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + "\n") +
-        string("[" + MenuItem::LONGEST_WORDS + "] " + LONGEST_WORDS_TITLE + "\n") +
-        string("[" + MenuItem::LOGY_WORDS + "] " + LOGY_WORDS_TITLE + "\n") +
-        string("[" + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + "\n") +
-        string("[" + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + "\n") +
-        string("[" + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + "\n") +
-        string("[" + MenuItem::GLOSSARY + "] " + GLOSSARY_TITLE + "\n") +
-        string("[" + MenuItem::QUIT + "] Quit");
+        "[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + '\n' +
+        "[" + MenuItem::LONGEST_WORDS + "] " + LONGEST_WORDS_TITLE + '\n' +
+        "[" + MenuItem::LOGY_WORDS + "] " + LOGY_WORDS_TITLE + '\n' +
+        "[" + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + '\n' +
+        "[" + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + '\n' +
+        "[" + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + '\n' +
+        "[" + MenuItem::GLOSSARY + "] " + GLOSSARY_TITLE + '\n' +
+        "[" + MenuItem::QUIT + "] Quit";
 }
 
 /**
@@ -128,7 +128,7 @@ void CliUserInterface::rhymeWords()
     string word;
     do
     {
-        Logger::log(Info, RHYME_WORDS_TITLE + ":");
+        Logger::log(Info, RHYME_WORDS_TITLE + ':');
         Logger::log(Input, "Enter a word at least 3 letters long to find words that rhyme");
         Logger::log(CONTROL_TITLE);
 
@@ -147,7 +147,7 @@ void CliUserInterface::rhymeWords()
         // tell user when nothing found then go back to top of loop
         if (rhymes.empty())
         {
-            Logger::log(Output, "No rhymes found for '" + word + "'");
+            Logger::log(Output, "No rhymes found for '" + word + '\'');
             continue;
         }
 
@@ -170,7 +170,7 @@ void CliUserInterface::wordAnagrams()
     string word;
     do
     {
-        Logger::log(Info, ANAGRAM_WORD_TITLE + ":");
+        Logger::log(Info, ANAGRAM_WORD_TITLE + ':');
         Logger::log(Input, "Enter a word from the dictionary to find it's anagram/s");
         Logger::log(CONTROL_TITLE);
 
@@ -186,7 +186,7 @@ void CliUserInterface::wordAnagrams()
         // tell user when nothing found then go back to top of loop
         if (anagrams.empty())
         {
-            Logger::log(Output, "No anagrams found for '" + word + "'");
+            Logger::log(Output, "No anagrams found for '" + word + '\'');
             continue;
         }
 
@@ -226,7 +226,7 @@ void CliUserInterface::stringAnagrams()
         // tell user when nothing found then go back to top of loop
         if (anagrams.empty())
         {
-            Logger::log(Output, "No anagrams found for '" + word + "'");
+            Logger::log(Output, "No anagrams found for '" + word + '\'');
             continue;
         }
 
@@ -234,7 +234,7 @@ void CliUserInterface::stringAnagrams()
         Logger::log(Output, "Found " + to_string(anagrams.size()) + " legal scrabble anagram/s of '" + word + "':");
 
         for (const auto& it : anagrams)
-            Logger::log(it->getWord() + " (" + to_string(it->getScrabbleScore()) + ")");
+            Logger::log(it->getWord() + " (" + to_string(it->getScrabbleScore()) + ')');
     }
     while (!isControlChar(word));
 
@@ -259,12 +259,12 @@ void CliUserInterface::writeGlossary()
 
     // print glossary
     for (const auto& entry : *_glossary.getGlossary())
-        Logger::log(entry.second + "\n");
+        Logger::log(entry.second + '\n');
 
     // write glossary
     _glossary.write();
 
-    Logger::log(Info, "Operation complete, wrote " + to_string(_glossary.size()) + " entries to '" + _glossary.getOutputFilepath() + "'");
+    Logger::log(Info, "Operation complete, wrote " + to_string(_glossary.size()) + " entries to '" + _glossary.getOutputFilepath() + '\'');
     start();
 }
 
@@ -294,7 +294,7 @@ bool CliUserInterface::isValidMenuSelection(const string& selection) const
         || selection == MenuItem::QUIT;
 
     if (!isValid)
-        Logger::log(Error, "'" + selection + "' is not a valid selection, try again");
+        Logger::log(Error, '\'' + selection + "' is not a valid selection, try again");
 
     return isValid;
 }
@@ -309,7 +309,7 @@ bool CliUserInterface::isValidRhymeWord(const string& word) const
     const auto isValid = word.length() >= MIN_RHYME_LENGTH;
 
     if (!isValid)
-        Logger::log(Error, "'" + word + "' must be at least " + to_string(MIN_RHYME_LENGTH) + " letters long, try again");
+        Logger::log(Error, '\'' + word + "' must be at least " + to_string(MIN_RHYME_LENGTH) + " letters long, try again");
 
     return isValid;
 }
