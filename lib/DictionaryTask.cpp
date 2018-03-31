@@ -266,7 +266,7 @@ string DictionaryTask::getAnagramKey(const string& word)
 * \return A new result after filter is applied.
 */
 template<typename Predicate>
-vector<shared_ptr<Word>> DictionaryTask::filterResult(vector<shared_ptr<Word>> result, Predicate predicate)
+vector<shared_ptr<Word>> DictionaryTask::filterResult(vector<shared_ptr<Word>> result, const Predicate& predicate)
 {
     // cool solution from https://stackoverflow.com/a/42723273
     // adapted to accept a predicate lambda exp for custom filtering

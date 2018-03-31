@@ -97,7 +97,7 @@ namespace lib
         * \return A new result after filter is applied.
         */
         template<typename Predicate>
-        static std::vector<std::shared_ptr<Word>> filterResult(std::vector<std::shared_ptr<Word>> result, Predicate predicate);
+        static std::vector<std::shared_ptr<Word>> filterResult(std::vector<std::shared_ptr<Word>> result, const Predicate& predicate);
         /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.

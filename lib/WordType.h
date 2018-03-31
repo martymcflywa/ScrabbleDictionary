@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <map>
 #include <string>
+#include <unordered_map>
 
 namespace lib
 {
@@ -18,7 +18,7 @@ namespace lib
 
     class WordType
     {
-        static std::map<Type, std::string> _typeMap;
+        static std::unordered_map<Type, std::string> _typeMap;
 
     public:
         static std::string getName(const Type& type);
