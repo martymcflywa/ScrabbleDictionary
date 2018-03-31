@@ -1,9 +1,13 @@
 ﻿#include "stdafx.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "Logger.h"
+#include <iomanip>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 using namespace cli;
 
 void Logger::log(Prefix response, char const* message)
@@ -12,22 +16,35 @@ void Logger::log(Prefix response, char const* message)
     log(response, m);
 }
 
+void Logger::log(Prefix response, const std::string& message, const duration<double>& duration)
+{
+    auto timer = ostringstream();
+    timer << fixed;
+    timer << setprecision(2);
+    timer << duration.count();
+
+    const auto instrumentedMessage = message + ", took " + timer.str() + " seconds";
+
+    log(response, instrumentedMessage);
+}
+
 void Logger::log(Prefix response, const string& message)
 {
     const auto prefix = resolvePrefix(response);
 
     if (response == Task)
     {
-        cout << endl << prefix + message << endl;
+        cout << '\n' << prefix + message << '\n';
+        printPrompt();
         return;
     }
         
-    cout << prefix + message << endl;
+    cout << prefix + message << '\n';
 }
 
 void Logger::log(const string& message)
 {
-    cout << message << endl;
+    cout << message << '\n';
 }
 
 /**
