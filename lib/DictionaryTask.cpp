@@ -51,17 +51,16 @@ void DictionaryTask::setLongestWords(const shared_ptr<Word> wordObj)
 {
     const auto word = wordObj->getWord();
 
-    // if current word length is equal to max, add it to the list
-    if (word.length() == _maxWordLength)
-        _longestWords.push_back(wordObj);
+    // ignore if less than max
+    if (word.length() < _maxWordLength)
+        return;
 
-    // if current word length is greater than max, clear the list, add current word to fresh list, set new max threshold
+    // clear collection if greater than max
     if (word.length() > _maxWordLength)
-    {
         _longestWords.clear();
-        _longestWords.push_back(wordObj);
-        _maxWordLength = word.length();
-    }
+
+    _longestWords.push_back(wordObj);
+    _maxWordLength = word.length();
 }
 
 /**
