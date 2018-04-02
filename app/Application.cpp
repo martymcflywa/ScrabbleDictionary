@@ -50,15 +50,15 @@ void Application::loadDictionary()
     Logger::log(Info, "Loading dictionary...");
 
     // instrument this operation
-    const auto tStart = steady_clock::now();
+    const auto start = steady_clock::now();
 
     _dictionary.loadDictionary(_dictionaryReader);
 
-    const auto tEnd = steady_clock::now();
-    const auto tDelta = duration<double>(tEnd - tStart);
+    const auto end = steady_clock::now();
+    const auto delta = duration<double>(end - start);
     const auto message = "Loaded dictionary with " + to_string(_dictionary.size()) + " entries";
 
-    Logger::log(Info, message, tDelta);
+    Logger::log(Info, message, delta);
 }
 
 /**
@@ -71,24 +71,16 @@ void Application::generateGlossaryAsync()
     Logger::log(Info, "Generating glossary asynchronously...");
 
     // instrument this operation
-    const auto tStart = steady_clock::now();
+    const auto start = steady_clock::now();
 
-    auto glossaryTask = async([&](){ _glossary.generateAsync(); });
+    async([&](){ _glossary.generateAsync(); }).wait();
 
-    // poll to check task is done
-    auto taskDone = false;
-    do
-    {
-        taskDone = glossaryTask.wait_for(milliseconds(1)) == future_status::ready;
-    }
-    while (!taskDone);
-
-    const auto tEnd = steady_clock::now();
-    const auto tDelta = duration<double>(tEnd - tStart);
+    const auto end = steady_clock::now();
+    const auto delta = duration<double>(end - start);
     const auto message = "Generated glossary with " + to_string(_glossary.size()) + " entries";
 
-    // let user know glossary is ready
-    Logger::log(Task, message, tDelta);
+    // announce glossary is ready
+    Logger::log(Task, message, delta);
 }
 
 
