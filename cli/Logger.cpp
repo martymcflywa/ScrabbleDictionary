@@ -34,17 +34,17 @@ void Logger::log(Prefix response, const string& message)
 
     if (response == Task)
     {
-        cout << '\n' << prefix + message << '\n';
+        cout << '\n' << prefix + message + '\n';
         printPrompt();
         return;
     }
         
-    cout << prefix + message << '\n';
+    cout << prefix + message + '\n';
 }
 
 void Logger::log(const string& message)
 {
-    cout << message << '\n';
+    cout << message + '\n';
 }
 
 /**
