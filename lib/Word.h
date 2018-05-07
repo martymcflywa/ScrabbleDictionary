@@ -42,8 +42,8 @@ namespace lib
          */
         void incrementUsage();
         /**
-         * \brief Returns true if usage < 2.
-         * \returns True if usage < 2.
+         * \brief Returns true if usage == 1.
+         * \returns True if usage == 1.
          */
         bool isRareWord() const;
         /**
@@ -59,5 +59,14 @@ namespace lib
         * \returns The score for the word if not misc, proper noun or hyphenated words, else returns 0.
         */
         int calculateScrabbleScore() const;
+        /**
+        * \brief Deals with edge case where "csp2104" is noun.
+        * Checks if a word contains numbers by iterating each
+        * letter as uppercase and checking if its ascii value is
+        * within range of '0' - '9'.
+        * \param word The word to check if it contains numbers.
+        * \return true if it contains numbers.
+        */
+        static bool containsNumbers(const std::string& word);
     };
 }
