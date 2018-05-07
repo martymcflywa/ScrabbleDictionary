@@ -47,12 +47,15 @@ string Word::printDefinition() const
 }
 
 /**
-* \brief Returns true if word is not misc, proper noun or hyphenated.
-* \return True if word type is not misc, proper noun or hyphenated.
+* \brief Returns true if word is not misc, proper noun, hyphenated or contains numbers.
+* \return True if word type is not misc, proper noun, hyphenated or contains numbers.
 */
 bool Word::isLegalScrabbleWord() const
 {
-    return !(_type == Misc || _type == ProperNoun || _word.find("-") != string::npos);
+    return !(_type == Misc 
+        || _type == ProperNoun 
+        || _word.find('-') != string::npos 
+        || containsNumbers(_word));
 }
 
 /**
@@ -109,4 +112,26 @@ int Word::calculateScrabbleScore() const
         score += letterScores[toupper(letter) - capitalA];
 
     return score;
+}
+
+/**
+* \brief Deals with edge case where "csp2104" is noun.
+* Checks if a word contains numbers by iterating each
+* letter as uppercase and checking if its ascii value is
+* within range of '0' - '9'.
+* \param word The word to check if it contains numbers.
+* \return true if it contains numbers.
+*/
+bool Word::containsNumbers(const std::string& word)
+{
+    const auto asciiZero = static_cast<int>('0');
+    const auto asciiNine = static_cast<int>('9');
+
+    for (const auto& letter : word)
+    {
+        const auto uppercase = toupper(letter);
+        if (uppercase >= asciiZero && uppercase <= asciiNine)
+            return true;
+    }
+    return false;
 }

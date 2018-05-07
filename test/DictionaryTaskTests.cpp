@@ -260,6 +260,9 @@ namespace dictionaryTaskTests
         const auto hyphenTypeDef = " [v]" + definition;
         const auto expectedHyphenScore = 0;
 
+        const string wordWithNumber = "abc123";
+        const auto expectedWordWithNumberScore = 0;
+
         const auto words = vector<string>
         {
             adjectiveWord,
@@ -270,7 +273,8 @@ namespace dictionaryTaskTests
             verbWord,
             miscWord,
             properNounWord,
-            hyphenWord
+            hyphenWord,
+            wordWithNumber
         };
         const auto typeAndDefs = vector<string>
         {
@@ -282,7 +286,8 @@ namespace dictionaryTaskTests
             verbTypeDef,
             miscWordTypeDef,
             properNounTypeDef,
-            hyphenTypeDef
+            hyphenTypeDef,
+            nounTypeDef
         };
 
         GIVEN("A dictionary with all word types")
@@ -301,6 +306,7 @@ namespace dictionaryTaskTests
                 auto actualMiscScore = dictionary.getScrabbleScore(miscWord);
                 auto actualProperNounScore = dictionary.getScrabbleScore(properNounWord);
                 auto actualHyphenScore = dictionary.getScrabbleScore(hyphenWord);
+                auto actualWordWithNumberScore = dictionary.getScrabbleScore(wordWithNumber);
 
                 THEN("An adjective word can score")
                 {
@@ -345,6 +351,11 @@ namespace dictionaryTaskTests
                 AND_THEN("A hyphen word can't score")
                 {
                     REQUIRE(expectedHyphenScore == actualHyphenScore);
+                }
+
+                AND_THEN("A word with numbers can't score")
+                {
+                    REQUIRE(expectedWordWithNumberScore == actualWordWithNumberScore);
                 }
             }
 
