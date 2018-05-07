@@ -24,7 +24,7 @@ namespace dictionaryExtractorTests
     {
         GIVEN("A file containing valid dictionary entries")
         {
-            const string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n\n";
+            const string testFile = "first [adj]\nThis is the first definition.\n\nsecond [adv]\nThis is the second definition.\n";
 
             WHEN("The extractor reads the file")
             {

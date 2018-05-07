@@ -24,7 +24,6 @@ DictionaryExtractor::DictionaryExtractor(IPrint& printer, ITask& task) : _printe
 unordered_map<string, shared_ptr<Word>> DictionaryExtractor::extract(istream& content)
 {
     const auto firstLine = 0;
-    const auto lastLine = 2;
     auto currentLine = 0;
 
     auto output = unordered_map<string, shared_ptr<Word>>();
@@ -34,21 +33,9 @@ unordered_map<string, shared_ptr<Word>> DictionaryExtractor::extract(istream& co
     string type;
     string definition;
 
-    while (getline(content, line))
+    while (!content.eof())
     {
-        if (currentLine == lastLine)
-        {
-            // the last line of the entry, time to construct the word and add it to collection.
-            const auto wordObj = make_shared<Word>(WordFactory::build(word, type, definition, _printer));
-            output.insert(pair<string, shared_ptr<Word>>(word, wordObj));
-
-            // optimisation: handle tasks in the extract loop while loading,
-            // rather than multiple loops later on
-            _task.handleTasks(wordObj);
-
-            currentLine = 0;
-            continue;
-        }
+        getline(content, line);
 
         // the first line of the entry, grab the word and type
         if (currentLine == firstLine)
@@ -59,9 +46,24 @@ unordered_map<string, shared_ptr<Word>> DictionaryExtractor::extract(istream& co
             continue;
         }
 
-        // the second line of the entry (implied), grab the definition
-        definition = line;
-        currentLine++;
+        // the second line of the entry, grab the definition
+        if (currentLine == firstLine + 1)
+        {
+            definition = line;
+            currentLine++;
+            continue;
+        }
+
+        // the last line of the entry (implied), 
+        // time to construct the word and add it to collection.
+        const auto wordObj = make_shared<Word>(WordFactory::build(word, type, definition, _printer));
+        output.insert(pair<string, shared_ptr<Word>>(word, wordObj));
+
+        // optimisation: handle tasks in the extract loop while loading,
+        // rather than multiple loops later on
+        _task.handleTasks(wordObj);
+
+        currentLine = 0;
     }
     return output;
 }
