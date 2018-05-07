@@ -19,14 +19,14 @@ CliUserInterface::CliUserInterface(Dictionary& dictionary, Glossary& glossary) :
     _glossary(glossary)
 {
     _menu = 
-        "[" + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + '\n' +
-        "[" + MenuItem::LONGEST_WORDS + "] " + LONGEST_WORDS_TITLE + '\n' +
-        "[" + MenuItem::LOGY_WORDS + "] " + LOGY_WORDS_TITLE + '\n' +
-        "[" + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + '\n' +
-        "[" + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + '\n' +
-        "[" + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + '\n' +
-        "[" + MenuItem::GLOSSARY + "] " + GLOSSARY_TITLE + '\n' +
-        "[" + MenuItem::QUIT + "] Quit";
+        '[' + MenuItem::SEARCH_DEFINITION_SCORE + "] " + SEARCH_DEFINITION_TITLE + '\n' +
+        '[' + MenuItem::LONGEST_WORDS + "] " + LONGEST_WORDS_TITLE + '\n' +
+        '[' + MenuItem::LOGY_WORDS + "] " + LOGY_WORDS_TITLE + '\n' +
+        '[' + MenuItem::RHYME_WORDS + "] " + RHYME_WORDS_TITLE + '\n' +
+        '[' + MenuItem::ANAGRAM_WORD + "] " + ANAGRAM_WORD_TITLE + '\n' +
+        '[' + MenuItem::ANAGRAM_STRING + "] " + ANAGRAM_STRING_TITLE + '\n' +
+        '[' + MenuItem::GLOSSARY + "] " + GLOSSARY_TITLE + '\n' +
+        '[' + MenuItem::QUIT + "] Quit";
 }
 
 /**
@@ -62,7 +62,7 @@ void CliUserInterface::findDefinition()
     string word;
     do
     {
-        Logger::log(Info, SEARCH_DEFINITION_TITLE + ":");
+        Logger::log(Info, SEARCH_DEFINITION_TITLE + ':');
         Logger::log(Input, "Enter a word to find its definition and scrabble score");
         Logger::log(CONTROL_TITLE);
         Logger::printPrompt();
@@ -93,7 +93,7 @@ void CliUserInterface::longestWords()
     for (const auto& ptr : longest)
     {
         const auto word = ptr->getWord();
-        Logger::log(word + " (" + to_string(word.length()) + ")");
+        Logger::log(word + " (" + to_string(word.length()) + ')');
     }
 
     // head back to main menu when task complete
@@ -113,7 +113,7 @@ void CliUserInterface::wordsEndWithLogy()
     for (const auto& ptr : logyWords)
     {
         const auto word = ptr->getWord();
-        Logger::log(word + " (" + to_string(word.length()) + ")");
+        Logger::log(word + " (" + to_string(word.length()) + ')');
     }
 
     // head back to main menu when task complete
@@ -210,7 +210,7 @@ void CliUserInterface::stringAnagrams()
     string word;
     do
     {
-        Logger::log(Info, ANAGRAM_STRING_TITLE + ":");
+        Logger::log(Info, ANAGRAM_STRING_TITLE + ':');
         Logger::log(Input, "Enter a string of letters to find legal scrabble anagram/s with its (score)");
         Logger::log(CONTROL_TITLE);
 
