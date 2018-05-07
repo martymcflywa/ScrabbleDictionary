@@ -73,7 +73,7 @@ void Application::generateGlossaryAsync()
     // instrument this operation
     const auto start = steady_clock::now();
 
-    async([&](){ _glossary.generateAsync(); }).wait();
+    async(launch::async, [&]() { _glossary.generateAsync(); }).wait();
 
     const auto end = steady_clock::now();
     const auto delta = duration<double>(end - start);
