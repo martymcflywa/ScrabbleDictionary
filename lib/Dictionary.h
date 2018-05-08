@@ -76,11 +76,10 @@ namespace lib {
          */
         int getScrabbleScore(const std::string& word) const;
         /**
-         * \brief Search the dictionary for the word. If it exists, will look for anagrams of that word.
-         * If it doesn't exist, returns an empty list.
-         * \param word The word to search for anagrams.
-         * \returns Anagram/s of the word, if the word exists in the dictionary, else returns an empty list. 
-         */
+        * \brief Returns anagrams of the word being searched, which exist in the dictionary.
+        * \param word The word to search for anagrams.
+        * \returns Anagrams of the word being searched, which exist in the dictionary.
+        */
         std::vector<std::shared_ptr<Word>> getWordAnagrams(const std::string& word) const;
         /**
         * \brief Search for anagrams of a string of letters.

@@ -397,7 +397,7 @@ namespace dictionaryTaskTests
 
             WHEN("A word is searched for anagrams")
             {
-                const auto actual = dictionary.getWordAnagrams(anagram1);
+                const auto actual = dictionary.getWordAnagrams("laset");
 
                 THEN("Anagrams of the word are returned")
                 {
@@ -406,26 +406,22 @@ namespace dictionaryTaskTests
                     REQUIRE(TestHelpers::vectorContains(actual, anagram4));
                 }
 
-                AND_THEN("The word being searched for is not returned")
-                {
-                    REQUIRE(!TestHelpers::vectorContains(actual, anagram1));
-                }
-
                 AND_THEN("Non anagrams are not returned")
                 {
+                    REQUIRE(actual.size() == 4);
                     REQUIRE(!TestHelpers::vectorContains(actual, notAnagram1));
                     REQUIRE(!TestHelpers::vectorContains(actual, notAnagram2));
                 }
             }
 
-            AND_WHEN("Anagrams are not found for a word")
+            AND_WHEN("An existing word is searched")
             {
-                const string target = "nope";
-                const auto actual = dictionary.getWordAnagrams(target);
+                const auto actual = dictionary.getWordAnagrams(anagram1);
 
-                THEN("No anagrams are returned")
+                THEN("The word being searched for is not returned")
                 {
-                    REQUIRE(actual.empty());
+                    REQUIRE(actual.size() == 3);
+                    REQUIRE(!TestHelpers::vectorContains(actual, anagram1));
                 }
             }
 
