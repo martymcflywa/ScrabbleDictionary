@@ -424,88 +424,67 @@ namespace dictionaryTaskTests
                     REQUIRE(!TestHelpers::vectorContains(actual, anagram1));
                 }
             }
-
-            AND_WHEN("Anagrams for a collection of letters is requested")
-            {
-                const string target = "alset";
-                const auto actual = dictionary.getStringAnagrams(target);
-
-                THEN("Anagrams of the collection of letters are returned")
-                {
-                    REQUIRE(TestHelpers::vectorContains(actual, anagram1));
-                    REQUIRE(TestHelpers::vectorContains(actual, anagram2));
-                    REQUIRE(TestHelpers::vectorContains(actual, anagram3));
-                    REQUIRE(TestHelpers::vectorContains(actual, anagram4));
-                }
-
-                AND_THEN("Non anagrams are not returned")
-                {
-                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram1));
-                    REQUIRE(!TestHelpers::vectorContains(actual, notAnagram2));
-                }
-            }
-
-            AND_WHEN("Anagrams are not found for a collection of letters")
-            {
-                const string target = "nope";
-                const auto actual = dictionary.getStringAnagrams(target);
-
-                THEN("No anagrams are returned")
-                {
-                    REQUIRE(actual.empty());
-                }
-            }
         }
 
-        GIVEN("A dictionary with anagrams of legal and illegal scrabble words")
+        GIVEN("A dictionary with legal and illegal scrabble words")
         {
             const string definition = "\nTest definition.\n\n";
+            const string legalTypeDef = " [n]" + definition;
 
-            const string nounWord = "word";
-            const auto nounTypeDef = " [n]" + definition;
-
-            const string miscWord = "dwor";
-            const auto miscTypeDef = " [misc]" + definition;
-
-            const string properNounWord = "rdwo";
-            const auto properNounTypeDef = " [pn]" + definition;
-
-            const string hyphenWord = "w-o-r-d";
-            const auto hyphenTypeDef = " [v]" + definition;
+            const string highScoreOne = "adds";
+            const string highScoreTwo = "dads";
+            const string lowScoreOne = "add";
+            const string lowScoreTwo = "dad";
+            const string misc = "ad";
+            const string properNoun = "da";
+            const string hyphen = "a-d-d";
 
             const auto words = vector<string>
             {
-                nounWord,
-                miscWord,
-                properNounWord,
-                hyphenWord
+                highScoreOne,
+                highScoreTwo,
+                lowScoreOne,
+                lowScoreTwo,
+                misc,
+                properNoun,
+                hyphen
             };
-            const auto typeAndDefs = vector<string>
+            
+            const auto typeDefs = vector<string>
             {
-                nounTypeDef,
-                miscTypeDef,
-                properNounTypeDef,
-                hyphenTypeDef
+                legalTypeDef,
+                legalTypeDef,
+                legalTypeDef,
+                legalTypeDef,
+                " [misc]" + definition,
+                " [pn]" + definition,
+                legalTypeDef
             };
 
-            auto builder = TestDictionaryBuilder(words, typeAndDefs);
+            auto builder = TestDictionaryBuilder(words, typeDefs);
             auto dictionary = builder.build();
 
-            WHEN("Anagrams for a collection of letters is requested")
+            WHEN("Anagrams for a string is searched")
             {
-                const string target = "drow";
+                const string target = "sdads";
                 const auto actual = dictionary.getStringAnagrams(target);
 
-                THEN("Legal scrabble words are returned")
+                THEN("Only highest scoring anagrams are returned")
                 {
-                    REQUIRE(TestHelpers::vectorContains(actual, nounWord));
+                    REQUIRE(actual.size() == 2);
+                    REQUIRE(TestHelpers::vectorContains(actual, highScoreOne));
+                    REQUIRE(TestHelpers::vectorContains(actual, highScoreTwo));
                 }
+            }
 
-                AND_THEN("Illegal scrabble words are not returned")
+            AND_WHEN("An existing word is searched")
+            {
+                const auto actual = dictionary.getStringAnagrams(highScoreOne);
+
+                THEN("The existing word is not returned")
                 {
-                    REQUIRE(!TestHelpers::vectorContains(actual, miscWord));
-                    REQUIRE(!TestHelpers::vectorContains(actual, properNounWord));
-                    REQUIRE(!TestHelpers::vectorContains(actual, hyphenWord));
+                    REQUIRE(actual.size() == 1);
+                    REQUIRE(!TestHelpers::vectorContains(actual, highScoreOne));
                 }
             }
         }
