@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ITask.h"
 #include "Word.h"
+#include <map>
 #include <unordered_map>
 
 namespace lib
@@ -15,7 +16,7 @@ namespace lib
         std::vector<std::shared_ptr<Word>> _longestWords{};
         std::vector<std::shared_ptr<Word>> _logyWords{};
         std::unordered_map<std::string, std::vector<std::shared_ptr<Word>>> _rhymes{};
-        std::unordered_map<std::string, std::vector<std::shared_ptr<Word>>> _anagrams{};
+        std::map<std::string, std::vector<std::shared_ptr<Word>>> _anagrams{};
 
     public:
         DictionaryTask() = default;
@@ -68,13 +69,28 @@ namespace lib
         */
         std::vector<std::shared_ptr<Word>> getRhymes(const std::string& word);
         /**
-        * \brief Sort word's letters alphabetically, as key to anagram map.
-        * If key exists in anagram map, return list value for that key, else return an empty list.
-        * \param taskType Only WordAnagrams or StringAnagrams supported.
+        * \brief Returns all anagrams, including illegal scrabble words for a search pattern.
+        * Search pattern does not have to be an existing word in the dictionary. If the search
+        * pattern exists in the result, it will be filtered out.
         * \param word The word to search for anagrams.
-        * \returns Anagram/s of the word, if they exist, else returns an empty list.
+        * \returns Any anagram/s of the word, if they exist, else returns an empty list.
         */
-        std::vector<std::shared_ptr<Word>> getAnagrams(TaskType taskType, const std::string& word);
+        std::vector<std::shared_ptr<Word>> getWordAnagrams(const std::string& word);
+        /**
+         * \brief Returns the highest scrabble scoring anagrams from a collection of letters.
+         * Not all letters have to be used in anagrams. If the letters form a word in the result,
+         * it will be filtered out.
+         * \param letters The collection of letters to search anagrams of.
+         * \return The highest scrabble scoring anagrams, if any exist, else returns an empty list.
+         */
+        std::vector<std::shared_ptr<Word>> getStringAnagrams(const std::string& letters);
+        /**
+         * \brief Returns true if all the characters in the key exist in the collection of letters.
+         * \param letters The collection of letters being checked.
+         * \param key Each letter in the key will be checked against collection of letters.
+         * \return True if all characters in the key exist in the collection of letters.
+         */
+        static bool hasAllLetters(std::string letters, const std::string& key);
         /**
          * \brief Returns the rhyming part of the word if >= 3 letters,
          * else returns an empty string.
@@ -97,7 +113,7 @@ namespace lib
         * \return A new result after filter is applied.
         */
         template<typename Predicate>
-        static std::vector<std::shared_ptr<Word>> filterResult(std::vector<std::shared_ptr<Word>> result, const Predicate& predicate);
+        static std::vector<std::shared_ptr<Word>> filter(std::vector<std::shared_ptr<Word>> result, const Predicate& predicate);
         /**
         * \brief Returns true if the word ends with ending.
         * \param word The word to inspect.

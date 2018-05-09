@@ -34,8 +34,9 @@ std::vector<std::shared_ptr<Word>> DictionaryTask::getTaskResult(const TaskType 
     case Rhymes:
         return getRhymes(word);
     case WordAnagrams:
+        return getWordAnagrams(word);
     case StringAnagrams:
-        return getAnagrams(taskType, word);
+        return getStringAnagrams(word);
     default:
         throw UnsupportedTaskException(to_string(taskType));
     }
@@ -169,7 +170,7 @@ vector<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
     if (it == _rhymes.end())
         return vector<shared_ptr<Word>>();
 
-    return filterResult(
+    return filter(
         it->second,
         [&word](shared_ptr<Word> const& wordObj)
         {
@@ -178,13 +179,13 @@ vector<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 }
 
 /**
-* \brief Sort word's letters alphabetically, as key to anagram map.
-* If key exists in anagram map, return list value for that key, else return an empty list.
-* \param taskType Only WordAnagrams or StringAnagrams supported.
+* \brief Returns all anagrams, including illegal scrabble words for a search pattern.
+* Search pattern does not have to be an existing word in the dictionary. If the search
+* pattern exists in the result, it will be filtered out.
 * \param word The word to search for anagrams.
-* \returns Anagram/s of the word, if they exist, else returns an empty list.
+* \returns Any anagram/s of the word, if they exist, else returns an empty list.
 */
-vector<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const string& word)
+std::vector<std::shared_ptr<Word>> DictionaryTask::getWordAnagrams(const std::string& word)
 {
     const auto key = getAnagramKey(word);
     const auto it = _anagrams.find(key);
@@ -193,31 +194,93 @@ vector<shared_ptr<Word>> DictionaryTask::getAnagrams(TaskType taskType, const st
     if (it == _anagrams.end())
         return vector<shared_ptr<Word>>();
 
-    // TODO: Investigate below
-    // Would rather init a variable called 'predicate' up here to avoid repeated code.
-    // Switch determines the appropriate unary predicate to store in the variable.
-    // Then call 'return filterResult(list, predicate)' after the switch case.
-    // But what type is a lambda?? Tried std::function<>, doesnt work...
-    switch (taskType)
+    // remove search pattern from result
+    return filter(
+        it->second,
+        [&word](shared_ptr<Word> const& wordObj)
+        {
+            return word == wordObj->getWord();
+        });
+}
+
+/**
+* \brief Returns the highest scrabble scoring anagrams from a collection of letters.
+* Not all letters have to be used in anagrams. If the letters form a word in the result,
+* it will be filtered out.
+* \param letters The collection of letters to search anagrams of.
+* \return The highest scrabble scoring anagrams, if any exist, else returns an empty list.
+*/
+std::vector<std::shared_ptr<Word>> DictionaryTask::getStringAnagrams(const std::string& letters)
+{
+    auto result = vector<shared_ptr<Word>>{};
+    auto maxScore = 0;
+
+    // TODO: needs optimizing, iterating over every anagram key is not ideal! This is worst case O(n^2)
+    // IDEA: Binary search on first letter of key since std::map is sorted, see map::lower_bound
+    for (const auto& pair : _anagrams)
     {
-    case WordAnagrams: // remove word that matches the search pattern
-        return filterResult(
-            it->second,
-            [&word](shared_ptr<Word> const& wordObj)
+        auto legalWords = filter(
+            pair.second,
+            [](shared_ptr<Word> const& wordObj)
             {
-                return word == wordObj->getWord();
+                return !wordObj->isLegalScrabbleWord();
             });
-    case StringAnagrams: // remove word that matches the search pattern or illegal scrabble words
-        return filterResult(
-            it->second,
-            [&word](shared_ptr<Word> const& wordObj)
-            {
-                return word == wordObj->getWord()
-                    || !wordObj->isLegalScrabbleWord();
-            });
-    default:
-        throw UnsupportedTaskException(to_string(taskType));
+
+        if (legalWords.empty())
+            continue;
+
+        // Safe to assume at this point, all words in legalWords have the same scrabble score,
+        // since they all contain the exact same letters.
+
+        const auto currentMaxScore = legalWords.front()->getScrabbleScore();
+
+        // Only interested in this collection of anagrams if it has a 
+        // current max score greater than or equal to max score
+        if (currentMaxScore < maxScore)
+            continue;
+
+        const auto key = pair.first;
+
+        if (letters.length() < key.length())
+            continue;
+
+        if (!hasAllLetters(letters, key))
+            continue;
+
+        // If we find a higher scoring collection of anagrams,
+        // reset the result cache and set a new max score
+        if (currentMaxScore > maxScore)
+        {
+            maxScore = currentMaxScore;
+            result.clear();
+        }
+
+        for (auto& it : legalWords)
+            result.push_back(it);
     }
+
+    return filter(
+        result,
+        [&letters](shared_ptr<Word> const& wordObj)
+        {
+            return letters == wordObj->getWord();
+        });
+}
+
+bool DictionaryTask::hasAllLetters(string letters, const string& key)
+{
+    // TODO: Naive solution here, adds even more complexity to getStringAnagrams loop
+    // IDEA: Trie or radix tree, see https://stackoverflow.com/q/2835910
+    for (auto c : key)
+    {
+        const auto foundChar = letters.find(c);
+
+        if (foundChar == string::npos)
+            return false;
+        
+        letters.erase(foundChar, 1);
+    }
+    return true;
 }
 
 /**
@@ -247,8 +310,10 @@ string DictionaryTask::getAnagramKey(const string& word)
     if (word.length() == 1)
         return word;
 
-    // make a copy
+    // make lowercase
     auto key = word;
+    transform(word.begin(), word.end(), key.begin(), ::tolower);
+
     // strip hyphens '-'
     key.erase(remove(key.begin(), key.end(), '-'), key.end());
     // sort alphabetically
@@ -265,7 +330,7 @@ string DictionaryTask::getAnagramKey(const string& word)
 * \return A new result after filter is applied.
 */
 template<typename Predicate>
-vector<shared_ptr<Word>> DictionaryTask::filterResult(vector<shared_ptr<Word>> result, const Predicate& predicate)
+vector<shared_ptr<Word>> DictionaryTask::filter(vector<shared_ptr<Word>> result, const Predicate& predicate)
 {
     // cool solution from https://stackoverflow.com/a/42723273
     // adapted to accept a predicate lambda exp for custom filtering
