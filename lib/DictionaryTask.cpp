@@ -172,7 +172,7 @@ vector<shared_ptr<Word>> DictionaryTask::getRhymes(const string& word)
 
     return filter(
         it->second,
-        [&word](shared_ptr<Word> const& wordObj)
+        [&word](const shared_ptr<Word>& wordObj)
         {
             return wordObj->getWord() == word;
         });
@@ -197,7 +197,7 @@ std::vector<std::shared_ptr<Word>> DictionaryTask::getWordAnagrams(const std::st
     // remove search pattern from result
     return filter(
         it->second,
-        [&word](shared_ptr<Word> const& wordObj)
+        [&word](const shared_ptr<Word>& wordObj)
         {
             return word == wordObj->getWord();
         });
@@ -221,7 +221,7 @@ std::vector<std::shared_ptr<Word>> DictionaryTask::getStringAnagrams(const std::
     {
         auto legalWords = filter(
             pair.second,
-            [](shared_ptr<Word> const& wordObj)
+            [](const shared_ptr<Word>& wordObj)
             {
                 return !wordObj->isLegalScrabbleWord();
             });
@@ -261,12 +261,18 @@ std::vector<std::shared_ptr<Word>> DictionaryTask::getStringAnagrams(const std::
 
     return filter(
         result,
-        [&letters](shared_ptr<Word> const& wordObj)
+        [&letters](const shared_ptr<Word>& wordObj)
         {
             return letters == wordObj->getWord();
         });
 }
 
+/**
+* \brief Returns true if all the characters in the key exist in the collection of letters.
+* \param letters The collection of letters being checked.
+* \param key Each letter in the key will be checked against collection of letters.
+* \return True if all characters in the key exist in the collection of letters.
+*/
 bool DictionaryTask::hasAllLetters(string letters, const string& key)
 {
     // TODO: Naive solution here, adds even more complexity to getStringAnagrams loop
@@ -312,7 +318,7 @@ string DictionaryTask::getAnagramKey(const string& word)
 
     // make lowercase
     auto key = word;
-    transform(word.begin(), word.end(), key.begin(), ::tolower);
+    transform(word.begin(), word.end(), key.begin(), tolower);
 
     // strip hyphens '-'
     key.erase(remove(key.begin(), key.end(), '-'), key.end());
