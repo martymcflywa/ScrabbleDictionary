@@ -22,7 +22,7 @@ namespace cli
         const std::string LOGY_WORDS_TITLE = "Find word/s that end in 'logy' and have a length of seven or less characters";
         const std::string RHYME_WORDS_TITLE = "Find word/s that rhyme";
         const std::string ANAGRAM_WORD_TITLE = "Find anagram/s of a word in the dictionary";
-        const std::string ANAGRAM_STRING_TITLE = "Find legal scrabble anagram/s and their (scores) for a string of letters";
+        const std::string ANAGRAM_STRING_TITLE = "Find anagram/s with the highest scrabble (score) from a string of letters";
         const std::string GLOSSARY_TITLE = "Write glossary to file";
         const std::string CONTROL_TITLE = "[" + MenuItem::BACK + "] Back\n[" + MenuItem::QUIT + "] Quit";
         const unsigned MIN_RHYME_LENGTH = 3;
