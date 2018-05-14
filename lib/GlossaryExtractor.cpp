@@ -17,8 +17,9 @@ vector<string> GlossaryExtractor::extract(istream& content)
     string line;
     auto words = vector<string>();
 
-    while(getline(content, line))
+    while(!content.eof())
     {
+        getline(content, line);
         unsigned start = 0;
         unsigned end;
 
