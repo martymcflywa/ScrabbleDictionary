@@ -13,7 +13,7 @@ namespace lib
         /**
          * \brief The stuff to ignore.
          */
-        const std::string SPECIAL_CHARS = " \t\r\n,.!?;:-_“”\"+=@#$%^&*()[]{}<>\\/|`~";
+        const std::string SPECIAL_CHARS = " \t\r\n,.!?;:-_“”\"+=@#$%^&*()[]{}<>\\/|`~ï»¿";
     public:
         /**
          * \brief Extracts words from a text file, ignoring any special characters,
