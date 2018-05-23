@@ -22,12 +22,13 @@ namespace glossaryExtractorTests
             const string word5 = "test";
             const string word6 = "file";
             const string word7 = "can't";
+            const string word8 = "preface";
 
             const auto testFile =
                 "“" + word1 + "!” " + "\"" + word2 + "\"\n" +
                 "-" + word3 + "--" + word4 + "\n" +
                 "_" + word5 + "_" + "\tFILE" + "\n" +
-                word7;
+                word7 + " ï»¿" + word8;
 
             auto reader = TestReader();
             reader.setTestFile(testFile);
@@ -46,6 +47,7 @@ namespace glossaryExtractorTests
                     REQUIRE(TestHelpers::vectorContains(actual, word5));
                     REQUIRE(TestHelpers::vectorContains(actual, word6));
                     REQUIRE(TestHelpers::vectorContains(actual, word7));
+                    REQUIRE(TestHelpers::vectorContains(actual, word8));
                 }
             }
         }
